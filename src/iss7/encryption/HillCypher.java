@@ -1,4 +1,4 @@
-package iss7;
+package encryption;
 
 public class HillCypher {
 
