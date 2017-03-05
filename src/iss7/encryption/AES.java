@@ -91,6 +91,7 @@ public class AES {
             LOGGER.info("Beginning round: " + (i));
             key = keyExpansion(key, i);
             stateArray = substituteBytes(stateArray);
+            LOGGER.info("Before Shift : " + i + "---" + Arrays.deepToString(stateArray));
             stateArray = shiftRowsLeft(stateArray);
             if (i < NUMBER_ROUNDS) {
                 stateArray = mixColumns(stateArray);
@@ -262,6 +263,19 @@ public class AES {
         }
     }
 
+    public static String decrypt(int[][] state) {
+        // Lets do the inverse
+
+        int[][] lastRoundKey = addRoundKey(state, KEY);
+        LOGGER.info("Before Last Round: " + Arrays.deepToString(lastRoundKey));
+
+
+        int[][] newState = shiftRowsRight(lastRoundKey);
+        LOGGER.info("Before final shift: " + Arrays.deepToString(newState));
+
+        return "";
+    }
+
     public static void main(String[] args) {
 
         // Test row shifting
@@ -360,6 +374,9 @@ public class AES {
             test = args[0];
         }
         String ciphertext = encrypt(test);
-//        assert (plaintext.equals(test));
+        //Hardcoded new state to be removed
+        int[][] newState = {{60, 240, 53, 72}, {205, 131, 2, 240}, {74, 165, 2, 6}, {15, 132, 142, 85}};
+        String plaintext = decrypt(newState);
+        //        assert (plaintext.equals(test));
     }
 }
