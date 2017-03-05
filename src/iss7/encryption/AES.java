@@ -54,11 +54,10 @@ public class AES {
     private AES() {
     }
 
-
     public static String encrypt(String plaintext) {
         LOGGER.info("Entered plaintext: |" + plaintext + "|");
         byte[] bytes = plaintext.getBytes();
-        LOGGER.info("Plaintext as hex: " + Arrays.toString(bytes));
+        LOGGER.info("Plaintext as ASCII values: " + Arrays.toString(bytes));
 
         int[][] stateArray = new int[4][4];
         for (int i = 0; i < 4; i++) {
@@ -70,12 +69,12 @@ public class AES {
 
         for (int i = 0; i < NUMBER_ROUNDS; i++) {
             LOGGER.info("Beginning round: " + (i + 1));
-            substituteBytes(stateArray);
-            shiftRowsLeft(stateArray);
+            stateArray = substituteBytes(stateArray);
+            stateArray = shiftRowsLeft(stateArray);
             if (i != NUMBER_ROUNDS - 1) {
                 stateArray = mixColumns(stateArray);
             }
-            addRoundKey(stateArray);
+            stateArray = addRoundKey(stateArray);
         }
 
         LOGGER.info("Encryption finished!");
@@ -84,38 +83,37 @@ public class AES {
         return "";
     }
 
-    private static void substituteBytes(int[][] state) {
+    private static int[][] substituteBytes(int[][] state) {
+        int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
                 // Use masks of F0 and 0F to separate row/column values
                 int row = (state[i][j] & LEFT_MASK) / 16;
                 int column = (state[i][j] & RIGHT_MASK);
-                state[i][j] = S_BOX[row][column];
+                newState[i][j] = S_BOX[row][column];
             }
         }
-
+        return newState;
     }
 
-    private static void shiftRowsLeft(int[][] state) {
+    private static int[][] shiftRowsLeft(int[][] state) {
+        int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
-            shiftRowLeft(state[i], i);
+            newState[i] = shiftRowLeft(state[i], i);
         }
+        return newState;
 
     }
 
-    private static void shiftRowLeft(int[] state, int shiftAmount) {
-        for (int i = 0; i < shiftAmount; i++) {
-            for (int j = 0; j < state.length - 1; j++) {
-                int tmp = state[j];
-                state[j] = state[j + 1];
-                state[j + 1] = tmp;
-            }
+    private static int[] shiftRowLeft(int[] row, int shiftAmount) {
+        int[] newRow = new int[row.length];
+        for (int i = 0; i < row.length; i++) {
+            newRow[i] = row[(i + shiftAmount) % row.length];
         }
+        return newRow;
     }
 
     private static int[][] mixColumns(int[][] state) {
-        // Don't think you can change state until all values have been set, so create
-        // a temporary copy array
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
@@ -160,16 +158,18 @@ public class AES {
         }
     }
 
-    private static void addRoundKey(int[][] state) {
-        addRoundKey(state, KEY);
+    private static int[][] addRoundKey(int[][] state) {
+        return addRoundKey(state, KEY);
     }
 
-    private static void addRoundKey(int[][] state, int[][] key) {
+    private static int[][] addRoundKey(int[][] state, int[][] key) {
+        int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
-                state[j][i] = state[j][i] ^ key[j][i];
+                newState[j][i] = state[j][i] ^ key[j][i];
             }
         }
+        return newState;
     }
 
     public static String decrypt(String ciphertext) {
@@ -180,8 +180,12 @@ public class AES {
 
         // Test row shifting
         int[] testRow = {0, 1, 2, 3};
-        shiftRowLeft(testRow, 2);
-        assert (Arrays.equals(testRow, new int[]{2, 3, 0, 1}));
+        int[] resultRow = shiftRowLeft(testRow, 2);
+        assert (Arrays.equals(resultRow, new int[]{2, 3, 0, 1}));
+
+        int[] testRow2 = {0, 1, 2, 3};
+        int[] resultRow2 = shiftRowLeft(testRow2, 3);
+        assert (Arrays.equals(resultRow2, new int[]{3, 0, 1, 2}));
 
         int[][] testShiftRows = new int[][]{
                 {0, 1, 2, 3},
@@ -195,8 +199,8 @@ public class AES {
                 {2, 3, 0, 1},
                 {3, 0, 1, 2}
         };
-        shiftRowsLeft(testShiftRows);
-        assert (Arrays.deepEquals(testShiftRows, expectedShiftRows));
+        int[][] resultShiftRows = shiftRowsLeft(testShiftRows);
+        assert (Arrays.deepEquals(resultShiftRows, expectedShiftRows));
 
 
         // Test mixColumnValues
@@ -239,8 +243,8 @@ public class AES {
                 {0x7f, 0x35, 0xea, 0x50},
                 {0xf2, 0x2b, 0x43, 0x49}
         };
-        addRoundKey(expectedMixColumns, testKey);
-        assert (Arrays.deepEquals(expectedMixColumns, expectedKeyResult));
+        int[][] keyResult = addRoundKey(expectedMixColumns, testKey);
+        assert (Arrays.deepEquals(keyResult, expectedKeyResult));
 
 
         String test;
