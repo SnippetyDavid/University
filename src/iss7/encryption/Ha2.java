@@ -7,6 +7,7 @@ public class Ha2 {
 
     private final static Logger LOGGER = Logger.getLogger(Ha2.class.getName());
 
+    private final static int IV = 76;
 
     public static int[] encrypt(String plaintext, int iv){
         int[] converted = convertToNum(plaintext);
@@ -34,10 +35,7 @@ public class Ha2 {
     }
 
     private static int addChainingValue(int AB, int msgblock){
-        int newValue = AB + msgblock;
-        newValue = newValue % 100;
-
-        return newValue;
+        return (AB + msgblock) % 100;
     }
 
     private static int multiplyChainingValue(int cValue){
@@ -49,8 +47,7 @@ public class Ha2 {
         digitString = Integer.toString(digits);
         digitString = new StringBuffer(digitString).reverse().toString();
 
-        digits =  Integer.parseInt(digitString);
-        return digits;
+        return Integer.parseInt(digitString);
     }
 
     private static int addInitialToNew(int iv, int newValue){
@@ -59,11 +56,37 @@ public class Ha2 {
 
     public static void main(String[] args) {
 
-        //Harcoded IV for now to one used in lecture slides
-        int iv = 76;
-        String plaintext = "markfrequency";
+        //Testing conversing to number corresponding to letters
+        String testText = "hi";
+        int[] convertResult = convertToNum(testText);
+        assert (Arrays.equals(convertResult, new int[]{7,8}));
 
-        encrypt(plaintext, iv);
+        //Testing add chaining value
+        int initial = 12;
+        assert (addChainingValue(initial, IV) == 88);
+
+        //Testing multiplication method
+        int testInt = 7;
+        int multiplyResult = multiplyChainingValue(testInt);
+        assert (multiplyResult == 49);
+
+        //Testing reversal
+        int value = 123;
+        int reversed = reverseDigits(value);
+        assert (reversed == 321);
+
+        //Testing add of initial value to new result
+        int newValue = 107;
+        assert (addInitialToNew(IV, newValue) == 83);
+
+        //Testing entire method with plaintext 'ha'
+        String plain = "ha";
+        int[] finalResult = encrypt(plain, IV);
+        assert (Arrays.equals(finalResult, new int[]{94,99}));
+
+        //Running actual encryption
+        String plaintext = "markfrequency";
+        encrypt(plaintext, IV);
 
     }
 
