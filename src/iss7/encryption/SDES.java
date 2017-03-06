@@ -151,7 +151,7 @@ public class SDES {
 	 * @param bits The bits to be S-Box transformed
 	 * @return Transformed bit String
 	 */
-	private static String sBOXTransform(int[][] sBox, String bits){
+	private static String sBoxTransform(int[][] sBox, String bits){
 		
 		assert(bits.length() == 4);
 		StringBuilder sb = new StringBuilder();
@@ -237,8 +237,8 @@ public class SDES {
 		//sBox transforms
 		fLeft = fResult.substring(0, 4);
 		fRight = fResult.substring(4, 8);
-		fLeft = sBOXTransform(S_BOX_0,fLeft);		
-		fRight = sBOXTransform(S_BOX_1,fRight);
+		fLeft = sBoxTransform(S_BOX_0,fLeft);		
+		fRight = sBoxTransform(S_BOX_1,fRight);
 		fResult = fLeft + fRight;
 		
 		//P4 Transform
