@@ -85,16 +85,17 @@ public class AES {
     private static int[][] encrypt(int[][] stateArray) {
 
         int[][] key = KEY;
+        stateArray = addRoundKey(stateArray, key);
 
         for (int i = 1; i <= NUMBER_ROUNDS; i++) {
             LOGGER.info("Beginning round: " + (i));
+            key = keyExpansion(key, i);
             stateArray = substituteBytes(stateArray);
             stateArray = shiftRowsLeft(stateArray);
-            if (i != NUMBER_ROUNDS) {
+            if (i < NUMBER_ROUNDS) {
                 stateArray = mixColumns(stateArray);
             }
-            stateArray = addRoundKey(stateArray);
-            key = keyExpansion(key, i);
+            stateArray = addRoundKey(stateArray, key);
         }
 
         LOGGER.info("Encryption finished!");
@@ -118,7 +119,6 @@ public class AES {
 
     private static void subWord(int[] targetRow) {
         for (int i = 0; i < targetRow.length; i++) {
-            // Use masks of F0 and 0F to separate row/column values
             int rowIndex = (targetRow[i] & LEFT_MASK) / 16;
             int columnIndex = (targetRow[i] & RIGHT_MASK);
             targetRow[i] = S_BOX[rowIndex][columnIndex];
@@ -207,10 +207,6 @@ public class AES {
         }
     }
 
-    private static int[][] addRoundKey(int[][] state) {
-        return addRoundKey(state, KEY);
-    }
-
     private static int[][] addRoundKey(int[][] state, int[][] key) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
@@ -221,36 +217,53 @@ public class AES {
         return newState;
     }
 
-    private static int[][] keyExpansion(int[][] state, int numRounds) {
-        int[][] newState = new int[state.length][state[0].length];
-        for (int i = 0; i < state.length; i++) {
-            newState[i] = Arrays.copyOf(state[i], state[i].length);
+    private static int[][] keyExpansion(int[][] key, int numRounds) {
+        int[][] newKey = new int[key.length][key[0].length];
+        for (int i = 0; i < key.length; i++) {
+            newKey[i] = Arrays.copyOf(key[i], key[i].length);
         }
 
-        int rcon = (int) Math.pow(2, numRounds - 1);
-        if (rcon > 255)
-            rcon = rcon ^ 0x1b;
+        int rcon;
+        if (numRounds < 9)
+            rcon = 1 << (numRounds - 1);
+        else {
+            rcon = 1 << 8;
+            for (int i = 8; i < numRounds; i++) {
+                rcon = rcon << 1;
+                if (rcon > 255)
+                    rcon = rcon & 0xFF ^ 0x1b;
+            }
+        }
 
-        int[] temp = columnToArray(state, 3);
+        int[] temp = columnToArray(key, 3);
 
-        for (int i = 0; i < newState.length; i++) {
+        for (int i = 0; i < newKey.length; i++) {
             if (i == 0) {
                 temp = shiftRowLeft(temp, 1); // rotWord
                 subWord(temp);
                 temp[0] = temp[0] ^ rcon;
             }
 
-            int[] last = columnToArray(state, i);
-            for (int j = 0; j < state[i].length; j++) {
+            int[] last = columnToArray(key, i);
+            for (int j = 0; j < key[i].length; j++) {
                 temp[j] = temp[j] ^ last[j];
-                newState[j][i] = temp[j];
+                newKey[j][i] = temp[j];
             }
         }
 
-        return newState;
+        return newKey;
 
     }
 
+    private static void printMatrixAsHex(String name, int[][] state) {
+        System.out.println(name + ": ");
+        for (int[] i : state) {
+            for (int j : i) {
+                System.out.print(Integer.toHexString(j) + " ");
+            }
+            System.out.print("\n");
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -340,7 +353,6 @@ public class AES {
         };
 
         int[][] resultEncryptOutput = encrypt(testEncrypt);
-        System.out.println(Arrays.deepToString(expectedEncryptOutput));
         assert (Arrays.deepEquals(resultEncryptOutput, expectedEncryptOutput));
 
         String test;
