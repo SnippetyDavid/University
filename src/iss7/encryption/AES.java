@@ -162,11 +162,8 @@ public class AES {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
-                // 'Rotating' the column like this seemed to remove mental
-                // overhead
-                // Plus less index juggling
-                int[] targetColumn = columnToArray(state, j);
-                newState[i][j] = multiplyRowByColumn(MCT[i], targetColumn);
+                // 'Rotating' the column to remove mental overhead
+                newState[i][j] = multiplyRowByColumn(MCT[i], columnToArray(state, j));
             }
         }
         return newState;
