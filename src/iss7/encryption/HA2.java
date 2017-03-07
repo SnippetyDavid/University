@@ -3,9 +3,9 @@ package encryption;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-public class Ha2 {
+public class HA2 {
 
-    private final static Logger LOGGER = Logger.getLogger(Ha2.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(HA2.class.getName());
 
     private final static int IV = 76;
 
