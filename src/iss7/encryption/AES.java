@@ -90,12 +90,16 @@ public class AES {
         for (int i = 1; i <= NUMBER_ROUNDS; i++) {
             LOGGER.info("Beginning round: " + (i));
             key = keyExpansion(key, i);
+            LOGGER.info("Before sub : " + i + "---" + Arrays.deepToString(stateArray));
             stateArray = substituteBytes(stateArray);
             LOGGER.info("Before Shift : " + i + "---" + Arrays.deepToString(stateArray));
             stateArray = shiftRowsLeft(stateArray);
             if (i < NUMBER_ROUNDS) {
+                LOGGER.info("Before mix at round: " + i + "--" + Arrays.deepToString(stateArray));
                 stateArray = mixColumns(stateArray);
             }
+            LOGGER.info("Before Round : " + i + "---" + Arrays.deepToString(stateArray));
+
             stateArray = addRoundKey(stateArray, key);
         }
 
@@ -113,6 +117,33 @@ public class AES {
                 int row = (state[i][j] & LEFT_MASK) / 16;
                 int column = (state[i][j] & RIGHT_MASK);
                 newState[i][j] = S_BOX[row][column];
+            }
+        }
+        return newState;
+    }
+
+    private static int[][] reverseSubstitution(int[][] state){
+        int[][] newState = new int[state.length][state[0].length];
+        for (int i = 0; i < state.length; i++) {
+            for (int j = 0; j < state[i].length; j++){
+                //find the index of the element
+                int value = state[i][j];
+                //System.out.println(value);
+
+                for(int k = 0; k < S_BOX.length; k++){
+                    for(int l = 0; l < S_BOX.length; l++){
+                        if(S_BOX[k][l] == value){
+
+                            int first = k;
+                            int second = (l);
+
+                            String test =Integer.toHexString(first) + Integer.toHexString(second);
+                            System.out.println(test);
+                            newState[i][j] = Integer.parseInt(test,16) ;
+                        }
+                    }
+                }
+
             }
         }
         return newState;
@@ -265,13 +296,27 @@ public class AES {
 
     public static String decrypt(int[][] state) {
         // Lets do the inverse
-
-        int[][] lastRoundKey = addRoundKey(state, KEY);
+        int[][] key = KEY;
+        int[][][] allKeys = new int[10][4][4];
+        //Getting and storing all keys to be accessed later
+        for (int i = 1; i <= NUMBER_ROUNDS; i++) {
+           key=keyExpansion(key, i);
+           allKeys[i-1] = key;
+        }
+        int[][] lastRoundKey = addRoundKey(state, allKeys[9]);
         LOGGER.info("Before Last Round: " + Arrays.deepToString(lastRoundKey));
-
 
         int[][] newState = shiftRowsRight(lastRoundKey);
         LOGGER.info("Before final shift: " + Arrays.deepToString(newState));
+
+        int[][] bSubState = reverseSubstitution(newState);
+        LOGGER.info("Before sub : " + Arrays.deepToString(bSubState));
+
+        for(int i = NUMBER_ROUNDS - 2; i>0; i--){
+            int[][] round = addRoundKey(bSubState, allKeys[i]);
+            LOGGER.info("Before  Round : " + (i+1)+ "---" + Arrays.deepToString(round));
+
+        }
 
         return "";
     }
@@ -375,7 +420,7 @@ public class AES {
         }
         String ciphertext = encrypt(test);
         //Hardcoded new state to be removed
-        int[][] newState = {{60, 240, 53, 72}, {205, 131, 2, 240}, {74, 165, 2, 6}, {15, 132, 142, 85}};
+        int[][] newState = {{64, 38, 178, 31}, {56, 0, 56, 192}, {123, 179, 12, 195}, {179, 90, 70, 114}};
         String plaintext = decrypt(newState);
         //        assert (plaintext.equals(test));
     }
