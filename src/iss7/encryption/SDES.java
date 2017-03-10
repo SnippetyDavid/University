@@ -84,9 +84,7 @@ public class SDES {
 		//KEY 2
 		key2 = shiftLeft(3,p10Transformed);
 		key2 = permutation(P8,key2);
-		System.out.println("key1: " + key1);
-		System.out.println("Key2: " + key2);
-		
+
 		return new KeyWrapper(key1,key2);
 	}
 	
@@ -149,7 +147,6 @@ public class SDES {
 		char temp;
 		for(int x = 0; x < cBinary.length; x+=7){
 			cBinary[x] = ciphertext.substring(0, 8);
-			System.out.println("Binary 8: " + cBinary[x]);
 		}
 		for(int x = 0; x < cBinary.length; x++){
 			//IP
@@ -270,11 +267,9 @@ public class SDES {
 		
 		//EP on right bits
 		fResult = permutation(EP,rightBits);
-		System.out.println("after ep: " + fResult);
 		
 		//XOR Key + EP Transformed right bits
 		fResult = xor(fResult,key);
-		System.out.println("After XOR: " + fResult);
 		
 		//sBox transforms
 		fLeft = fResult.substring(0, 4);
@@ -282,23 +277,24 @@ public class SDES {
 		fLeft = sBoxTransform(S_BOX_0,fLeft);		
 		fRight = sBoxTransform(S_BOX_1,fRight);
 		fResult = fLeft + fRight;
-		System.out.println("After SBox: " + fResult);
 		
 		//P4 Transform
 		fResult = permutation(P4,fResult);
-		System.out.println("After P4: " + fResult);
 		
 		//XOR with Left bits + FResult
 		return xor(leftBits,fResult) + rightBits;
 	}
 	
 	public static void main(String[] args) {
+		String plaintext = "T";
 		String testAns = "10001111";
-		String cipher = (encrypt("T"));
+		String cipher = (encrypt(plaintext));
 		System.out.println(cipher);
-		assert(testAns.equals(cipher));
 		String decryptedText = decrypt(cipher);
 		System.out.println("plaintext: " + decryptedText);
+		
+		assert(testAns.equals(cipher));
+		assert(decryptedText.equals(plaintext));
 		
 		
 		
