@@ -84,6 +84,8 @@ public class SDES {
 		//KEY 2
 		key2 = shiftLeft(3,p10Transformed);
 		key2 = permutation(P8,key2);
+		System.out.println("key1: " + key1);
+		System.out.println("Key2: " + key2);
 		
 		return new KeyWrapper(key1,key2);
 	}
@@ -128,6 +130,44 @@ public class SDES {
 			sbCipher.append(binary[x]);
 		}
 		return sbCipher.toString();
+	}
+	
+	/**
+	 * This method first call "GenerateKeys" to retrieve required keys for encryption
+	 * The ciphertext is broken down into groups of 8 and stored in an array
+	 * Each element in the binary array is then modified by IP Permutation, FFunction with Key 2,
+	 * the first four and last four bits are then swapped, put through the FFunction with Key 1
+	 * and then Inverse Permutation is applied.
+	 * The binary representation is converted to ASCII then added to the string builder
+	 * @param ciphertext String to be decrypted
+	 * @return The plaintext
+	 */
+	public static String decrypt(String ciphertext){
+		String[] cBinary = new String[ciphertext.length()/8];
+		KeyWrapper keys = generateKeys();
+		StringBuilder sbPlaintext = new StringBuilder();
+		char temp;
+		for(int x = 0; x < cBinary.length; x+=7){
+			cBinary[x] = ciphertext.substring(0, 8);
+			System.out.println("Binary 8: " + cBinary[x]);
+		}
+		for(int x = 0; x < cBinary.length; x++){
+			//IP
+			cBinary[x] = permutation(IP,cBinary[x]);
+			//F with Key 2
+			cBinary[x] = fFunction(cBinary[x], keys.key2);
+			//Swap
+			cBinary[x] = swap8(cBinary[x]);
+			//F with Key 1
+			cBinary[x] = fFunction(cBinary[x], keys.key1);
+			//Inverse P
+			cBinary[x] = permutation(INVERSE_P,cBinary[x]);
+			//convert to Ascii
+			temp = (char)Integer.parseInt(cBinary[x],2);
+			//Convert to text
+			sbPlaintext.append(temp);
+		}
+		return sbPlaintext.toString();
 	}
 	
 	/**
@@ -230,9 +270,11 @@ public class SDES {
 		
 		//EP on right bits
 		fResult = permutation(EP,rightBits);
+		System.out.println("after ep: " + fResult);
 		
 		//XOR Key + EP Transformed right bits
 		fResult = xor(fResult,key);
+		System.out.println("After XOR: " + fResult);
 		
 		//sBox transforms
 		fLeft = fResult.substring(0, 4);
@@ -240,9 +282,11 @@ public class SDES {
 		fLeft = sBoxTransform(S_BOX_0,fLeft);		
 		fRight = sBoxTransform(S_BOX_1,fRight);
 		fResult = fLeft + fRight;
+		System.out.println("After SBox: " + fResult);
 		
 		//P4 Transform
 		fResult = permutation(P4,fResult);
+		System.out.println("After P4: " + fResult);
 		
 		//XOR with Left bits + FResult
 		return xor(leftBits,fResult) + rightBits;
@@ -253,6 +297,10 @@ public class SDES {
 		String cipher = (encrypt("T"));
 		System.out.println(cipher);
 		assert(testAns.equals(cipher));
+		String decryptedText = decrypt(cipher);
+		System.out.println("plaintext: " + decryptedText);
+		
+		
 		
 	}
 }
