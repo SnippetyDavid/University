@@ -145,9 +145,12 @@ public class SDES {
 		KeyWrapper keys = generateKeys();
 		StringBuilder sbPlaintext = new StringBuilder();
 		char temp;
-		for(int x = 0; x < cBinary.length; x+=7){
-			cBinary[x] = ciphertext.substring(0, 8);
+		int y = 0;
+		for(int x = 0; x < cBinary.length; x++){
+			cBinary[x] = ciphertext.substring(y, y+8);
+			y +=8;
 		}
+		
 		for(int x = 0; x < cBinary.length; x++){
 			//IP
 			cBinary[x] = permutation(IP,cBinary[x]);
@@ -292,9 +295,17 @@ public class SDES {
 		System.out.println(cipher);
 		String decryptedText = decrypt(cipher);
 		System.out.println("plaintext: " + decryptedText);
-		
 		assert(testAns.equals(cipher));
 		assert(decryptedText.equals(plaintext));
+		
+		plaintext = "markfrequency";
+		cipher = encrypt(plaintext);
+		System.out.println("Ciphertext: " + cipher);
+		decryptedText = decrypt(cipher);
+		System.out.println("Decrypted: " + decryptedText);
+		
+		
+		
 		
 		
 		
