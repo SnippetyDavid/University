@@ -58,7 +58,6 @@ public class AES {
         LOGGER.info("Entered plaintext: |" + plaintext + "|");
         byte[] bytes = plaintext.getBytes();
         LOGGER.info("Plaintext as ASCII values: " + Arrays.toString(bytes));
-
         int[][] stateArray = new int[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -67,20 +66,42 @@ public class AES {
         }
         LOGGER.info("Plaintext as block: " + Arrays.deepToString(stateArray));
 
-        for (int i = 0; i < NUMBER_ROUNDS; i++) {
-            LOGGER.info("Beginning round: " + (i + 1));
+        encrypt(stateArray);
+
+        byte[] resultBytes = new byte[bytes.length];
+        for (int i = 0; i < stateArray.length; i++) {
+            for (int j = 0; j < stateArray[i].length; j++) {
+                resultBytes[4 * i + j] = (byte) stateArray[i][j];
+            }
+        }
+
+        String ciphertext = new String(resultBytes);
+
+        LOGGER.info("Encrypted text: " + ciphertext);
+
+        return ciphertext;
+    }
+
+    private static int[][] encrypt(int[][] stateArray) {
+
+        int[][] key = KEY;
+        stateArray = addRoundKey(stateArray, key);
+
+        for (int i = 1; i <= NUMBER_ROUNDS; i++) {
+            LOGGER.info("Beginning round: " + (i));
+            key = keyExpansion(key, i);
             stateArray = substituteBytes(stateArray);
             stateArray = shiftRowsLeft(stateArray);
-            if (i != NUMBER_ROUNDS - 1) {
+            if (i < NUMBER_ROUNDS) {
                 stateArray = mixColumns(stateArray);
             }
-            stateArray = addRoundKey(stateArray);
+            stateArray = addRoundKey(stateArray, key);
         }
 
         LOGGER.info("Encryption finished!");
-        LOGGER.info("Produced ciphertext: ");
+        LOGGER.info("Produced ciphertext as block: " + Arrays.deepToString(stateArray));
 
-        return "";
+        return stateArray;
     }
 
     private static int[][] substituteBytes(int[][] state) {
@@ -94,6 +115,14 @@ public class AES {
             }
         }
         return newState;
+    }
+
+    private static void subWord(int[] targetRow) {
+        for (int i = 0; i < targetRow.length; i++) {
+            int rowIndex = (targetRow[i] & LEFT_MASK) / 16;
+            int columnIndex = (targetRow[i] & RIGHT_MASK);
+            targetRow[i] = S_BOX[rowIndex][columnIndex];
+        }
     }
 
     private static int[][] shiftRowsLeft(int[][] state) {
@@ -113,20 +142,36 @@ public class AES {
         return newRow;
     }
 
+    private static int[][] shiftRowsRight(int[][] state) {
+        int[][] newState = new int[state.length][state[0].length];
+        for (int i = newState.length - 1; i >= 0; i--) {
+            newState[i] = shiftRowRight(state[i], newState.length - i);
+        }
+        return newState;
+    }
+
+    private static int[] shiftRowRight(int[] row, int shiftAmount) {
+        int[] newRow = new int[row.length];
+        for (int i = newRow.length - 1; i >= 0; i--) {
+            newRow[i] = row[(i + shiftAmount) % row.length];
+        }
+        return newRow;
+    }
+
     private static int[][] mixColumns(int[][] state) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
-                // 'Rotating' the column like this seemed to remove mental overhead
-                // Plus less index juggling
-                int[] targetColumn = {
-                        state[0][j], state[1][j], state[2][j], state[3][j]
-                };
-                newState[i][j] = multiplyRowByColumn(MCT[i], targetColumn);
+                // 'Rotating' the column to remove mental overhead
+                newState[i][j] = multiplyRowByColumn(MCT[i], columnToArray(state, j));
             }
         }
         return newState;
 
+    }
+
+    private static int[] columnToArray(int[][] state, int j) {
+        return new int[]{state[0][j], state[1][j], state[2][j], state[3][j]};
     }
 
     private static int multiplyRowByColumn(String[] row, int[] column) {
@@ -142,7 +187,8 @@ public class AES {
             return stateValue;
         } else {
             int returnValue;
-            // Seemed easier to use substrings here, I'm open to suggestions though
+            // Seemed easier to use substrings here, I'm open to suggestions
+            // though
             String asBinary = Integer.toBinaryString(stateValue);
             String paddedBinary = "00000000".substring(asBinary.length()) + asBinary;
             String shifted = paddedBinary.substring(1) + "0";
@@ -158,10 +204,6 @@ public class AES {
         }
     }
 
-    private static int[][] addRoundKey(int[][] state) {
-        return addRoundKey(state, KEY);
-    }
-
     private static int[][] addRoundKey(int[][] state, int[][] key) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
@@ -172,8 +214,52 @@ public class AES {
         return newState;
     }
 
-    public static String decrypt(String ciphertext) {
-        return "";
+    private static int[][] keyExpansion(int[][] key, int numRounds) {
+        int[][] newKey = new int[key.length][key[0].length];
+        for (int i = 0; i < key.length; i++) {
+            newKey[i] = Arrays.copyOf(key[i], key[i].length);
+        }
+
+        int rcon;
+        if (numRounds < 9)
+            rcon = 1 << (numRounds - 1);
+        else {
+            rcon = 1 << 8;
+            for (int i = 8; i < numRounds; i++) {
+                rcon = rcon << 1;
+                if (rcon > 255)
+                    rcon = rcon & 0xFF ^ 0x1b;
+            }
+        }
+
+        int[] temp = columnToArray(key, 3);
+
+        for (int i = 0; i < newKey.length; i++) {
+            if (i == 0) {
+                temp = shiftRowLeft(temp, 1); // rotWord
+                subWord(temp);
+                temp[0] = temp[0] ^ rcon;
+            }
+
+            int[] last = columnToArray(key, i);
+            for (int j = 0; j < key[i].length; j++) {
+                temp[j] = temp[j] ^ last[j];
+                newKey[j][i] = temp[j];
+            }
+        }
+
+        return newKey;
+
+    }
+
+    private static void printMatrixAsHex(String name, int[][] state) {
+        System.out.println(name + ": ");
+        for (int[] i : state) {
+            for (int j : i) {
+                System.out.print(Integer.toHexString(j) + " ");
+            }
+            System.out.print("\n");
+        }
     }
 
     public static void main(String[] args) {
@@ -243,9 +329,28 @@ public class AES {
                 {0x7f, 0x35, 0xea, 0x50},
                 {0xf2, 0x2b, 0x43, 0x49}
         };
-        int[][] keyResult = addRoundKey(expectedMixColumns, testKey);
-        assert (Arrays.deepEquals(keyResult, expectedKeyResult));
+        int[][] addRoundKeyResult = addRoundKey(expectedMixColumns, testKey);
+        assert (Arrays.deepEquals(addRoundKeyResult, expectedKeyResult));
 
+        int[][] testKeyExpansion = keyExpansion(KEY, 1);
+        assert (Arrays.deepEquals(testKeyExpansion, testKey));
+
+        int[][] testEncrypt = {
+                {0x32, 0x88, 0x31, 0xe0},
+                {0x43, 0x5a, 0x31, 0x37},
+                {0xF6, 0x30, 0x98, 0x07},
+                {0xA8, 0x8d, 0xa2, 0x34}
+        };
+
+        int[][] expectedEncryptOutput = {
+                {0x39, 0x02, 0xdc, 0x19},
+                {0x25, 0xdc, 0x11, 0x6a},
+                {0x84, 0x09, 0x85, 0x0b},
+                {0x1d, 0xfb, 0x97, 0x32}
+        };
+
+        int[][] resultEncryptOutput = encrypt(testEncrypt);
+        assert (Arrays.deepEquals(resultEncryptOutput, expectedEncryptOutput));
 
         String test;
         if (args.length == 0) {
@@ -255,7 +360,6 @@ public class AES {
             test = args[0];
         }
         String ciphertext = encrypt(test);
-        String plaintext = decrypt(ciphertext);
 //        assert (plaintext.equals(test));
     }
 }
