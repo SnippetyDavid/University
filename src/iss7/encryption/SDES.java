@@ -84,7 +84,7 @@ public class SDES {
 		//KEY 2
 		key2 = shiftLeft(3,p10Transformed);
 		key2 = permutation(P8,key2);
-		
+
 		return new KeyWrapper(key1,key2);
 	}
 	
@@ -128,6 +128,46 @@ public class SDES {
 			sbCipher.append(binary[x]);
 		}
 		return sbCipher.toString();
+	}
+	
+	/**
+	 * This method first call "GenerateKeys" to retrieve required keys for encryption
+	 * The ciphertext is broken down into groups of 8 and stored in an array
+	 * Each element in the binary array is then modified by IP Permutation, FFunction with Key 2,
+	 * the first four and last four bits are then swapped, put through the FFunction with Key 1
+	 * and then Inverse Permutation is applied.
+	 * The binary representation is converted to ASCII then added to the string builder
+	 * @param ciphertext String to be decrypted
+	 * @return The plaintext
+	 */
+	public static String decrypt(String ciphertext){
+		String[] cBinary = new String[ciphertext.length()/8];
+		KeyWrapper keys = generateKeys();
+		StringBuilder sbPlaintext = new StringBuilder();
+		char temp;
+		int y = 0;
+		for(int x = 0; x < cBinary.length; x++){
+			cBinary[x] = ciphertext.substring(y, y+8);
+			y +=8;
+		}
+		
+		for(int x = 0; x < cBinary.length; x++){
+			//IP
+			cBinary[x] = permutation(IP,cBinary[x]);
+			//F with Key 2
+			cBinary[x] = fFunction(cBinary[x], keys.key2);
+			//Swap
+			cBinary[x] = swap8(cBinary[x]);
+			//F with Key 1
+			cBinary[x] = fFunction(cBinary[x], keys.key1);
+			//Inverse P
+			cBinary[x] = permutation(INVERSE_P,cBinary[x]);
+			//convert to Ascii
+			temp = (char)Integer.parseInt(cBinary[x],2);
+			//Convert to text
+			sbPlaintext.append(temp);
+		}
+		return sbPlaintext.toString();
 	}
 	
 	/**
@@ -249,10 +289,25 @@ public class SDES {
 	}
 	
 	public static void main(String[] args) {
+		String plaintext = "T";
 		String testAns = "10001111";
-		String cipher = (encrypt("T"));
+		String cipher = (encrypt(plaintext));
 		System.out.println(cipher);
+		String decryptedText = decrypt(cipher);
+		System.out.println("plaintext: " + decryptedText);
 		assert(testAns.equals(cipher));
+		assert(decryptedText.equals(plaintext));
+		
+		plaintext = "markfrequency";
+		cipher = encrypt(plaintext);
+		System.out.println("Ciphertext: " + cipher);
+		decryptedText = decrypt(cipher);
+		System.out.println("Decrypted: " + decryptedText);
+		
+		
+		
+		
+		
 		
 	}
 }
