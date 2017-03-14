@@ -1,3 +1,4 @@
+package encryption;
 
 public class SDES {
 	
