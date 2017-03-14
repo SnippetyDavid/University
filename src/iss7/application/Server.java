@@ -1,3 +1,4 @@
+package application;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -13,7 +14,8 @@ import java.net.Socket;
  * Adapted from CSC2008 Practical 6
  */
 public class Server extends JFrame {
-    private JTextArea outputArea;
+	private static final long serialVersionUID = 1074059196587915117L;
+	private JTextArea outputArea;
     private ServerSocket serverSocket;
 
     public Server() {

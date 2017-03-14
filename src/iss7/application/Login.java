@@ -1,21 +1,33 @@
-import javax.swing.*;
-import java.awt.*;
+package application;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 /**
  * Class to act as Client in remote server logon application for CSC3048 Assignment.
  * Adapted from CSC2008 Practical 6
  */
-public class Client extends JFrame {
-    private Container c;
+public class Login extends JFrame {
+ 	private static final long serialVersionUID = 4145505152156364910L;
+	private Container c;
     private JButton logonButton;
     private JPanel logonFieldsPanel;
     private JPanel logonButtonPanel;
@@ -27,15 +39,8 @@ public class Client extends JFrame {
     private ObjectInputStream clientInputStream;
     private ObjectOutputStream clientOutputStream;
 
-    public Client() {
-        super("Client");
-        addWindowListener
-                (new WindowAdapter() {
-                     public void windowClosing(WindowEvent e) {
-                         System.exit(0);
-                     }
-                 }
-                );
+    public Login() {
+        super("Login");
         c = getContentPane();
         c.setLayout(new BorderLayout());
 
@@ -60,12 +65,13 @@ public class Client extends JFrame {
         c.add(logonButtonPanel, BorderLayout.SOUTH);
 
         setSize(300, 125);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         setVisible(true);
     }
 
     public static void main(String args[]) {
-        Client gameClient = new Client();
+        Login gameClient = new Login();
         gameClient.getConnections();
     }
 
@@ -101,7 +107,7 @@ public class Client extends JFrame {
         setVisible(true);
     }
 
-    private void getConnections() {
+    void getConnections() {
         try {
             socket = new Socket(InetAddress.getLocalHost(), 6000);
             clientOutputStream = new ObjectOutputStream(socket.getOutputStream());
