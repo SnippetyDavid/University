@@ -1,8 +1,10 @@
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class RSA {
 
-    private static final String plaintext="abc";
+    private static final String plaintext="mark frequency";
     private static final int p = 41;
     private static final int q = 67;
     private static final int d = 83;
@@ -74,7 +76,8 @@ public class RSA {
         int[] cipher = new int[asciiPlaintext.length];
         String binaryE = Integer.toBinaryString(publicKey.partOne);
 
-        System.out.println(binaryE);
+        System.out.println("");
+        System.out.println("E("+publicKey.partOne+") as binary: " + binaryE);
 
         for(int j=0; j<asciiPlaintext.length; j++){
             int c = 1;
@@ -90,16 +93,19 @@ public class RSA {
         return cipher;
     }
 
-    private static double[] decrypt(Key privateKey, int[] ciphertext){
+    private static BigInteger[] decrypt(Key privateKey, int[] ciphertext){
 
-        double[] decrypted = new double[ciphertext.length];
-        double m;
+        BigInteger[] decrypted = new BigInteger[ciphertext.length];
+        BigInteger m;
 
         for(int i=0; i<ciphertext.length; i++){
-            m = Math.pow(ciphertext[i],privateKey.partOne);
-            m = m % privateKey.partTwo;
+            BigInteger cipher = BigInteger.valueOf(ciphertext[i]);
+            m = cipher.pow(privateKey.partOne);
+            m = m.remainder(BigInteger.valueOf(privateKey.partTwo));
             decrypted[i]=m;
         }
+
+
 
         return decrypted;
     }
@@ -113,36 +119,6 @@ public class RSA {
         return ascii;
     }
 
-    private static void EncDecB(Key publicKey, Key privateKey){
-        int asii=2; //B
-
-        String binaryE = Integer.toBinaryString(publicKey.partOne);
-        System.out.println(binaryE); //correct
-
-        int c = 1;
-        for (int i=0; i<binaryE.length(); i++){
-            char bitE = binaryE.charAt(i);
-            c = c * c;
-            c = c % publicKey.partTwo;
-            if (bitE=='1'){
-                c = (c*2)%publicKey.partTwo;
-            }
-        }
-
-        int cipher = c;
-        System.out.println("");
-        System.out.println(cipher);
-
-        double result;
-//        result = Math.pow(cipher,83);
-//        System.out.println(result);
-//        result = result%privateKey.partTwo;
-//        System.out.println(result);
-        result = Math.pow(14,31);
-        System.out.println(result);
-        result = result%133;
-        System.out.println(result);
-    }
 
     public static void main(String [] args){
 
@@ -151,18 +127,32 @@ public class RSA {
         Key privateKey = new Key(keyValues.d,keyValues.n);
         System.out.println("Public Key: <" + publicKey.partOne + "," + publicKey.partTwo + ">");
         System.out.println("Private Key: <" + privateKey.partOne + "," + privateKey.partTwo + ">");
+        System.out.println("");
 
-//        int[] asciiPlaintext = convertToNum(plaintext);
-//
-//        int[] ciphertext = encrypt(publicKey, asciiPlaintext);
-//
-//        double[] decrypted = decrypt(privateKey, ciphertext);
+        int[] asciiPlaintext = convertToNum(plaintext);
+        System.out.println("Plaintext: " + plaintext);
+        System.out.print("Plaintext in ASCII: ");
+        for(int i=0; i<asciiPlaintext.length; i++){
+            System.out.print(asciiPlaintext[i]);
+            System.out.print(",");
+        }
 
-        //testing which is broke, enc or dec
-        EncDecB(publicKey, privateKey);
+        int[] ciphertext = encrypt(publicKey, asciiPlaintext);
+        System.out.println("");
+        System.out.println("Encrypted :");
+        for (int j=0; j<ciphertext.length; j++){
+            System.out.print(ciphertext[j]);
+            System.out.print(",");
+        }
 
-
-
+        BigInteger[] decrypted = decrypt(privateKey, ciphertext);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Decrypted :");
+        for (int k=0; k<decrypted.length; k++){
+            System.out.print(decrypted[k]);
+            System.out.print(",");
+        }
 
     }
 
