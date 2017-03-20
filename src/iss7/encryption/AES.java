@@ -231,7 +231,7 @@ public class AES {
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
                 // 'Rotating' the column to remove mental overhead
-                newState[i][j] = multiplyRowByColumn(MCT[i], columnToArray(state, j));
+                newState[i][j] = multiplyRowByColumn(transformation[i], columnToArray(state, j));
             }
         }
         return newState;
