@@ -9,16 +9,18 @@ public class HA2 {
 
     private final static int IV = 76;
 
-    public static int[] encrypt(String plaintext, int iv){
+    public static int encrypt(String plaintext, int iv){
         int[] converted = convertToNum(plaintext);
-        int[] hashed = new int[converted.length];
+        int hashed = 0;
         for(int i=0; i<plaintext.length(); i++){
-            hashed[i] = addChainingValue(iv, converted[i]);
-            hashed[i] = multiplyChainingValue(hashed[i]);
-            hashed[i] = reverseDigits(hashed[i]);
-            hashed[i] = addInitialToNew(iv, hashed[i]);
+            hashed = addChainingValue(iv, converted[i]);
+            hashed = multiplyChainingValue(hashed);
+            hashed = reverseDigits(hashed);
+            hashed = addInitialToNew(iv, hashed);
+
+            iv = hashed;
         }
-        LOGGER.info("Hashed: " + Arrays.toString(hashed));
+        LOGGER.info("End Hash Value: " + hashed);
 
         return hashed;
     }
@@ -81,13 +83,13 @@ public class HA2 {
 
         //Testing entire method with plaintext 'ha'
         String plain = "ha";
-        int[] finalResult = encrypt(plain, IV);
-        assert (Arrays.equals(finalResult, new int[]{94,99}));
+        int finalResult = encrypt(plain, IV);
+        assert (finalResult == 79);
 
         //Running actual encryption
         String plaintext = "markfrequency";
         encrypt(plaintext, IV);
-
+        System.out.println();
     }
 
 }
