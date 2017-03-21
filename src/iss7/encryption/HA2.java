@@ -30,7 +30,7 @@ public class HA2 {
        String alphabet = "abcdefghijklmnopqrstuvwxyz";
        int[] ascii = new int[message.length()];
        for (int i=0; i<message.length(); i++){
-           ascii[i] = (alphabet.indexOf(message.charAt(i)));
+           ascii[i] = (alphabet.indexOf(message.toLowerCase().charAt(i)));
            LOGGER.info("Char: " + ascii[i]);
        }
        return ascii;
@@ -85,6 +85,11 @@ public class HA2 {
         String plain = "ha";
         int finalResult = encrypt(plain, IV);
         assert (finalResult == 79);
+
+        // Second test string
+        String testTwo = "HellomynameIsAlice";
+        int resultTwo = encrypt(testTwo, IV);
+        assert(resultTwo == 52);
 
         //Running actual encryption
         String plaintext = "markfrequency";
