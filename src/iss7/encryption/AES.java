@@ -2,6 +2,7 @@ package encryption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.logging.Logger;
 
 public class AES {
@@ -84,26 +85,20 @@ public class AES {
     }
 
     public static String encrypt(String plaintext) {
-        LOGGER.info("Entered plaintext: |" + plaintext + "|");
-
-        int[][] stateArray = stringToBlock(plaintext);
-        LOGGER.info("Plaintext as block: " + Arrays.deepToString(stateArray));
-
+        int[][] stateArray = stringToBlock(plaintext, false);
         stateArray = encrypt(stateArray);
-        LOGGER.info("Ciphertext as block: " + Arrays.deepToString(stateArray));
-
-        String ciphertext = blockToString(stateArray);
-        LOGGER.info("Encrypted text: " + ciphertext);
-
+        String ciphertext = blockToString(stateArray, true);
         return ciphertext;
     }
 
     private static int[][] encrypt(int[][] stateArray) {
+        LOGGER.info("Starting AES encryption");
 
         int[][] key = KEY;
         stateArray = addRoundKey(stateArray, key);
 
         for (int i = 1; i <= NUMBER_ROUNDS; i++) {
+            LOGGER.info("Starting AES encryption round " + i);
             key = keyExpansion(key, i);
             stateArray = substituteBytes(stateArray);
             stateArray = shiftRowsLeft(stateArray);
@@ -112,25 +107,20 @@ public class AES {
             }
             stateArray = addRoundKey(stateArray, key);
         }
-
         LOGGER.info("Encryption finished!");
-        LOGGER.info("Produced ciphertext as block: " + Arrays.deepToString(stateArray));
 
         return stateArray;
     }
 
     public static String decrypt(String ciphertext) {
-        int[][] stateArray = stringToBlock(ciphertext);
-        printMatrixAsHex("Initial", stateArray);
-
+        int[][] stateArray = stringToBlock(ciphertext, true);
         stateArray = decrypt(stateArray);
-        printMatrixAsHex("Final", stateArray);
-
-        return blockToString(stateArray);
+        return blockToString(stateArray, false);
 
     }
 
     private static int[][] decrypt(int[][] state) {
+        LOGGER.info("Starting AES decryption");
         int[][] key = KEY;
         int[][][] allKeys = new int[10][4][4];
         int[][] newState;
@@ -151,7 +141,8 @@ public class AES {
         newState = shiftRowsRight(newState);
         newState = reverseSubBytes(newState);
         newState = addRoundKey(newState, KEY);
-        LOGGER.info("Final result: " + Arrays.deepToString(newState));
+        LOGGER.info("AES decryption finished");
+
 
         return newState;
     }
@@ -356,27 +347,32 @@ public class AES {
         }
     }
 
-    private static int[][] stringToBlock(String text) {
-        byte[] bytes = text.getBytes();
+    private static int[][] stringToBlock(String text, boolean decode) {
+        byte[] bytes;
+        if (decode)
+            bytes = Base64.getDecoder().decode(text);
+        else
+            bytes = text.getBytes();
+
         int[][] stateArray = new int[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                stateArray[j][i] = bytes[4 * i + j];
+                stateArray[j][i] = bytes[(4 * i) + j];
             }
         }
         return stateArray;
     }
 
-    private static String blockToString(int[][] stateArray) {
+    private static String blockToString(int[][] stateArray, boolean encode) {
 
         byte[] resultBytes = new byte[16];
-        System.out.println(Arrays.deepToString(stateArray));
         for (int i = 0; i < stateArray.length; i++) {
             for (int j = 0; j < stateArray[i].length; j++) {
-                resultBytes[(4 * i) + j] = (byte) stateArray[i][j];
+                resultBytes[(4 * i) + j] = (byte) stateArray[j][i];
             }
         }
-        System.out.println(Arrays.toString(resultBytes));
+        if (encode)
+            resultBytes = Base64.getEncoder().encode(resultBytes);
         return new String(resultBytes);
     }
 
@@ -489,8 +485,6 @@ public class AES {
         }
         String ciphertext = encrypt(test);
         String plaintext = decrypt(ciphertext);
-        System.out.println(plaintext);
-        // Commented out until we work out where the bug in blockToString / stringToBlock is
-        // assert (plaintext.equals(test));
+        assert (plaintext.equals(test));
     }
 }
