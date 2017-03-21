@@ -71,8 +71,7 @@ public class Login extends JFrame {
     }
 
     public static void main(String args[]) {
-        Login gameClient = new Login();
-        gameClient.getConnections();
+        new Login();
     }
 
     private void addOutput(String s) {
@@ -159,6 +158,7 @@ public class Login extends JFrame {
     private class ButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == logonButton)
+                getConnections();
                 sendLoginDetails();
         }
     }
