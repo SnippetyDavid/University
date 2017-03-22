@@ -175,7 +175,7 @@ public class AES {
 
         for (int i = 0; i < plaintext.length(); i++) {
             if (plaintext.charAt(i) == 0) {
-                plaintext = plaintext.substring(0, i+1);
+                plaintext = plaintext.substring(0, i);
                 break;
             }
         }
@@ -540,7 +540,6 @@ public class AES {
 
     /**
      * Main method. Used to run tests
-     * @param args args[0] is used to pass a test string
      */
     public static void main(String[] args) {
 
@@ -642,15 +641,19 @@ public class AES {
         assert (Arrays.deepEquals(resultDecryptOutput, testEncrypt));
 
 
-        String test;
-        if (args.length == 0) {
-            test = "mark frequency  ";
-
-        } else {
-            test = args[0];
-        }
+        String test = "mark frequency  ";
         String ciphertext = encrypt(test);
         String plaintext = decrypt(ciphertext);
         assert (plaintext.equals(test));
+
+        String test2 = "superBigLongTestStringerinoooO";
+        String ciphertext2 = encrypt(test2);
+        String plaintext2 = decrypt(ciphertext2);
+        assert (plaintext2.equals(test2));
+
+        String test3 = "cats";
+        String ciphertext3 = encrypt(test3);
+        String plaintext3 = decrypt(ciphertext3);
+        assert (plaintext3.equals(test3));
     }
 }
