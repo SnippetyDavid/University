@@ -5,10 +5,16 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.logging.Logger;
 
+/**
+ * Utility class which provides static methods for AES-128 encryption and decryption.
+ */
 public class AES {
 
     private final static Logger LOGGER = Logger.getLogger(AES.class.getName());
 
+    /**
+     * Hard coded final values for encryption and decryption
+     */
     private static final int NUMBER_ROUNDS = 10;
     private static final int[][] KEY = {
             {
@@ -80,34 +86,51 @@ public class AES {
             {0x0b, 0x0d, 0x09, 0x0e}
     };
 
-    // Prevents instantiation
+    /**
+     * Overrides the default constructor to prevent instantiation of AES, as it provides all useful functions
+     * statically
+     */
     private AES() {
     }
 
+    /**
+     * Encrypts a string using AES-128, and returns the encrypted string as a new Base64 encoded string. Base64
+     * encoding is used to prevent errors when transforming back into ASCII.
+     *
+     * @param plaintext text to be encrypted
+     * @return Base64 encoded ciphertext string
+     */
     public static String encrypt(String plaintext) {
-    	byte[] text = plaintext.getBytes();
-    	int padding = text.length % 16;
-    	if (padding != 0)
-    	    padding = 16 - padding;
-    	
-    	byte[] paddedBytes = Arrays.copyOf(text, text.length + padding);
-    	ArrayList<Byte> cipherBytes = new ArrayList<Byte>();
-    	for (int i=0; i < paddedBytes.length; i+=16) {
+        byte[] text = plaintext.getBytes();
+        int padding = text.length % 16;
+        if (padding != 0)
+            padding = 16 - padding;
+
+        byte[] paddedBytes = Arrays.copyOf(text, text.length + padding);
+        ArrayList<Byte> cipherBytes = new ArrayList<Byte>();
+        for (int i = 0; i < paddedBytes.length; i += 16) {
             byte[] targetBytes = Arrays.copyOfRange(paddedBytes, i, i + 16);
-	        int[][] stateArray = byteToBlock(targetBytes);
-	        stateArray = encrypt(stateArray);
-	        for (byte b: blockToBytes(stateArray))
-	            cipherBytes.add(b);
-    	}
-    	
-    	byte[] byteArray = new byte[cipherBytes.size()];
-    	for (int i =0; i < byteArray.length; i++) {
-    	    byteArray[i] = cipherBytes.get(i);
-    	}
-    	
+            int[][] stateArray = byteToBlock(targetBytes);
+            stateArray = encrypt(stateArray);
+            for (byte b : blockToBytes(stateArray))
+                cipherBytes.add(b);
+        }
+
+        byte[] byteArray = new byte[cipherBytes.size()];
+        for (int i = 0; i < byteArray.length; i++) {
+            byteArray[i] = cipherBytes.get(i);
+        }
+
         return Base64.getEncoder().encodeToString(byteArray);
     }
 
+    /**
+     * Takes a two dimensional array of ints, arranged as described in the AES specification, and performs 10 rounds
+     * of AES encryption on them.
+     *
+     * @param stateArray input block
+     * @return output block of integers
+     */
     private static int[][] encrypt(int[][] stateArray) {
         LOGGER.info("Starting AES encryption");
 
@@ -129,30 +152,43 @@ public class AES {
         return stateArray;
     }
 
+    /**
+     * Decrypts a Base64 encoded string of ciphertext produced using AES-128 encryption.
+     *
+     * @param ciphertext Base64 encoded ciphertext
+     * @return decrypted string as plaintext
+     */
     public static String decrypt(String ciphertext) {
-    	byte[] text =  Base64.getDecoder().decode(ciphertext.getBytes());
+        byte[] text = Base64.getDecoder().decode(ciphertext.getBytes());
         int padding = text.length % 16;
         if (padding != 0)
             padding = 16 - padding;
-        
-    	byte[] paddedBytes = Arrays.copyOf(text, text.length + padding);
-    	String plaintext = "";
-    	for (int i=0; i < paddedBytes.length; i+=16) {
-    	    byte[] targetBytes = Arrays.copyOfRange(paddedBytes, i, i + 16);
-	        int[][] stateArray = byteToBlock(targetBytes);
-	        stateArray = decrypt(stateArray);
-	        plaintext += new String(blockToBytes(stateArray));
-    	}
-    	
-    	for (int i=0; i < plaintext.length(); i++) {
-    	    if (plaintext.charAt(i) == 0) {
-    	        plaintext = plaintext.substring(0, i++);
-    	        break;
-    	    }
-    	}
-    	return plaintext;
+
+        byte[] paddedBytes = Arrays.copyOf(text, text.length + padding);
+        String plaintext = "";
+        for (int i = 0; i < paddedBytes.length; i += 16) {
+            byte[] targetBytes = Arrays.copyOfRange(paddedBytes, i, i + 16);
+            int[][] stateArray = byteToBlock(targetBytes);
+            stateArray = decrypt(stateArray);
+            plaintext += new String(blockToBytes(stateArray));
+        }
+
+        for (int i = 0; i < plaintext.length(); i++) {
+            if (plaintext.charAt(i) == 0) {
+                plaintext = plaintext.substring(0, i+1);
+                break;
+            }
+        }
+        return plaintext;
     }
 
+    /**
+     * Takes a two dimensional array of ints, arranged as described in the AES specification, and performs 10 rounds
+     * of AES decryption on them.
+     *
+     * @param state input matrix
+     * @return output matrix
+     */
     private static int[][] decrypt(int[][] state) {
         LOGGER.info("Starting AES decryption");
         int[][] key = KEY;
@@ -181,14 +217,31 @@ public class AES {
         return newState;
     }
 
+    /**
+     * S-Box lookup wrapper method, for use in encryption
+     * @param state input matrix
+     * @return output matrix
+     */
     private static int[][] substituteBytes(int[][] state) {
         return sBoxLookup(state, S_BOX);
     }
 
+    /**
+     * S-Box lookup wrapper method, for use in decryption
+     * @param state input matrix
+     * @return output matrix
+     */
     private static int[][] reverseSubBytes(int[][] state) {
         return sBoxLookup(state, INVERSE_S_BOX);
     }
 
+    /**
+     * For every entry in a two dimensional int input array, performs and S Box substitution using either the S Box or
+     * Inverse S Box described in the AES specification.
+     * @param state input matrix
+     * @param transformation two dimensional S Box to use for substitution
+     * @return output matrix, with all values from the input matrix substituted
+     */
     private static int[][] sBoxLookup(int[][] state, int[][] transformation) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
@@ -202,6 +255,10 @@ public class AES {
         return newState;
     }
 
+    /**
+     * Performs an S Box lookup for a word at a time.
+     * @param targetRow array of input integers to substitute.
+     */
     private static void subWord(int[] targetRow) {
         for (int i = 0; i < targetRow.length; i++) {
             int rowIndex = (targetRow[i] & LEFT_MASK) / 16;
@@ -210,6 +267,12 @@ public class AES {
         }
     }
 
+    /**
+     * Shifts every row in an input matrix to the left, by an amount which matches its index. For example, the 0th row
+     * of the matrix would be shifted by 0 places, while the 2nd row would be shifted by 2 places.
+     * @param state input matrix
+     * @return output shifted matrix
+     */
     private static int[][] shiftRowsLeft(int[][] state) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
@@ -219,6 +282,12 @@ public class AES {
 
     }
 
+    /**
+     * Shift an individual array to the left by an input number of places.
+     * @param row row to be shifted
+     * @param shiftAmount number of places to shift the values in the array by
+     * @return shifted row
+     */
     private static int[] shiftRowLeft(int[] row, int shiftAmount) {
         int[] newRow = new int[row.length];
         for (int i = 0; i < row.length; i++) {
@@ -227,6 +296,12 @@ public class AES {
         return newRow;
     }
 
+    /**
+     * Shifts every row in an input matrix to the right, by an amount which matches its index. For example, the 0th row
+     * of the matrix would be shifted by 0 places, while the 2nd row would be shifted by 2 places.
+     * @param state input matrix
+     * @return output shifted matrix
+     */
     private static int[][] shiftRowsRight(int[][] state) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = newState.length - 1; i >= 0; i--) {
@@ -235,6 +310,12 @@ public class AES {
         return newState;
     }
 
+    /**
+     * Shift an individual array to the right by an input number of places.
+     * @param row row to be shifted
+     * @param shiftAmount number of places to shift the values in the array by
+     * @return shifted row
+     */
     private static int[] shiftRowRight(int[] row, int shiftAmount) {
         int[] newRow = new int[row.length];
         for (int i = newRow.length - 1; i >= 0; i--) {
@@ -243,14 +324,31 @@ public class AES {
         return newRow;
     }
 
+    /**
+     * Performs a mix column transformation for use in encryption.
+     * @param state input matrix
+     * @return output matrix
+     */
     private static int[][] forwardMixColumns(int[][] state) {
         return mixColumns(state, MCT);
     }
 
+    /**
+     * Performs an inverse mix column transformation for use in decryption
+     * @param state input matrix
+     * @return output matrix
+     */
     private static int[][] inverseMixColumns(int[][] state) {
         return mixColumns(state, INVERSE_MCT);
     }
 
+    /**
+     * Performs a mix column transformation using an input two dimensional matrix of operations. Calculates new values
+     * for an input array using a matrix multiplication.
+     * @param state input matrix
+     * @param transformation two dimensional array of values to multiply by
+     * @return ouput matrix
+     */
     private static int[][] mixColumns(int[][] state, int[][] transformation) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
@@ -262,11 +360,24 @@ public class AES {
         return newState;
     }
 
+    /**
+     * Returns a target column from a particular matrix as a one-dimensional array.
+     * @param state input matrix
+     * @param j index of column to be 'rotated'
+     * @return column as a one dimensional array
+     */
     private static int[] columnToArray(int[][] state, int j) {
         // Param j is the index of the column
         return new int[]{state[0][j], state[1][j], state[2][j], state[3][j]};
     }
 
+    /**
+     * Multiplies a row by a column for use in matrix multiplications, then XORs the results to provide a single return
+     *  value during MCT.
+     * @param row input row of ints
+     * @param column input column of ints
+     * @return result of multiplying the row by the column, then XORing output values.
+     */
     private static int multiplyRowByColumn(int[] row, int[] column) {
         int[] results = new int[column.length];
         for (int i = 0; i < row.length; i++) {
@@ -276,8 +387,7 @@ public class AES {
     }
 
     /**
-     * Performs a multiplication of y by x, for an 8 bit number.
-     *
+     * Performs a multiplication of y by x, for an 8 bit number. Deals with overflow as appropriate.
      * @param x - the number of times by which to multiply y
      * @param y - the number to be multiplied
      * @return result xy
@@ -293,6 +403,7 @@ public class AES {
         while (loopCounter > 1) {
             if (loopCounter % 2 != 0) {
                 loopCounter--;
+                // Add at 0 to provide the sequence of operations in the forward direction
                 operations.add(0, 1);
             } else {
                 loopCounter = loopCounter / 2;
@@ -314,6 +425,13 @@ public class AES {
         return result;
     }
 
+    /**
+     * Adds the round key during encryption by XORing values from the input state matrix with corresponding values from
+     * an input key matrix, and returns the result.
+     * @param state input matrix
+     * @param key input key matrix
+     * @return result of XORing each value of state with corresponding values from key
+     */
     private static int[][] addRoundKey(int[][] state, int[][] key) {
         int[][] newState = new int[state.length][state[0].length];
         for (int i = 0; i < state.length; i++) {
@@ -324,6 +442,12 @@ public class AES {
         return newState;
     }
 
+    /**
+     * Performs a key expansion on an input key, by calculating a round constant and using this to produce a new key.
+     * @param key input key matrix
+     * @param numRounds current round number, used to produce round constant.
+     * @return output key matrix
+     */
     private static int[][] keyExpansion(int[][] key, int numRounds) {
         int[][] newKey = new int[key.length][key[0].length];
         for (int i = 0; i < key.length; i++) {
@@ -381,6 +505,12 @@ public class AES {
         }
     }
 
+    /**
+     * Takes an input array of precisely 16 bytes, and places them into a matrix as described in the AES specification
+     * for use in transformations.
+     * @param bytes input array of bytes
+     * @return output two dimensional array of 8 bit integers
+     */
     private static int[][] byteToBlock(byte[] bytes) {
         int[][] stateArray = new int[4][4];
         for (int i = 0; i < 4; i++) {
@@ -391,6 +521,11 @@ public class AES {
         return stateArray;
     }
 
+    /**
+     * Takes a two dimensional 4x4 input array, and returns a single array.
+     * @param stateArray input matrix
+     * @return array of bytes
+     */
     private static byte[] blockToBytes(int[][] stateArray) {
 
         byte[] resultBytes = new byte[16];
@@ -399,10 +534,14 @@ public class AES {
                 resultBytes[(4 * i) + j] = (byte) stateArray[j][i];
             }
         }
-        
+
         return resultBytes;
     }
 
+    /**
+     * Main method. Used to run tests
+     * @param args args[0] is used to pass a test string
+     */
     public static void main(String[] args) {
 
         // Test row shifting
