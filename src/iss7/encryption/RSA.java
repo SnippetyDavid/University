@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class RSA {
 
+	
     private static final String plaintext="mark frequency";
     private static final int p = 41;
     private static final int q = 67;
@@ -14,6 +15,7 @@ public class RSA {
     private static final int n = p*q;
     private static final int w = (p-1)*(q-1);
 
+    
     private static class Key{
         private int partOne,partTwo;
         private Key(int d_e, int n){
@@ -22,6 +24,7 @@ public class RSA {
         }
     }
 
+    
     private static class KeyValues{
         private int e,d,n;
         private KeyValues(int e, int d, int n){
@@ -31,6 +34,10 @@ public class RSA {
         }
     }
 
+    
+    
+    // Calculates the value of e using Extended Euclids 
+    // and returns the values (e,d,n) that make the public / private key
     private static KeyValues genKeyValues(int d, int w){
 
         int remainder , divs, e, v, temp, x, y, prevx, prevy;
@@ -68,12 +75,13 @@ public class RSA {
 
         e=prevy;
 
-        //KeyValues keyValues = new KeyValues(e,d,n);
         return new KeyValues(e,d,n);
 
     }
+    
+    
 
-
+    // Encrypting using Exponentiation by Squaring and Dividing 
     public static int[] encrypt(Key publicKey, int[] asciiPlaintext){
 
         int[] cipher = new int[asciiPlaintext.length];
@@ -96,6 +104,8 @@ public class RSA {
         return cipher;
     }
 
+    
+    
     public static BigInteger[] decrypt(Key privateKey, int[] ciphertext){
 
         BigInteger[] decrypted = new BigInteger[ciphertext.length];
@@ -111,6 +121,8 @@ public class RSA {
         return decrypted;
     }
 
+    
+    
     private static int[] convertToNum(String plaintext){
     	
         String alphabet = " abcdefghijklmnopqrstuvwxyz";
@@ -139,6 +151,8 @@ public class RSA {
         return asciiPairedInt;
     }
     
+    
+    
     private static BigInteger[] unpair(BigInteger[] paired){
     	BigInteger[] unpaired = new BigInteger[plaintext.length()];
     	
@@ -159,8 +173,10 @@ public class RSA {
     }
 
 
+    
     public static void main(String [] args){
 
+    	//Generating the values for the public / private key
         KeyValues keyValues = genKeyValues(d,w);
         Key publicKey = new Key(keyValues.e,keyValues.n);
         Key privateKey = new Key(keyValues.d,keyValues.n);
@@ -168,6 +184,7 @@ public class RSA {
         System.out.println("Private Key: <" + privateKey.partOne + "," + privateKey.partTwo + ">");
         System.out.println("");
 
+        //Converting the plaintext to numbers and pairing
         System.out.println("Plaintext: " + plaintext);
         int[] asciiPlaintext = convertToNum(plaintext);
         System.out.print("Plaintext in ASCII Paired: ");
@@ -176,6 +193,7 @@ public class RSA {
             System.out.print(",");
         }
 
+        //Encrypting the paired numbers
         int[] ciphertext = encrypt(publicKey, asciiPlaintext);
         System.out.println("");
         System.out.println("Encrypted :");
@@ -184,6 +202,7 @@ public class RSA {
             System.out.print(",");
         }
 
+        //Decrypting the paired numbers
         BigInteger[] decrypted = decrypt(privateKey, ciphertext);
         System.out.println("");
         System.out.println("");
@@ -193,6 +212,7 @@ public class RSA {
             System.out.print(",");
         }
         
+        //Splitting the decrypted numbers to give the final output
         BigInteger[] unpaired = unpair(decrypted);
         System.out.println("");
         System.out.println("");
