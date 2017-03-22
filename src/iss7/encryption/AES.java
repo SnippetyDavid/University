@@ -85,10 +85,27 @@ public class AES {
     }
 
     public static String encrypt(String plaintext) {
-        int[][] stateArray = stringToBlock(plaintext, false);
-        stateArray = encrypt(stateArray);
-        String ciphertext = blockToString(stateArray, true);
-        return ciphertext;
+    	byte[] text = plaintext.getBytes();
+    	int padding = text.length % 16;
+    	if (padding != 0)
+    	    padding = 16 - padding;
+    	
+    	byte[] paddedBytes = Arrays.copyOf(text, text.length + padding);
+    	ArrayList<Byte> cipherBytes = new ArrayList<Byte>();
+    	for (int i=0; i < paddedBytes.length; i+=16) {
+            byte[] targetBytes = Arrays.copyOfRange(paddedBytes, i, i + 16);
+	        int[][] stateArray = byteToBlock(targetBytes);
+	        stateArray = encrypt(stateArray);
+	        for (byte b: blockToBytes(stateArray))
+	            cipherBytes.add(b);
+    	}
+    	
+    	byte[] byteArray = new byte[cipherBytes.size()];
+    	for (int i =0; i < byteArray.length; i++) {
+    	    byteArray[i] = cipherBytes.get(i);
+    	}
+    	
+        return Base64.getEncoder().encodeToString(byteArray);
     }
 
     private static int[][] encrypt(int[][] stateArray) {
@@ -113,10 +130,27 @@ public class AES {
     }
 
     public static String decrypt(String ciphertext) {
-        int[][] stateArray = stringToBlock(ciphertext, true);
-        stateArray = decrypt(stateArray);
-        return blockToString(stateArray, false);
-
+    	byte[] text =  Base64.getDecoder().decode(ciphertext.getBytes());
+        int padding = text.length % 16;
+        if (padding != 0)
+            padding = 16 - padding;
+        
+    	byte[] paddedBytes = Arrays.copyOf(text, text.length + padding);
+    	String plaintext = "";
+    	for (int i=0; i < paddedBytes.length; i+=16) {
+    	    byte[] targetBytes = Arrays.copyOfRange(paddedBytes, i, i + 16);
+	        int[][] stateArray = byteToBlock(targetBytes);
+	        stateArray = decrypt(stateArray);
+	        plaintext += new String(blockToBytes(stateArray));
+    	}
+    	
+    	for (int i=0; i < plaintext.length(); i++) {
+    	    if (plaintext.charAt(i) == 0) {
+    	        plaintext = plaintext.substring(0, i++);
+    	        break;
+    	    }
+    	}
+    	return plaintext;
     }
 
     private static int[][] decrypt(int[][] state) {
@@ -347,13 +381,7 @@ public class AES {
         }
     }
 
-    private static int[][] stringToBlock(String text, boolean decode) {
-        byte[] bytes;
-        if (decode)
-            bytes = Base64.getDecoder().decode(text);
-        else
-            bytes = text.getBytes();
-
+    private static int[][] byteToBlock(byte[] bytes) {
         int[][] stateArray = new int[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -363,7 +391,7 @@ public class AES {
         return stateArray;
     }
 
-    private static String blockToString(int[][] stateArray, boolean encode) {
+    private static byte[] blockToBytes(int[][] stateArray) {
 
         byte[] resultBytes = new byte[16];
         for (int i = 0; i < stateArray.length; i++) {
@@ -371,9 +399,8 @@ public class AES {
                 resultBytes[(4 * i) + j] = (byte) stateArray[j][i];
             }
         }
-        if (encode)
-            resultBytes = Base64.getEncoder().encode(resultBytes);
-        return new String(resultBytes);
+        
+        return resultBytes;
     }
 
     public static void main(String[] args) {
