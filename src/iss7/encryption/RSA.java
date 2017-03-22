@@ -1,6 +1,9 @@
+package encryption;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RSA {
 
@@ -71,7 +74,7 @@ public class RSA {
     }
 
 
-    private static int[] encrypt(Key publicKey, int[] asciiPlaintext){
+    public static int[] encrypt(Key publicKey, int[] asciiPlaintext){
 
         int[] cipher = new int[asciiPlaintext.length];
         String binaryE = Integer.toBinaryString(publicKey.partOne);
@@ -93,7 +96,7 @@ public class RSA {
         return cipher;
     }
 
-    private static BigInteger[] decrypt(Key privateKey, int[] ciphertext){
+    public static BigInteger[] decrypt(Key privateKey, int[] ciphertext){
 
         BigInteger[] decrypted = new BigInteger[ciphertext.length];
         BigInteger m;
@@ -105,18 +108,54 @@ public class RSA {
             decrypted[i]=m;
         }
 
-
-
         return decrypted;
     }
 
     private static int[] convertToNum(String plaintext){
+    	
         String alphabet = " abcdefghijklmnopqrstuvwxyz";
-        int[] ascii = new int[plaintext.length()];
+        String[] ascii = new String[plaintext.length()];
         for (int i=0; i<plaintext.length(); i++){
-            ascii[i] = (alphabet.indexOf(plaintext.charAt(i)));
+            ascii[i] = Integer.toString((alphabet.indexOf(plaintext.charAt(i))));
+            if (ascii[i].length()==1){
+            	ascii[i] = "0" + ascii[i];
+            }
         }
-        return ascii;
+
+        System.out.print("Plaintext in ASCII: ");
+        for(int i=0; i<ascii.length; i++){
+            System.out.print(ascii[i]);
+            System.out.print(",");
+        }
+        System.out.println("");
+
+        String[] asciiPaired = new String[(int)Math.ceil((double)plaintext.length()/2)];
+        for (int j=0, k=0; k<ascii.length; j++, k+=2){
+        	asciiPaired[j] = ascii[k] + ascii[k+1]; 
+        }
+        
+        int[] asciiPairedInt = Arrays.stream(asciiPaired).mapToInt(Integer::parseInt).toArray();
+
+        return asciiPairedInt;
+    }
+    
+    private static BigInteger[] unpair(BigInteger[] paired){
+    	BigInteger[] unpaired = new BigInteger[plaintext.length()];
+    	
+    	for (int i=0, j=0; i<paired.length; i++, j+=2){
+    		int length = String.valueOf(paired[i]).length();
+    		if (length <=2){
+    			unpaired[j]=BigInteger.valueOf(0);
+    			unpaired[j+1]=paired[i];
+    		} else if (length >=3){
+    			String toSplit = String.valueOf(paired[i]);
+    			String split1 = toSplit.substring(0, toSplit.length()-2);
+    		    String split2 = toSplit.substring(toSplit.length()-2, toSplit.length());
+    		    unpaired[j]= new BigInteger(split1);
+    		    unpaired[j+1]= new BigInteger(split2);
+    		}
+    	}
+    	return unpaired;
     }
 
 
@@ -129,9 +168,9 @@ public class RSA {
         System.out.println("Private Key: <" + privateKey.partOne + "," + privateKey.partTwo + ">");
         System.out.println("");
 
-        int[] asciiPlaintext = convertToNum(plaintext);
         System.out.println("Plaintext: " + plaintext);
-        System.out.print("Plaintext in ASCII: ");
+        int[] asciiPlaintext = convertToNum(plaintext);
+        System.out.print("Plaintext in ASCII Paired: ");
         for(int i=0; i<asciiPlaintext.length; i++){
             System.out.print(asciiPlaintext[i]);
             System.out.print(",");
@@ -148,9 +187,18 @@ public class RSA {
         BigInteger[] decrypted = decrypt(privateKey, ciphertext);
         System.out.println("");
         System.out.println("");
-        System.out.println("Decrypted :");
+        System.out.println("Decrypted:");
         for (int k=0; k<decrypted.length; k++){
             System.out.print(decrypted[k]);
+            System.out.print(",");
+        }
+        
+        BigInteger[] unpaired = unpair(decrypted);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Decrypted & Unpaired:");
+        for (int l=0; l<unpaired.length; l++){
+            System.out.print(unpaired[l]);
             System.out.print(",");
         }
 
