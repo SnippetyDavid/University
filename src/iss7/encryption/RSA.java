@@ -12,7 +12,7 @@ public class RSA {
     private static final int W = (P-1)*(Q-1);
     
     private static final String PLAINTEXT="mark frequency";
-    PrivateKeyRSA privateKey = new PrivateKeyRSA(D,N);
+    private static PrivateKeyRSA privateKey = new PrivateKeyRSA(D,N);
 
     
     public static class PublicKeyRSA{
@@ -128,9 +128,6 @@ public class RSA {
     
     
     public static String decrypt(String ciphertext){
-
-    	//Declaring and Initializing the private key
-    	PrivateKeyRSA privateKey = new PrivateKeyRSA(D,N);
 
     	BigInteger[] cipherBigIntArray = new BigInteger[(int)Math.ceil((double)PLAINTEXT.length()/2)];
     	for ( int j=0, k=0; j<ciphertext.length(); j+=4, k++){
