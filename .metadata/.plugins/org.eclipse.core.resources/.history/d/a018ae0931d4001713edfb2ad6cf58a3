@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+
+public class Main {
+	public static void main(String[] args) {
+		ArrayList<String> dwarfs = new ArrayList<String>();
+		ArrayList<String> dwarves = new ArrayList<String>();
+		
+		dwarfs.add("Thorin");
+		dwarfs.add("Dwalin");
+		dwarfs.add("Balin");
+		dwarfs.add("Gloin");
+		dwarfs.add("Kili");
+		dwarfs.add("Fili");
+		dwarfs.add("Dori");
+		dwarfs.add("Nori");
+		dwarfs.add("Ori");
+		dwarfs.add("Oin");
+		dwarfs.add("Bifur");
+		dwarfs.add("Bombur");
+		dwarfs.add("Bofur");
+		
+		dwarves.add("");
+		dwarves.add("");
+		dwarves.add("");
+		dwarves.add("");
+		dwarves.add("");
+		dwarves.add("");
+		dwarves.add("");
+	}
+}

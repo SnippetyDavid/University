@@ -1,0 +1,139 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>JAAACK!!</title>
+		
+		<style type="text/css"></style>
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 		 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+ 		 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<link href="css/lab5.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">		
+	</head>
+	<body>
+	
+		<div class="topnav fixedElement" id="myTopnav">
+		  <a class="active" href="#home">Home</a>
+		  <a href="#explore">Explore</a>
+		  <a href="#visitorinfo">Visitor Info</a>
+		  <a href="#discover">Discover</a>
+		  <a href="#weddings">Weddings</a>
+		  <a href="#planyourevent">Plan Your Event</a>
+		  <a href="#learning">Learning</a>
+		  <a href="#social">Social</a>
+		  <a href="#contacts">Contact</a>
+		</div>
+		
+		<div class="containerT" >
+			<img id="bannerT" src="tita.jpg" alt="Banner Image"/>
+			<h2 class="centeredT">TITANIC BELFAST.</h2>
+		</div>
+		
+
+		<hr>
+		<div class="row">
+		  <div class="columnLeft center">
+				
+				<div id="demo" class="carousel slide" data-ride="carousel">
+			  <!-- Indicators -->
+			  <ul class="carousel-indicators">
+			    <li data-target="#demo" data-slide-to="0" class="active"></li>
+			    <li data-target="#demo" data-slide-to="1"></li>
+			    <li data-target="#demo" data-slide-to="2"></li>
+			  </ul>
+			  <!-- The slideshow -->
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="TitCar1.jpg" alt="Los Angeles" width="1100" height="500">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="TitCar2.jpg" alt="Chicago" width="1100" height="500">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="TitCar3.jpg" alt="New York" width="1100" height="500">
+			    </div>
+			  </div>
+			  <!-- Left and right controls -->
+			  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+			    <span class="carousel-control-prev-icon"></span>
+			  </a>
+			  <a class="carousel-control-next" href="#demo" data-slide="next">
+			    <span class="carousel-control-next-icon"></span>
+			  </a>
+			</div>
+						  
+		  </div>
+		  <div class="columnRight center">
+		  	<p>
+		  	RMS Titanic was a British passenger liner that sank in the North Atlantic Ocean in the early morning hours of 15 April 1912, after it collided with an iceberg during its maiden voyage from Southampton to New York City. There were an estimated 2,224 passengers and crew aboard the ship, and more than 1,500 died, making it one of the deadliest commercial peacetime maritime disasters in modern history. The RMS Titanic was the largest ship afloat at the time it entered service and was the second of three Olympic-class ocean liners operated by the White Star Line. The Titanic was built by the Harland and Wolff shipyard in Belfast. Thomas Andrews, her architect, died in the disaster.[2]
+<br>
+Titanic was under the command of Edward Smith, who also went down with the ship. The ocean liner carried some of the wealthiest people in the world, as well as hundreds of emigrants from Great Britain and Ireland, Scandinavia and elsewhere throughout Europe who were seeking a new life in the United States. The first-class accommodation was designed to be the pinnacle of comfort and luxury, with an on-board gymnasium, swimming pool, libraries, high-class restaurants and opulent cabins. A high-powered radiotelegraph transmitter was available for sending passenger "marconigrams" and for the ship's operational use. [3] Although Titanic had advanced safety features such as watertight compartments and remotely activated watertight doors, there were not enough lifeboats to accommodate all of those aboard, due to outdated maritime safety regulations. Titanic only carried enough lifeboats for 1,178 people—slightly more than half of the number on board, and one third of her total capacity. The ship carried lifeboat davits which could lower three lifeboats each, for a total of 48 boats. However, Titanic carried only a total of 20 lifeboats, four of which were collapsible and proved to be hard to launch during the sinking. [4]
+<br>
+After leaving Southampton on 10 April 1912, Titanic called at Cherbourg in France and Queenstown (now Cobh) in Ireland before heading west to New York.[5] On 14 April, four days into the crossing and about 375 miles (600 km) south of Newfoundland, she hit an iceberg at 11:40 p.m. ship's time. The collision caused the ship's hull plates to buckle inwards along her starboard (right) side and opened five of her sixteen watertight compartments to the sea; she could only survive four flooding. Meanwhile, passengers and some crew members were evacuated in lifeboats, many of which were launched only partially loaded. A disproportionate number of men were left aboard because of a "women and children first" protocol for loading lifeboats.[6] At 2:20 a.m., she broke apart and foundered—with well over one thousand people still aboard. Just under two hours after the Titanic sank, the Cunard liner RMS Carpathia arrived at the scene, where she brought aboard an estimated 705 survivors.
+<br>
+The disaster was met with worldwide shock and outrage at the huge loss of life and the regulatory and operational failures that had led to it. Public inquiries in Britain and the United States led to major improvements in maritime safety. One of their most important legacies was the establishment in 1914 of the International Convention for the Safety of Life at Sea (SOLAS), which still governs maritime safety today. Additionally, several new wireless regulations were passed around the world in an effort to learn from the many missteps in wireless communications—which could have saved many more passengers.[7]
+<br>
+The wreck of Titanic was first discovered in 1985 (more than 70 years after the disaster), and the vessel remains on the seabed. The ship was split in two and is gradually disintegrating at a depth of 12,415 feet (3,784 m). Since her discovery in 1985, thousands of artefacts have been recovered and put on display at museums around the world. Titanic has become one of the most famous ships in history; her memory is kept alive by numerous works of popular culture, including books, folk songs, films, exhibits, and memorials. Titanic is the second largest ocean liner wreck in the world, only beaten by her sister HMHS Britannic, the largest ever sunk.
+		  	</p>
+		  </div>
+		</div>
+	
+	
+	
+
+	
+
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		
+
+	</body>
+</html>

@@ -1,0 +1,6 @@
+
+public class Dwarfe {
+	public Dwarfe (String name, String author, Image image){
+		
+	}
+}

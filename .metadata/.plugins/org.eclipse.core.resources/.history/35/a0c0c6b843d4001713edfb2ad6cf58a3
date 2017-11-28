@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		ArrayList<Dwarfe> dwarfes = new ArrayList<Dwarfe>();
+		dwarfes.add(new Dwarfe("Thorin","LOTR",null));
+		dwarfes.add(new Dwarfe("Fili","LOTR",null));
+		dwarfes.add(new Dwarfe("Kili","LOTR",null));
+		dwarfes.add(new Dwarfe("Oin","LOTR",null));
+		dwarfes.add(new Dwarfe("Gloin","LOTR",null));
+		dwarfes.add(new Dwarfe("Balin","LOTR",null));
+		dwarfes.add(new Dwarfe("Dwalin","LOTR",null));
+		dwarfes.add(new Dwarfe("Ori","LOTR",null));
+		dwarfes.add(new Dwarfe("Dori","LOTR",null));
+		dwarfes.add(new Dwarfe("Nori","LOTR",null));
+		dwarfes.add(new Dwarfe("Bifur","LOTR",null));
+		dwarfes.add(new Dwarfe("Bofur","LOTR",null));
+		dwarfes.add(new Dwarfe("Bombur","LOTR",null));
+		
+		dwarfes.add(new Dwarfe("Dopey","Disney",null));
+		dwarfes.add(new Dwarfe("Doc","Disney",null));
+		dwarfes.add(new Dwarfe("Grumpy","Disney",null));
+		dwarfes.add(new Dwarfe("Bashful","Disney",null));
+		dwarfes.add(new Dwarfe("Sneezy","Disney",null));
+		dwarfes.add(new Dwarfe("Sleepy","Disney",null));
+		dwarfes.add(new Dwarfe("Happy","Disney",null));
+		
+	}
+}

@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>JAAACK!!</title>
+		
+		<style type="text/css"></style>
+		<link href="css/lab5.css" rel="stylesheet" type="text/css"/>
+		
+		
+	</head>
+	<body>
+		<div id="image">
+			<img id="banner" src="Titanic.jpg" alt="Banner Image"/>
+			<h2 style="color:white;">TITANIC<br>BELFAST.</h2>
+		</div>
+		
+	
+		<h1 class="importantText">This is h1</h1>
+		<p id="first">This is a paragraph of text</p>
+		<div style="border-style:dashed;">
+		<p class="importantText">This is another paragraph of text</p>
+		</div>
+		
+		<br>
+		<h1>Links</h1>
+		<br>
+		
+		<br>
+		<p>Links to other sites:</p>
+		<a href="http://www.google.co.uk"> Google</a>
+		
+		<h1>Normal doggo</h1>
+		<img src="a90f24a1187edebb2ac5b7aed5611f74.jpg" alt="Big Ol'Pupper">
+		
+		<h1>Small doggo with clickable link</h1>
+		<a href="http://www.google.co.uk"><img src="a90f24a1187edebb2ac5b7aed5611f74.jpg" alt="Big Ol'Pupper" height="150"></a>
+		
+		<h1>Long doggo</h1>
+		<img src="a90f24a1187edebb2ac5b7aed5611f74.jpg" alt="Big Ol'Pupper" height="150" width="900">
+		
+	</body>
+</html>

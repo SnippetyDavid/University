@@ -1,0 +1,12 @@
+		p{
+			font-family:verdana;
+		}		
+		h1{
+			font-family:consolas;
+		}
+		#first{
+			font-family:verdana;
+		}
+		.importantText{
+			color:red;
+		}

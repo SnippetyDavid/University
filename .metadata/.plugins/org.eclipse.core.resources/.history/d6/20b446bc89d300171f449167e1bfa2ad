@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Lab 5!</title>
+		
+		<style type="text/css"></style>
+		<link href="H:\HtmlJsCss\lab5.css" rel="stylesheet" type="text/css"/>
+		
+	</head>
+	<body>
+		<h1 class="importantText">This is h1</h1>
+		<p id="first">This is a paragraph of text</p>
+		<div style="border-style:dashed;">
+		<p class="importantText">This is another paragraph of text</p>
+		</div>
+	</body>
+</html>
