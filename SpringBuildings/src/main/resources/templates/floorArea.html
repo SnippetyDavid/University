@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<title th:text="${pageTitle}"></title>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+</head>
+<body>
+	<nav th:replace="layouts/nav :: navFragment">
+	</nav>
+	
+	<div class="jumbotron">
+		<h1 style="text-align:center;">Floor Area</h1>
+	</div>
+	<div class="container">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Picture</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dwarf:${Dwarfs}">
+					<td th:text="${dwarf.name}">Doc</td>
+					<td><img
+						src="../static/Doc.png" th:src="@{/} + ${dwarf.image}"/></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+		<div th:replace="layouts/foot :: divFragment">
+	</div>
+</body>
+</html>
