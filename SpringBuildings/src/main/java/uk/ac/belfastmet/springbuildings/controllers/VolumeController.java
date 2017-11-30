@@ -19,7 +19,7 @@ public class VolumeController {
 	public String disney(Model model) {
 		model.addAttribute("pageTitle", "Volume!");
 		this.buildingService = new BuildingService();
-//		model.addAttribute("Dwarfs", this.buildingService.getDisneyDwarfs());
+		model.addAttribute("buildingVolume", this.buildingService.getBuildingVolume());
 		return "volume";
 	}
 

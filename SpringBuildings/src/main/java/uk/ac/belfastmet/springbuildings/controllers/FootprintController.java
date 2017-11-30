@@ -19,7 +19,7 @@ public class FootprintController {
 	public String tolkien(Model model) {
 		model.addAttribute("pageTitle", "Footprint!");
 		this.buildingService = new BuildingService();
-//		model.addAttribute("Dwarfs", this.buildingService.getTolkienDwarfs());
+		model.addAttribute("buildingFootprint", this.buildingService.getBuildingFootprint());
 		return "footprint";
 	}
 

@@ -19,7 +19,7 @@ public class FloorAreaController {
 	public String disney(Model model) {
 		model.addAttribute("pageTitle", "Floor Area!");
 		this.buildingService = new BuildingService();
-//		model.addAttribute("Dwarfs", this.buildingService.getDisneyDwarfs());
+		model.addAttribute("buildingFloorArea", this.buildingService.getBuildingFloorArea());
 		return "floorArea";
 	}
 

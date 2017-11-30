@@ -28,10 +28,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="dwarf:${Dwarfs}">
-					<td th:text="${dwarf.name}">Doc</td>
+				<tr th:each="bfa:${buildingFloorArea}">
+					<td th:text="${bfa.name}">Doc</td>
 					<td><img
-						src="../static/Doc.png" th:src="@{/} + ${dwarf.image}"/></td>
+						src="../static/Doc.png" th:src="@{/} + ${bfa.image}"/></td>
 				</tr>
 			</tbody>
 		</table>

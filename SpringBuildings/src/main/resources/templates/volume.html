@@ -28,10 +28,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="dwarf:${Dwarfs}">
-					<td th:text="${dwarf.name}">Thorin</td>
+				<tr th:each="bv:${buildingVolume}">
+					<td th:text="${bv.name}">Thorin</td>
 					<td><img
-						src="../static/Throin.png" th:src="@{/} + ${dwarf.image}"/></td>
+						src="../static/Throin.png" th:src="@{/} + ${bv.image}"/></td>
 				</tr>
 			</tbody>
 		</table>
