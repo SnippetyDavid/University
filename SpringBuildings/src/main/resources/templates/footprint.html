@@ -11,6 +11,11 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+	<style>
+	body {
+	    background-color: rgb(200, 200, 200);
+	}
+	</style>
 </head>
 <body>
 	<nav th:replace="layouts/nav :: navFragment">
@@ -18,20 +23,25 @@
 	
 	<div class="jumbotron">
 		<h1 style="text-align: center;">Footprint</h1>
-	</div>
-	<div class="container">
+	</div>	
+	<div class="container" style="background-color:rgb(235, 235, 235);">
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>Rank</th>
 					<th>Name</th>
+					<th>Footprint</th>
 					<th>Picture</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="bf:${buildingFootprint}">
-					<td th:text="${bf.name}">Thorin</td>
+				<tr th:each="bf:${BF}">
+					<td th:text="${bf.rank}"></td>
+					<td th:text="${bf.name}"></td>
+					<td th:text="${bf.country}"></td>
+					<td th:text="${bf.footprint}"></td>
 					<td><img
-						src="../static/Throin.png" th:src="@{/} + ${bf.image}"/></td>
+						src="../static/buildingFootprint/f1.jpg" th:src="@{/buildingFootprint/} + ${bf.image}" width="150" height ="150"/></td>
 				</tr>
 			</tbody>
 		</table>

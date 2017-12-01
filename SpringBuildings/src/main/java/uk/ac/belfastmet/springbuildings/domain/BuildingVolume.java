@@ -8,8 +8,9 @@ public class BuildingVolume {
 	private String place;
 	private int floorArea;
 	private int volume;
+	private String image;
 
-	public BuildingVolume(int rank, String name, String country, String place, int floorArea, int volume) {
+	public BuildingVolume(int rank, String name, String country, String place, int floorArea, int volume, String image) {
 		super();
 		this.rank = rank;
 		this.name = name;
@@ -17,6 +18,7 @@ public class BuildingVolume {
 		this.place = place;
 		this.floorArea = floorArea;
 		this.volume = volume;
+		this.image = image;
 	}
 
 	public int getRank() {
@@ -65,6 +67,14 @@ public class BuildingVolume {
 
 	public void setVolume(int volume) {
 		this.volume = volume;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

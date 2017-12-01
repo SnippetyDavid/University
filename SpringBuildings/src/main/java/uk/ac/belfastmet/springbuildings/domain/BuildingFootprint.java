@@ -7,14 +7,16 @@ public class BuildingFootprint {
 	private String country;
 	private String place;
 	private int footprint;
+	private String image;
 
-	public BuildingFootprint(int rank, String name, String country, String place, int footprint) {
+	public BuildingFootprint(int rank, String name, String country, String place, int footprint, String image) {
 		super();
 		this.rank = rank;
 		this.name = name;
 		this.country = country;
 		this.place = place;
 		this.footprint = footprint;
+		this.image = image;
 	}
 
 	public int getRank() {
@@ -55,6 +57,14 @@ public class BuildingFootprint {
 
 	public void setFootprint(int footprint) {
 		this.footprint = footprint;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

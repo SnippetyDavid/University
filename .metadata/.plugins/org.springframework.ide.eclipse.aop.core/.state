@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
 <aop-project name="SpringBuildings"/>
+<aop-project name="SpringDwarvesDwarfsSaved"/>
 <aop-project name="Titanic"/>
 <aop-project name="SpringDwarvesDwarfs"/>
+<aop-project name="SpringUKCharts"/>
+<aop-project name="TitanicSaved"/>
 <aop-project name="HelloSpringBoot1"/>
 </aop-reference-model>

@@ -7,14 +7,16 @@ public class BuildingFloorArea {
 	private String country;
 	private String place;
 	private int floorArea;
+	private String image;
 
-	public BuildingFloorArea(int rank, String name, String country, String place, int floorArea) {
+	public BuildingFloorArea(int rank, String name, String country, String place, int floorArea, String image) {
 		super();
 		this.rank = rank;
 		this.name = name;
 		this.country = country;
 		this.place = place;
 		this.floorArea = floorArea;
+		this.image = image;
 	}
 
 	public int getRank() {
@@ -55,6 +57,14 @@ public class BuildingFloorArea {
 
 	public void setFloorArea(int floorArea) {
 		this.floorArea = floorArea;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title th:text="${pageTitle}">Home!</title>
+
+<style type="text/css"></style>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav th:replace="layouts/nav :: navFragment"></nav>
+
+	<div class="jumbotron">
+		<pre
+			style="text-align: center; font-family: Impact; font-size: 150px; color: black; text-shadow: -3px -3px 0 #F00, 3px -3px 0 #F00, -3px 3px 0 #F00, 3px 3px 0 #F00;">UK TOP 10!</pre>
+	</div>
+
+	<div style="text-align: center;" class="container">
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Rank</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="song:${Songs}">
+					<td th:text="${song.rank}"></td>
+						<td><img src="../static/1.jpg"
+						th:src="@{/} + ${song.image}" width="150"
+						height="150" /></td>
+					<td th:text="${song.songName}"></td>
+					<td th:text="${song.artist}"></td>
+					<td><a th:href="${song.youtubeLink}">Youtube Link</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<br/><br/><br/>
+</body>
+</html>

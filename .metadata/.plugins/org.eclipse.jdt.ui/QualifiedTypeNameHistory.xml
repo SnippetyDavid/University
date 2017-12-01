@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
 <fullyQualifiedTypeName name="java.awt.Image"/>
 <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
-<fullyQualifiedTypeName name="javax.annotation.PostConstruct"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
 <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
@@ -16,11 +15,21 @@
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
 <fullyQualifiedTypeName name="uk.ac.belfastmet.springdwarvesdwarfs.service.DwarfService"/>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="uk.ac.belfastmet.springbuildings.service.BuildingService"/>
-<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="uk.ac.belfastmet.springbuildings.domain.BuildingFloorArea"/>
 <fullyQualifiedTypeName name="uk.ac.belfastmet.springbuildings.domain.BuildingFootprint"/>
 <fullyQualifiedTypeName name="uk.ac.belfastmet.springbuildings.domain.BuildingVolume"/>
+<fullyQualifiedTypeName name="uk.ac.belfastmet.springukcharts.domain.Song"/>
+<fullyQualifiedTypeName name="uk.ac.belfastmet.springukcharts.service.SongService"/>
+<fullyQualifiedTypeName name="uk.ac.belfastmet.springdwarvesdwarfssaved.domain.Dwarf"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+<fullyQualifiedTypeName name="javax.annotation.PostConstruct"/>
+<fullyQualifiedTypeName name="uk.ac.belfastmet.springdwarvesdwarfssaved.repositories.DwarfRepository"/>
+<fullyQualifiedTypeName name="javax.persistence.Entity"/>
+<fullyQualifiedTypeName name="javax.persistence.Id"/>
+<fullyQualifiedTypeName name="javax.persistence.GeneratedValue"/>
+<fullyQualifiedTypeName name="uk.ac.belfastmet.titanicsaved.repositories.PassengerRepository"/>
+<fullyQualifiedTypeName name="uk.ac.belfastmet.titanicsaved.domain.Passenger"/>
 </qualifiedTypeNameHistroy>
