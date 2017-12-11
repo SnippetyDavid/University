@@ -21,9 +21,30 @@ public class PassengerController {
 	}
 
 	@GetMapping("")
-	public String tolkien(Model model) {
+	public String allPassengers(Model model) {
 		model.addAttribute("pageTitle", "Passengers!");
 		model.addAttribute("Passengers", this.passengerRepo.findAll());
+		return "passenger";
+	}
+
+	@GetMapping("/Survivors")
+	public String survived(Model model) {
+		model.addAttribute("pageTitle", "Passengers!");
+		model.addAttribute("Passengers", this.passengerRepo.findBySurvived(1));
+		return "passenger";
+	}
+
+	@GetMapping("/Dead")
+	public String ded(Model model) {
+		model.addAttribute("pageTitle", "Passengers!");
+		model.addAttribute("Passengers", this.passengerRepo.findBySurvived(0));
+		return "passenger";
+	}
+
+	@GetMapping("/FirstClass")
+	public String firstClass(Model model) {
+		model.addAttribute("pageTitle", "Passengers!");
+		model.addAttribute("Passengers", this.passengerRepo.findByPClass(1));
 		return "passenger";
 	}
 

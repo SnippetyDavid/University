@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Form</title>
+
+<style type="text/css"></style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+</head>
+<body>
+
+	<div class="jumbotron text-center">
+		<h1>Old MacDonald had a Form</h1>
+		<br/>
+	</div>
+
+	<div class="container">
+		<form action="/result" method="POST">
+			First name:<br/> 
+			<input type="text" name="firstname" /><br/>
+			Last name:<br/> 
+			<input type="text" name="lastname" /><br/>
+			<input type="radio" name="gender" value="male" /> Male<br/>
+			<input type="radio" name="gender" value="female" /> Female<br/>
+			<input type="radio" name="gender" value="other" /> Other <br/>
+			<input type="submit" value="Submit" />
+		</form>
+	</div>
+
+
+</body>
+</html>
