@@ -12,12 +12,32 @@
 	<atom:link href="https://www.genuitec.com/feed/" rel="self" type="application/rss+xml" />
 	<link>https://www.genuitec.com</link>
 	<description>The Cloud Control Company</description>
-	<lastBuildDate>Sun, 10 Dec 2017 19:11:20 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 11 Dec 2017 19:52:12 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=4.6.1</generator>
 	<item>
+		<title>Create a Note Taking App Using Angular</title>
+		<link>https://www.genuitec.com/create-note-taking-app-using-angular/</link>
+		<pubDate>Mon, 11 Dec 2017 12:51:59 +0000</pubDate>
+		<dc:creator><![CDATA[Bob at Genuitec]]></dc:creator>
+				<category><![CDATA[Eclipse]]></category>
+		<category><![CDATA[Genuitec]]></category>
+		<category><![CDATA[MyEclipse]]></category>
+		<category><![CDATA[Programming Tips]]></category>
+		<category><![CDATA[Webclipse]]></category>
+		<category><![CDATA[create a note taking app]]></category>
+		<category><![CDATA[note taking app]]></category>
+		<category><![CDATA[note taking app with Angular]]></category>
+		<category><![CDATA[write a note taking app]]></category>
+
+		<guid isPermaLink="false">https://www.genuitec.com/?p=542885</guid>
+		<description><![CDATA[<p>In this Angular tutorial, we are going to create a Note Taking App using Angular IDE.Create New Angular ProjectWe’re going to be using Angular IDE in this tutorial, though you can use Webclipse or MyEclipse, following exactly the same steps. Before beginning, do ensure you are in the Angular Perspective (Window &#62; Perspective &#62; Open Perspective [&#8230;]</p>
+<p>The post <a rel="nofollow" href="https://www.genuitec.com/create-note-taking-app-using-angular/">Create a Note Taking App Using Angular</a> appeared first on <a rel="nofollow" href="https://www.genuitec.com">Genuitec</a>.</p>
+]]></description>
+		</item>
+		<item>
 		<title>In CI 9, DevStyle Ships with Webclipse and Angular IDE &#8211; Here’s Why</title>
 		<link>https://www.genuitec.com/ci-9-devstyle-ships-webclipse-angular-ide-heres/</link>
 		<pubDate>Fri, 01 Dec 2017 20:43:25 +0000</pubDate>
@@ -287,35 +307,14 @@
 <p>The post <a rel="nofollow" href="https://www.genuitec.com/javaone-2017-highlights/">JavaOne 2017: Highlights</a> appeared first on <a rel="nofollow" href="https://www.genuitec.com">Genuitec</a>.</p>
 ]]></description>
 		</item>
-		<item>
-		<title>Code Sharing Evolving</title>
-		<link>https://www.genuitec.com/code-sharing-evolving/</link>
-		<pubDate>Tue, 03 Oct 2017 17:59:43 +0000</pubDate>
-		<dc:creator><![CDATA[Wanda Muriy]]></dc:creator>
-				<category><![CDATA[Bright Ideas]]></category>
-		<category><![CDATA[Eclipse]]></category>
-		<category><![CDATA[Genuitec]]></category>
-		<category><![CDATA[MyEclipse]]></category>
-		<category><![CDATA[Programming Tips]]></category>
-		<category><![CDATA[Webclipse]]></category>
-		<category><![CDATA[code review]]></category>
-		<category><![CDATA[code sharing]]></category>
-		<category><![CDATA[collaborative programming]]></category>
-		<category><![CDATA[share code]]></category>
-
-		<guid isPermaLink="false">https://www.genuitec.com/?p=538504</guid>
-		<description><![CDATA[<p>Is there a little code snippet that is just driving you crazy? Or would you like a detailed collaborative session even before you dive in? There are different ways of sharing your code to get another developer to get involved. Read on for more!Simply Share with SlackSo how can you share your code? One easy [&#8230;]</p>
-<p>The post <a rel="nofollow" href="https://www.genuitec.com/code-sharing-evolving/">Code Sharing Evolving</a> appeared first on <a rel="nofollow" href="https://www.genuitec.com">Genuitec</a>.</p>
-]]></description>
-		</item>
 	</channel>
 </rss>
 
 <!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
 
-Object Caching 9464/9582 objects using disk
+Object Caching 9474/9594 objects using disk
 Page Caching using disk: enhanced (Requested URI is rejected)
 Content Delivery Network via resources.cloud.genuitec.com
-Database Caching 43/45 queries in 0.006 seconds using disk
+Database Caching 44/46 queries in 0.006 seconds using disk
 
- Served from: www.genuitec.com @ 2017-12-11 03:57:45 by W3 Total Cache -->
+ Served from: www.genuitec.com @ 2017-12-12 02:29:57 by W3 Total Cache -->

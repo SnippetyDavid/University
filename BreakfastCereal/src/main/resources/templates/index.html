@@ -17,13 +17,32 @@
 <body>
 
 	<div class="jumbotron text-center">
-		<h1>2 BreakFAST 2 BreakFURIOUS</h1>
+		<h1 th:text="${title}"></h1>
 		<h2></h2>
-		<br/>
+		<br />
 	</div>
 
 	<div class="container">
-		
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><h2>Name</h2></th>
+					<th><h2>Protein</h2></th>
+					<th><h2>Links</h2></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cer:${Cereals}">
+					<td th:text="${cer.cerealName}"></td>
+					<td th:text="${cer.protein}"></td>
+					<td><a th:href="@{Cereal/View/} + ${cer.cerealId}">View</a> <a
+						th:href="@{Cereal/Edit/} + ${cer.cerealId}">Edit</a> <a
+						th:href="@{Cereal/Delete/} + ${cer.cerealId}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="/Cereal/Add" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Add</a>
 	</div>
 
 

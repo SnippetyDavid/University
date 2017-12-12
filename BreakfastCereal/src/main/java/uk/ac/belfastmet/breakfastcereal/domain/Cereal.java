@@ -3,6 +3,9 @@ package uk.ac.belfastmet.breakfastcereal.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+//import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Cereal {
@@ -10,10 +13,13 @@ public class Cereal {
 	@Id
 	@GeneratedValue
 	private Integer cerealId;
+	@NotEmpty
 	private String manufacturer;
-	private String Cereal;
+	@NotEmpty
+	private String cerealName;
 	private int energy;
 	private int calories;
+//	@Min((long) 0.01)
 	private double protein;
 	private double carbohydrate;
 	private double sugars;
@@ -24,13 +30,17 @@ public class Cereal {
 	private String salt;
 	private String iron;
 	
-	public Cereal(Integer cerealId, String manufacturer, String cereal, int energy, int calories, double protein,
+	public Cereal() {
+		
+	}
+	
+	public Cereal(Integer cerealId, String manufacturer, String cerealName, int energy, int calories, double protein,
 			double carbohydrate, double sugars, double fat, double saturates, double fibre, String sodium, String salt,
 			String iron) {
 		super();
 		this.cerealId = cerealId;
 		this.manufacturer = manufacturer;
-		Cereal = cereal;
+		this.cerealName = cerealName;
 		this.energy = energy;
 		this.calories = calories;
 		this.protein = protein;
@@ -60,12 +70,12 @@ public class Cereal {
 		this.manufacturer = manufacturer;
 	}
 
-	public String getCereal() {
-		return Cereal;
+	public String getCerealName() {
+		return cerealName;
 	}
 
-	public void setCereal(String cereal) {
-		Cereal = cereal;
+	public void setCerealName(String cerealName) {
+		this.cerealName = cerealName;
 	}
 
 	public int getEnergy() {

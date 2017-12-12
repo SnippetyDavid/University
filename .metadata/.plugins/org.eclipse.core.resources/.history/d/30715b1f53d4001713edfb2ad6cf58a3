@@ -1,6 +1,0 @@
-package uk.ac.belfastmet.springdwarvesdwarfs.controllers;
-
-@Controller
-public class DisneyController {
-
-}
