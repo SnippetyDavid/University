@@ -1,0 +1,142 @@
+package tests;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+
+import mainGame.ShotCards;
+import mainWindow.LeftPanel;
+import mainWindow.RightPanel;
+
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * This class is used to test the shot card class. The reason for the test advance methods is
+ * because of the middle panel throwing up null pointer exceptions for moving the player images.
+ * The test methods are exactly the same as the normal method except with no reference to the 
+ * middle panel
+ * 
+ * @author Brogrammers
+ */
+public class ShotCardTest {
+	
+	private ShotCards card;
+	private ArrayList<String> players;
+	LeftPanel leftPanel;
+	RightPanel rightPanel;
+	
+	@Before
+	public void setup() {
+		card = new ShotCards("Card1", 1, false, "Test Description", "Test effect");
+		players = new ArrayList<String>();
+		players.add("player1");
+		players.add("player2");
+		players.add("player3");
+		players.add("player4");
+		leftPanel = new LeftPanel(players);
+		rightPanel = new RightPanel();
+		
+	}
+
+	@Test
+	public void testSetDescription() {
+		assertEquals("Test Description", card.getDescription());
+		card.setDescription("New test description");
+		assertEquals("New test description", card.getDescription());
+		
+	}
+	
+	@Test
+	public void testSetEffect() {
+		assertEquals("Test effect", card.getEffect());
+		card.setEffect("New test effect");
+		assertEquals("New test effect", card.getEffect());
+	}
+	
+	@Test
+	public void testBoojum() {
+		int boojumPos = 21;
+		RightPanel.setCurrentPlayer(1);
+		assertEquals(0,LeftPanel.getPlayer1().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer2().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer3().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer4().getPlayerPos());
+		ShotCards.testAdvanceBoojum();
+		assertEquals(boojumPos,LeftPanel.getPlayer1().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer2().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer3().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer4().getPlayerPos());
+		RightPanel.setCurrentPlayer(2);
+		ShotCards.testAdvanceBoojum();
+		assertEquals(boojumPos,LeftPanel.getPlayer1().getPlayerPos());
+		assertEquals(boojumPos,LeftPanel.getPlayer2().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer3().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer4().getPlayerPos());
+		LeftPanel.getPlayer1().setPlayerPos(0);
+		RightPanel.setCurrentPlayer(3);
+		ShotCards.testAdvanceBoojum();
+		assertEquals(0,LeftPanel.getPlayer1().getPlayerPos());
+		assertEquals(boojumPos,LeftPanel.getPlayer2().getPlayerPos());
+		assertEquals(boojumPos,LeftPanel.getPlayer3().getPlayerPos());
+		assertEquals(0,LeftPanel.getPlayer4().getPlayerPos());
+		RightPanel.setCurrentPlayer(4);
+		ShotCards.testAdvanceBoojum();
+		assertEquals(0,LeftPanel.getPlayer1().getPlayerPos());
+		assertEquals(boojumPos,LeftPanel.getPlayer2().getPlayerPos());
+		assertEquals(boojumPos,LeftPanel.getPlayer3().getPlayerPos());
+		assertEquals(boojumPos,LeftPanel.getPlayer4().getPlayerPos());	
+	}
+	
+	@Test
+	public void testAdvanceGo() {
+		int goPos = 0;
+		RightPanel.setCurrentPlayer(1);
+		LeftPanel.getPlayer1().setPlayerPos(10);
+		assertEquals(10,LeftPanel.getPlayer1().getPlayerPos());
+		ShotCards.testAdvanceGo();
+		assertEquals(goPos,LeftPanel.getPlayer1().getPlayerPos());
+
+	}
+	
+	@Test
+	public void testAdvanceBot() {
+		int botPos = 25;
+		RightPanel.setCurrentPlayer(1);
+		assertEquals(0,LeftPanel.getPlayer1().getPlayerPos());
+		ShotCards.testAdvanceBotanic();
+		assertEquals(botPos,LeftPanel.getPlayer1().getPlayerPos());
+	}
+
+	@Test
+	public void testAdvanceLanyon() {
+		int lanyonPos = 39;
+		RightPanel.setCurrentPlayer(1);
+		assertEquals(0,LeftPanel.getPlayer1().getPlayerPos());
+		ShotCards.testAdvanceLanyon();
+		assertEquals(lanyonPos,LeftPanel.getPlayer1().getPlayerPos());
+	}
+	
+	@Test
+	public void testCollectBursary() {
+		RightPanel.setCurrentPlayer(1);
+		assertEquals(1000,LeftPanel.getPlayer1().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer2().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer3().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer4().getPlayerMoney());
+		ShotCards.collectBursary();
+		assertEquals(1100,LeftPanel.getPlayer1().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer2().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer3().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer4().getPlayerMoney());
+		RightPanel.setCurrentPlayer(3);
+		ShotCards.collectBursary();
+		assertEquals(1100,LeftPanel.getPlayer1().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer2().getPlayerMoney());
+		assertEquals(1100,LeftPanel.getPlayer3().getPlayerMoney());
+		assertEquals(1000,LeftPanel.getPlayer4().getPlayerMoney());
+	}
+
+
+}

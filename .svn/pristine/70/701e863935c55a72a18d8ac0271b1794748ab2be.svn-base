@@ -1,0 +1,301 @@
+package mainGame;
+
+import mainWindow.LeftPanel;
+import mainWindow.MiddlePanel;
+import mainWindow.RightPanel;
+
+/**
+ * This class is used for the shot cards in our board game
+ *
+ * @author Brogrammers
+ */
+public class ShotCards {
+
+	private String description, effect;
+
+	/**
+	 * This constructor creates a shot card object
+	 * @param pPropertyName - the name of the card
+	 * @param pPropPos - the position of the card
+	 * @param pBuyable - whether the card is buyable
+	 * @param cDescription - the description of the card
+	 * @param cEffect - the effect of the card
+	 */
+	public ShotCards(String pPropertyName, int pPropPos, boolean pBuyable, 
+			String cDescription, String cEffect) {
+		description = cDescription;
+		effect = cEffect;
+	}
+	
+	/**
+	 * This method advances the player to Boojum
+	 */
+	public static void advanceBoojum(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+			MiddlePanel.setPlayerCharLocation(1, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+			MiddlePanel.setPlayerCharLocation(2, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+			MiddlePanel.setPlayerCharLocation(3, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+			MiddlePanel.setPlayerCharLocation(4, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		}
+	}
+	
+	/**
+	 * This method advances the player to Go
+	 */
+	public static void advanceGo(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+			MiddlePanel.setPlayerCharLocation(1, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+			MiddlePanel.setPlayerCharLocation(2, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+			MiddlePanel.setPlayerCharLocation(3, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+			MiddlePanel.setPlayerCharLocation(4, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		}
+	}
+	
+	/**
+	 * This method advances the player to Botanic station
+	 */
+	public static void advanceBotanic(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+			MiddlePanel.setPlayerCharLocation(1, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+			MiddlePanel.setPlayerCharLocation(2, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+			MiddlePanel.setPlayerCharLocation(3, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+			MiddlePanel.setPlayerCharLocation(4, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		}
+	}
+	
+	/**
+	 * This method advances the player to the Lanyon Building
+	 */
+	public static void advanceLanyon(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+			MiddlePanel.setPlayerCharLocation(1, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+			MiddlePanel.setPlayerCharLocation(2, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+			MiddlePanel.setPlayerCharLocation(3, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+			MiddlePanel.setPlayerCharLocation(4, LeftPanel.getPlayer1()
+					.getPlayerPos());
+		}
+	}
+	
+	/**
+	 * This method adds money tio the player in the form of a bursary
+	 */
+	public static void collectBursary(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerMoney(
+					LeftPanel.getPlayer1().getPlayerMoney() + 100);
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerMoney(
+					LeftPanel.getPlayer2().getPlayerMoney() + 100);
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerMoney(
+					LeftPanel.getPlayer3().getPlayerMoney() + 100);
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerMoney(
+					LeftPanel.getPlayer4().getPlayerMoney() + 100);
+		}
+	}
+
+	/**
+	 * This method returns the card's description
+	 * @return - description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * This method sets a new card description
+	 * @param description - new description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * This method returns the card effect
+	 * @return - effect
+	 */
+	public String getEffect() {
+		return effect;
+	}
+
+	/**
+	 * This method sets a new card effect
+	 * @param effect - new effect
+	 */
+	public void setEffect(String effect) {
+		this.effect = effect;
+	}
+
+	
+	/**
+	 * This method is for test purposes only
+	 */
+	public static void testAdvanceGo(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getGo().getPropPos());
+		}
+	}
+	
+	/**
+	 * This method is for test purposes only
+	 */
+	public static void testAdvanceBotanic(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getBotanicTrain().getPropPos());
+		}
+	}
+	
+	/**
+	 * This method advances the player to the Lanyon Building
+	 */
+	public static void testAdvanceLanyon(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getLanyonBuilding().getPropPos());
+		}
+	}
+	
+	/**
+	 * This method is for test purposes only
+	 */
+	public static void testAdvanceBoojum(){
+		if (LeftPanel.getPlayer1().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer1().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+		} else if (LeftPanel.getPlayer2().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer2().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+		} else if (LeftPanel.getPlayer3().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer3().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+		} else if (LeftPanel.getPlayer4().getPlayerNum() == RightPanel
+				.getCurrentPlayer()) {
+			LeftPanel.getPlayer4().setPlayerPos(
+					PropertySetup.getBoojum().getPropPos());
+		}
+	}
+}
