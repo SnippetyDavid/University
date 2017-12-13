@@ -17,6 +17,8 @@
 </head>
 
 <body>
+	<nav th:replace="layouts/nav :: navFragment"></nav>
+
 	<div class="jumbotron text-center">
 		<h1 th:text="${title}">Create</h1>
 		<br />
@@ -24,27 +26,27 @@
 
 	<div class="container">
 
-		<form class="form-horizontal" th:action="@{/Cereal/Save}"
-			th:object="${cereal}" method="post">
+		<form class="form-horizontal" th:action="@{/Passenger/Save}"
+			th:object="${Passengers}" method="post">
 
 			<!-- hidden field is important! -->
-			<input type="hidden" th:field="${cereal.cerealId}" />
+			<input type="hidden" th:field="${Passengers.passengerId}" />
 
 			<!--  1 -->
 			<!-- 		<label class="col-md-2">Manufacturer</label>
 			<div class="form-group">
-			<input type="text" class="form-control" th:field="${cereal.manufacturer}" />
-			<span th:if="${#fields.hasErrors('manufacturer')}" th:errors="${cereal.cerealName}" 
+			<input type="text" class="form-control" th:field="${Passengers.manufacturer}" />
+			<span th:if="${#fields.hasErrors('manufacturer')}" th:errors="${Passengers.cerealName}" 
 				th:class="help-block"></span>
 			</div>
 -->
 			<!--  2 -->
-			<div class="form-group is-invalid"
+<!-- 			<div class="form-group is-invalid"
 				th:classappend="${#fields.hasErrors('manufacturer')}? 'has-error'">
 				<label class="col-md-2">Manufacturer</label>
 				<div class="col-md-10 control-label">
 					<input type="text" class="form-control"
-						th:field="${cereal.manufacturer}" /> <span
+						th:field="${Passengers.manufacturer}" /> <span
 						th:if="${#fields.hasErrors('manufacturer')}"
 						th:errors="*{manufacturer}" th:class="help-block">Manufacturer
 						Errors</span>
@@ -52,79 +54,73 @@
 			</div>
 			<br />
 			<div class="form-group is-invalid"
-				th:classappend="${#fields.hasErrors('cerealName')}? 'is-invalid'">
+				th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
 				<label class="col-md-2">Cereal</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control"
-						th:field="${cereal.cerealName}" /> <span
-						th:if="${#fields.hasErrors('cerealName')}"
-						th:errors="*{cerealName}" th:class="help-block">Name Errors</span>
+						th:field="${Passengers.cerealName}" /> <span
+						th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}" th:class="help-block">Name Errors</span>
 				</div>
 			</div>
 
-
+-->
 			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Nutrition</th>
-						<th>Value</th>
-					</tr>
-				</thead>
 				<tbody>
 					<tr>
-						<td>Energy</td>
+						<td>Name</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.energy}" /></td>
+							th:field="${Passengers.name}" /></td>
 					</tr>
 					<tr>
-						<td>Calories</td>
+						<td>Sex</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.calories}" /></td>
+							th:field="${Passengers.sex}" /></td>
 					</tr>
 					<tr>
-						<td>Protein</td>
+						<td>Age</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.protein}" /></td>
+							th:field="${Passengers.age}" /></td>
 					</tr>
 					<tr>
-						<td>Carbohydrate</td>
+						<td>Survived</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.carbohydrate}" /></td>
+							th:field="${Passengers.survived}" /></td>
 					</tr>
 					<tr>
-						<td>Sugars</td>
+						<td>pClass</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.sugars}" /></td>
+							th:field="${Passengers.pClass}" /></td>
 					</tr>
 					<tr>
-						<td>Fat</td>
+						<td>SibSp</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.fat}" /></td>
+							th:field="${Passengers.sibSp}" /></td>
 					</tr>
 					<tr>
-						<td>Saturates</td>
+						<td>Parch</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.saturates}" /></td>
+							th:field="${Passengers.parch}" /></td>
 					</tr>
 					<tr>
-						<td>Fibre</td>
+						<td>Tciket</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.fibre}" /></td>
+							th:field="${Passengers.ticket}" /></td>
 					</tr>
 					<tr>
-						<td>Sodium</td>
+						<td>Fare</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.sodium}" /></td>
+							th:field="${Passengers.fare}" /></td>
 					</tr>
 					<tr>
-						<td>Salt</td>
+						<td>Cabin</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.salt}" /></td>
+							th:field="${Passengers.cabin}" /></td>
 					</tr>
 					<tr>
-						<td>Iron</td>
+						<td>Embarked</td>
 						<td><input type="text" class="form-control"
-							th:field="${cereal.iron}" /></td>
+							th:field="${Passengers.embarked}" /></td>
 					</tr>
 				</tbody>
 			</table>

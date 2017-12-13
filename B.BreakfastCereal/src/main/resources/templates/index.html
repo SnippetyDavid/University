@@ -17,27 +17,30 @@
 <body>
 
 	<div class="jumbotron text-center">
-		<h1 th:text="${title}"></h1>
+		<h1 style="font-size:100px" th:text="${title}"></h1>
 		<h2></h2>
 		<br />
 	</div>
 
 	<div class="container">
-		<table class="table table-striped">
+		<div class="alert alert-success" role="alert" th:if="${message}">
+			<p style="text-align:center" th:text="${message}"></p>
+		</div>
+		<table class="table">
 			<thead>
 				<tr>
+					<th><h2>Manufacturer</h2></th>
 					<th><h2>Name</h2></th>
-					<th><h2>Protein</h2></th>
 					<th><h2>Links</h2></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="cer:${Cereals}">
+					<td th:text="${cer.manufacturer}"></td>
 					<td th:text="${cer.cerealName}"></td>
-					<td th:text="${cer.protein}"></td>
-					<td><a th:href="@{Cereal/View/} + ${cer.cerealId}">View</a> <a
-						th:href="@{Cereal/Edit/} + ${cer.cerealId}">Edit</a> <a
-						th:href="@{Cereal/Delete/} + ${cer.cerealId}">Delete</a>
+					<td><a th:href="@{Cereal/View/} + ${cer.cerealId}" class="btn btn-secondary" role="button" aria-pressed="true">View</a> <a
+						th:href="@{Cereal/Edit/} + ${cer.cerealId}" class="btn btn-secondary" role="button" aria-pressed="true">Edit</a> <a
+						th:href="@{Cereal/Delete/} + ${cer.cerealId}" class="btn btn-secondary" role="button" aria-pressed="true">Delete</a>
 					</td>
 				</tr>
 			</tbody>

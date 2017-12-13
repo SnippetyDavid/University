@@ -22,19 +22,9 @@ public class IndexController {
 	
 	@GetMapping("/")
 	public String getCereals(Model model) {
-		model.addAttribute("pageTitle", "Cereals!");
-		model.addAttribute("title", "Cereals!");
-		model.addAttribute("Cereals", this.cerealRepo.findAll());
+		model.addAttribute("pageTitle", "Cereals");
+		model.addAttribute("title", "Cereals");
+		model.addAttribute("Cereals", this.cerealRepo.findByOrderByManufacturer());
 		return "index";
 	}
-	
-	@GetMapping("/Pro")
-	public String index(Model model) {
-		model.addAttribute("pageTitle", "Cereals!");
-		model.addAttribute("title", "Finola's Cereal Gainz!");
-		model.addAttribute("Cereals", this.cerealRepo.findByOrderByProteinDesc());
-		return "index";
-	}
-	
-	
 }

@@ -14,4 +14,6 @@ public interface CerealRepository extends CrudRepository<Cereal, Integer> {
 
 	Iterable<Cereal> findByCerealName(String string);
 
+	Iterable<Cereal> findByOrderByManufacturer();
+
 }

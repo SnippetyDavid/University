@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.belfastmet.breakfastcereal.domain.Cereal;
 import uk.ac.belfastmet.breakfastcereal.repositories.CerealRepository;
@@ -17,7 +18,7 @@ import uk.ac.belfastmet.breakfastcereal.repositories.CerealRepository;
 @Controller
 @RequestMapping("/Cereal")
 public class CerealController {
-	
+
 	@Autowired
 	CerealRepository cerealRepo;
 
@@ -25,42 +26,42 @@ public class CerealController {
 		super();
 		this.cerealRepo = cerealRepo;
 	}
-	
+
 	@GetMapping("/View/{cerealId}")
 	public String getCereals(@PathVariable("cerealId") Integer cerealId, Model model) {
 		model.addAttribute("pageTitle", "View Cereal");
 		model.addAttribute("Cereals", this.cerealRepo.findOne(cerealId));
 		return "cerealView";
 	}
-	
+
 	@GetMapping("/Edit/{cerealId}")
 	public String editCereal(@PathVariable("cerealId") Integer cerealId, Model model) {
 		model.addAttribute("pageTitle", "Edit Cereal");
-		model.addAttribute("Cereals", this.cerealRepo.findOne(cerealId));
-		return "cerealEdit";	
+		model.addAttribute("cereal", this.cerealRepo.findOne(cerealId));
+		return "cerealEdit";
 	}
-	
+
 	@GetMapping("/Add")
 	public String createCereal(Model model) {
-		model.addAttribute("page title","Add");
+		model.addAttribute("page title", "Add");
 		model.addAttribute("cereal", new Cereal());
 		return "cerealEdit";
 	}
-	
+
 	@GetMapping("/Delete/{cerealId}")
-	public String deleteCereal(@PathVariable("cerealId") Integer cerealId) {
+	public String deleteCereal(@PathVariable("cerealId") Integer cerealId, RedirectAttributes redirectAttrs) {
 		cerealRepo.delete(cerealId);
+		redirectAttrs.addFlashAttribute("message", "Cereal was deleted");
 		return "redirect:/";
 	}
-	
+
 	@PostMapping("/Save")
 	public String saveCereal(@Valid Cereal cereal, BindingResult bindingResult, Model model) {
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			return "cerealEdit";
-		} else { 
-		Cereal savedCereal = cerealRepo.save(cereal);
-		return "redirect:/Cereal/View/" + savedCereal.getCerealId();
+		} else {
+			Cereal savedCereal = cerealRepo.save(cereal);
+			return "redirect:/Cereal/View/" + savedCereal.getCerealId();
 		}
 	}
-	
 }
