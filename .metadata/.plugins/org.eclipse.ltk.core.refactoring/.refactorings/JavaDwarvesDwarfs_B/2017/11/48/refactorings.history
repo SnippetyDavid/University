@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;Dwarfe.java&apos; to &apos;SpringDwarvesDwarfs/src/main/java/uk.ac.belfastmet.springdwarvesdwarfs&apos;&#x0D;&#x0A;- Original project: &apos;JavaDwarvesDwarfs_B&apos;&#x0D;&#x0A;- Destination element: &apos;SpringDwarvesDwarfs/src/main/java/uk.ac.belfastmet.springdwarvesdwarfs&apos;&#x0D;&#x0A;- Original element: &apos;Dwarfe.java&apos;" description="Copy compilation unit" destination="=SpringDwarvesDwarfs/src\/main\/java&lt;uk.ac.belfastmet.springdwarvesdwarfs" element1="/src&lt;{Dwarfe.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1511879438206" units="1" version="1.0"/>
-</session>
