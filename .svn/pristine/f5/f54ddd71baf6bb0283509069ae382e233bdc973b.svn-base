@@ -1,0 +1,19 @@
+﻿using EasyWpfLoginNavigateExample.ViewModel;
+using System.Windows;
+
+
+namespace EasyWpfLoginNavigateExample.View
+{
+    /// <summary>
+    /// Interaction logic for CreateProject.xaml
+    /// </summary>
+    public partial class CreateProject : Window
+    {
+        public CreateProject()
+        {
+            InitializeComponent();
+            DataContext = new ProjectViewModel(Stage);
+
+        }
+    }
+}

@@ -1,0 +1,22 @@
+﻿<Window x:Class="EasyWpfLoginNavigateExample.View.UserInvites"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="My Project Invitations" Height="400" Width="350">
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFA4DAFF" Height="369" Width="342">
+            <ListBox Height="266"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="276" ItemsSource="{Binding Invites}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Project: " />
+                            <TextBlock Text="{Binding Path=ProjectName }" />
+                            <TextBlock Text="Role: " />
+                            <TextBlock Text="{Binding Path=role }" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <TextBlock Text="My invites" FontWeight="Bold" HorizontalAlignment="Center" Margin="106,5,106,337" FontSize="20" FontFamily="Calibri" Foreground="White"/>
+    </Grid>
+</Window>

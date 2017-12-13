@@ -1,0 +1,5 @@
+C:\Users\david_000\Documents\Agile_\ScrumManagement\SharedModelLibrary\bin\Debug\SharedModelLibrary.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\SharedModelLibrary\bin\Debug\SharedModelLibrary.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\SharedModelLibrary\obj\Debug\SharedModelLibrary.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\SharedModelLibrary\obj\Debug\SharedModelLibrary.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\SharedModelLibrary\obj\Debug\SharedModelLibrary.csprojResolveAssemblyReference.cache

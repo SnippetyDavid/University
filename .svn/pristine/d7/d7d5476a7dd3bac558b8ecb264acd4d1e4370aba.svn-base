@@ -1,0 +1,80 @@
+﻿using EasyWpfLoginNavigateExample.ServiceReference;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using WPFClientApplication.Helpers;
+using WPFClientApplication.ViewModel;
+
+
+namespace EasyWpfLoginNavigateExample.ViewModel.Project
+{
+    class ShowUsersViewModel : ViewModelBase
+    {
+        public RelayCommand SelectUsersForProjectCommand { get; set; }
+
+        public ShowUsersViewModel()
+        {
+            SelectUsersForProjectCommand = new RelayCommand(selectUsersForProject);
+        }
+
+        public void selectUsersForProject(object obj)
+        {
+            foreach (UserModel user in Users)
+            {
+               
+                if (user.IsSelected)
+                {
+                    List<int> selectedUsers = new List<int>();
+                    //selectedUsers.Add(user.id);
+                    Debug.WriteLine(user.id);
+                    
+                }
+            }
+
+        }
+
+        private List<UserModel> _Users = GetAllUsers();
+        public List<UserModel> Users
+        {
+            get
+            {
+                return _Users;
+            }
+
+            set
+            {
+                _Users = value;
+                RaisePropertyChanged("Users");
+            }
+        }
+
+
+        // static method returns all the users in a user model object
+        private static List<UserModel> GetAllUsers()
+        {
+            UserServiceClient client = new UserServiceClient();
+            IEnumerable<UserModel> users = client.getAllUsers();
+
+            return users.ToList();
+        }
+
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (_isSelected == value) return;
+
+                _isSelected = value;
+
+            }
+        }
+
+    }
+}

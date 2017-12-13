@@ -1,0 +1,47 @@
+CREATE TABLE ProjectTeam
+(
+id int IDENTITY(1,1) NOT NULL,
+project_id int NOT NULL,
+user_id int NOT NULL,
+roles_id int NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (project_id) REFERENCES Project(id),
+FOREIGN KEY (user_id) REFERENCES Users(id),
+FOREIGN KEY (roles_id) REFERENCES Roles(id)
+);
+
+
+CREATE TABLE Users
+(
+id int IDENTITY(1,1) NOT NULL,
+username varchar(100) NOT NULL,
+password varchar(100) NOT NULL,
+email varchar(100) NOT NULL,
+projectManager int,
+scrumMaster int,
+developer int,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Project
+(
+id int IDENTITY(1,1) NOT NULL,
+projectName varchar(100) NOT NULL,
+projectDescription varchar(500) NOT NULL,
+user_id int NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Roles
+(
+id int IDENTITY(1,1) NOT NULL,
+roleName varchar(100) NOT NULL,
+PRIMARY KEY (id)
+);
+
+
+
+INSERT  INTO Roles (roleName) VALUES ('Developer');
+INSERT INTO users (username, password, email) VALUES ('cmccaughey', 'password', 'cmccaughey12@qub.ac.uk');
+

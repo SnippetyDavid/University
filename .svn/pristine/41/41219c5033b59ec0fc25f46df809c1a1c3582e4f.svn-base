@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="58fb4b42-2c1d-4528-b48f-327da49a8fcc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:5595/User.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="User.xsd" MetadataType="Schema" ID="3c9717ca-575d-4474-874b-02b823c4e329" SourceId="1" SourceUrl="http://localhost:5595/User.svc?xsd=xsd0" />
+    <MetadataFile FileName="User1.xsd" MetadataType="Schema" ID="64c7d688-9001-4ab8-933e-c92486350d34" SourceId="1" SourceUrl="http://localhost:5595/User.svc?xsd=xsd2" />
+    <MetadataFile FileName="User.wsdl" MetadataType="Wsdl" ID="20c7ec24-7f78-4199-8564-6d001b6348cc" SourceId="1" SourceUrl="http://localhost:5595/User.svc?wsdl" />
+    <MetadataFile FileName="User2.xsd" MetadataType="Schema" ID="ef707cd9-aa47-4c8c-ac70-b6fb4ef21cf2" SourceId="1" SourceUrl="http://localhost:5595/User.svc?xsd=xsd1" />
+    <MetadataFile FileName="User.disco" MetadataType="Disco" ID="e36dc73c-2df3-42f6-8442-e9114ba18a4c" SourceId="1" SourceUrl="http://localhost:5595/User.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

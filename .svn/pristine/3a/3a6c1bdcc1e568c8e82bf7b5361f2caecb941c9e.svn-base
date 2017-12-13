@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+
+namespace WCFScrumManagement
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
+    public class User : UserService
+    {
+        // create the sql connection that connects to our hosted db
+        SqlConnection con = new SqlConnection("Data Source=jdickinson03.public.cs.qub.ac.uk;Initial Catalog=jdickinson03;User ID=jdickinson03;Password=5rmp7b1x2hzsv42f");
+
+        public Boolean InsertUserDetails(string username, string password, string email)
+        {
+            // open the sql connection
+            con.Open();
+
+            String query = "insert into Users(username,password,email) values(" + username + ", " + password + ", " + email + ")";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            // execute the insert statement and store the result
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+            // check to see if the user was succesfully added and return a boolean value based on the result
+            if (result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean checkUserDetails(string username, string password)
+        {
+            // open the sql connection
+            con.Open();
+
+            // Query string and execute the query
+            String query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "';";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+
+            // Reader returns true if the username and password is in the database
+            if (reader.Read()) 
+            {
+                // close the sql connection
+                con.Close();
+                return true;
+            }
+            else
+            {
+                // close the sql connection
+                con.Close();
+                return false;
+            }
+           
+            
+          
+            
+
+        }
+    }
+}

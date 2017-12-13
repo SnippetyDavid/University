@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_UserService" />
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:5595/User.svc" binding="basicHttpBinding"
+                bindingConfiguration="BasicHttpBinding_UserService" contract="ServiceReference.UserService"
+                name="BasicHttpBinding_UserService" />
+        </client>
+    </system.serviceModel>
+</configuration>

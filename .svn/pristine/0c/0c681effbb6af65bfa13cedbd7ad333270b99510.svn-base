@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using WPFClientApplication.ViewModel;
+using WPFClientApplication.Model;
+using EasyWpfLoginNavigateExample.ServiceReference;
+using System.Windows;
+using WPFClientApplication.Helpers;
+using System.Windows.Controls;
+
+namespace WPFClientApplication.ViewModel
+{
+    class UserInvitesViewModel : ViewModelBase
+    {
+
+        private List<UserModel> _Invites = GetInvites();
+        public List<UserModel> Invites
+        {
+            get
+            {
+                return _Invites;
+            }
+
+            set
+            {
+                _Invites = value;
+                RaisePropertyChanged("Users");
+            }
+        }
+
+        private static List<UserModel> GetInvites()
+        {
+            UserServiceClient client = new UserServiceClient();
+            IEnumerable<UserModel> users = client.getAllUsers();
+
+            return users.ToList();
+        }
+    }
+}

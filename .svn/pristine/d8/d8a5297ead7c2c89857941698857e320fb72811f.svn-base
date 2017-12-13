@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="EasyWpfLoginNavigateExample.View.ProjectOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="820">
+
+    <Grid Width="820" Height="600" Background="#FFF2F2F2">
+
+        <ScrollViewer x:Name="svBtn" Width="820" HorizontalAlignment="Left" 
+                  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+            <StackPanel>
+                <Label Content="##Project Name##" HorizontalAlignment="Left" Height="82" Margin="153,10,0,0" VerticalAlignment="Top" Width="429" FontSize="48"/>
+                <TextBlock Text=""/>
+                <TextBlock Text="Project Description" FontSize="20" FontWeight="Bold"/>
+                <TextBlock Text="simple wee sql query here ... hopefully "/>
+                <TextBlock Text="Text 03"/>
+                <TextBlock Text="Text 04"/>
+                <TextBlock Text="Text 05"/>
+                <TextBlock Text="Text 06"/>
+                <TextBlock Text="Text 07"/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text="Project Team" FontSize="20" FontWeight="Bold"/>
+                <ListView HorizontalAlignment="Left" Height="400" Margin="30,10,0,0" 
+              VerticalAlignment="Top" Width="550" ItemsSource="{Binding Users}">
+                    <ListView.View>
+                        <GridView x:Name="GridView1">
+                            <GridViewColumn  Width="50"  Header="Select" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <CheckBox  x:Name="chkAvg" Content="{Binding Data}" IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding= "{Binding Path=UserName}" 
+                                Header="Username" Width="170"/>
+                            <GridViewColumn  Width="110"  Header="Scrum Master" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <CheckBox  x:Name="chkAvg" Content="{Binding Data}" IsEnabled="{Binding ScrumMaster}" IsChecked="{Binding Path=IsScrumMasterSelected, Mode=TwoWay}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn  Width="110"  Header="Project Owner" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <CheckBox  x:Name="chkAvg" Content="{Binding Data}" IsEnabled="{Binding ProjectOwner}" IsChecked="{Binding Path=IsProjectOwnerSelected, Mode=TwoWay}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn  Width="110"  Header="Developer" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <CheckBox  x:Name="chkAvg" Content="{Binding Data}" IsEnabled="{Binding Developer}" IsChecked="{Binding Path=IsDeveloperSelected, Mode=TwoWay}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <TextBlock Text="have the option to view their account details ??"/>
+                <TextBlock Text="Blah Blah"/>
+                <TextBlock Text="Text 16"/>
+                <TextBlock Text="Text 17"/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text="Project Sprints" FontSize="20" FontWeight="Bold"/>
+                <TextBlock Text="Treeview here listing each sprint"/>
+                <TextBlock Text="for each sprint the treeview breaks down to sprint backlog, burndown, planning poker"/>
+                <TextBlock Text="sprint backlog (create one if doesnt exist, add tasks to each user story similar to our backlog"/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text="Product Backlog" FontSize="20" FontWeight="Bold"/>
+                <TextBlock Text="button to new usercontrol where we can reorder"/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+                <TextBlock Text=""/>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+
+</UserControl>

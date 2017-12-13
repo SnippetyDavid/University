@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using WPFClientApplication.Helpers;
+using WPFClientApplication.Model;
+
+namespace WPFClientApplication.ViewModel
+{
+    public class RegistrationViewModel : ViewModelBase
+    {
+        public RelayCommand RegisterCommand { get; set; }
+        public AuthenticationViewModel AuthVM { get; set; }
+
+        public RegistrationViewModel()
+        {
+            AuthVM = new AuthenticationViewModel();
+
+            RegisterCommand = new RelayCommand(DoRegister);
+
+        }
+
+        private void DoRegister(object obj)
+        {
+            AuthVM.IsRegisteredUser();
+        }
+
+    }
+}

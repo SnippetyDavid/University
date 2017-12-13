@@ -1,0 +1,42 @@
+﻿using EasyWpfLoginNavigateExample.Model;
+using EasyWpfLoginNavigateExample.ServiceReference1;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using WPFClientApplication.ViewModel;
+
+namespace EasyWpfLoginNavigateExample.ViewModel
+{
+    class CreateProjectViewModel : ViewModelBase
+    {
+
+        public CreateProjectViewModel()
+        {
+            NewProj = new NewProject { ProjectName = "", ProjectDescription = "" };
+        }
+
+        private NewProject _NewProj;
+
+        public NewProject NewProj
+        {
+            get { return _NewProj; }
+            set
+
+            {
+                if (value != _NewProj)
+                {
+                    _NewProj = value;
+                    RaisePropertyChanged("NewProj");
+                }
+            }
+        }
+
+        public void createProject()
+        {
+            ProjectServiceClient client = new ProjectServiceClient();
+            client.InsertProjectDetails(this.NewProj.ProjectName, this.NewProj.ProjectDescription);
+        }
+    }
+}

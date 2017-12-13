@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="EasyWpfLoginNavigateExample.View.ProductBacklog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="820">
+
+    <Grid Width="820" Height="600" Background="#FFF2F2F2">
+
+        <ScrollViewer x:Name="svBtn" Width="820" HorizontalAlignment="Left" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+            <StackPanel>
+                <Label Content="      Product Backlog" HorizontalAlignment="Left" Height="82" Margin="153,10,0,0" VerticalAlignment="Top" Width="461" FontSize="48"/>
+        <Grid Margin="30,0,40,119">
+            <ListView HorizontalAlignment="Left" Height="481" VerticalAlignment="Top" Width="600" ItemsSource="{Binding Invites}">
+                <ListView.View>
+                    <GridView x:Name="GridView1">
+                        <GridViewColumn Header="User Story" Width="400"/>
+                        <GridViewColumn Header="Market Value" Width="100"/>
+                        <GridViewColumn Header="Story Points" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button Content="Add" Height="35" Width="110" Margin="640,81,0,365"/>
+            <Button Content="Edit" Height="35" Width="110" Margin="640,151,0,295"/>
+            <Button Content="Delete" Height="35" Width="110" Margin="640,221,0,225"/>
+
+        </Grid>
+
+        </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+
+</UserControl>

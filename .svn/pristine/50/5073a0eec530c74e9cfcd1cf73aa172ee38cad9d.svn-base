@@ -1,0 +1,47 @@
+﻿using EasyWpfLoginNavigateExample.Model;
+using EasyWpfLoginNavigateExample.ServiceReference1;
+using System;
+using System.Windows;
+using WPFClientApplication.ViewModel;
+
+namespace EasyWpfLoginNavigateExample.ViewModel
+{
+    class CreateProjectViewModel : ViewModelBase
+    {
+
+        public CreateProjectViewModel()
+        {
+            NewProj = new NewProject { ProjectName = "", ProjectDescription = "" };
+        }
+
+        private NewProject _NewProj;
+
+        public NewProject NewProj
+        {
+            get { return _NewProj; }
+            set
+
+            {
+                if (value != _NewProj)
+                {
+                    _NewProj = value;
+                    RaisePropertyChanged("NewProj");
+                }
+            }
+        }
+
+        public Boolean createProject()
+        {
+            if(this.NewProj.ProjectName == "" || this.NewProj.ProjectDescription == "")
+            {
+                MessageBox.Show("You must enter a project name and description.");
+                return false;
+            }
+
+            // return true for test purposes.
+            return true; 
+            ProjectServiceClient client = new ProjectServiceClient();
+            return client.InsertProjectDetails(this.NewProj.ProjectName, this.NewProj.ProjectDescription);
+        }
+    }
+}
