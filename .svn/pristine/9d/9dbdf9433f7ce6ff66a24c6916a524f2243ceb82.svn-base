@@ -1,0 +1,841 @@
+package uk.co.takeabytestudios.rock_etout.game.gameScreens;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import uk.co.takeabytestudios.rock_etout.RocketOutFragment;
+import uk.co.takeabytestudios.rock_etout.ai.AIObjects;
+import uk.co.takeabytestudios.rock_etout.engine.AssetStore;
+import uk.co.takeabytestudios.rock_etout.engine.ElapsedTime;
+import uk.co.takeabytestudios.rock_etout.game.BlackHole;
+import uk.co.takeabytestudios.rock_etout.game.Fuel;
+import uk.co.takeabytestudios.rock_etout.game.Money;
+import uk.co.takeabytestudios.rock_etout.game.PlayerRocket;
+import uk.co.takeabytestudios.rock_etout.game.ProgressBar;
+import uk.co.takeabytestudios.rock_etout.graphics.IGraphics2D;
+import uk.co.takeabytestudios.rock_etout.util.BoundingBox;
+import uk.co.takeabytestudios.rock_etout.world.GameObject;
+import uk.co.takeabytestudios.rock_etout.world.GameScreen;
+import uk.co.takeabytestudios.rock_etout.world.LayerViewport;
+import uk.co.takeabytestudios.rock_etout.world.ScreenViewport;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.util.Log;
+
+/**
+ * This class creates the screen for the actual game
+ * 
+ * @authors Nathan Harrison, Niall Shannon, David Walsh, Reece Magee
+ */
+public class RocketGameScreen extends GameScreen {
+
+	// Properties
+
+	// score that the user earns over time... Initialized at 0
+	static int score = 0;
+
+	// Width and height of the level
+	private final float LEVEL_WIDTH = 1000.0f;
+	private final float LEVEL_HEIGHT = 1000.0f;
+
+	// Define viewports for this layer and the associated screen projection
+	private ScreenViewport mScreenViewport;
+	private LayerViewport mLayerViewport;
+
+	// Define a background object, alongside a player controlled rocket,
+	// a list of AI objects and a progress bar for the fuel gauge.
+	private GameObject mSkyBackground;
+	private PlayerRocket mPlayerRocket;
+	private ProgressBar mProgressBar;
+
+	private List<AIObjects> mFireball;
+	private final int NUM_FIREBALL = 5;
+	private List<AIObjects> mAIHelicopters;
+	private final int NUM_HELICOPTERS = 6;
+	private List<AIObjects> mAeroplane;
+	private final int NUM_AEROPLANE = 3;
+	private List<AIObjects> mComet;
+	private final int NUM_COMET = 5;
+	private List<AIObjects> mAlienSpaceship;
+	private final int NUM_ALIENSPACESHIP = 5;
+
+	// level of the game
+	private int level = 1;
+
+	// fuel
+	private List<Fuel> mFuel;
+	private final int NUM_FUEL = 5;
+	private final int FUEL_TANK = 250;
+	private final int MAX_TANK = 1000;
+	
+	
+	//Black Hole
+	private List<BlackHole>mHole;
+	// coins
+	private ArrayList<Money> mCoin;
+
+	// how fast the fuel goes down and the speed of the rocket
+	private static double fuelRemover = 4;
+	private static float accelerator = 500;
+
+	// Constructors
+	/**
+	 * Create the game world
+	 * 
+	 * @param game
+	 *            - Game to which this screen belongs
+	 */
+	public RocketGameScreen(RocketOutFragment game) {
+		super("RocketGameScreen", game);
+
+		// resets score to 0 when the game is started
+		resetScore();
+		// Create the screen viewport
+		mScreenViewport = new ScreenViewport(0, 0, game.getScreenWidth(),
+				(game.getScreenHeight()));
+
+		// Create the layer viewport, taking into account the orientation
+		// and aspect ratio of the screen.
+		if (mScreenViewport.height > mScreenViewport.width) {
+			mLayerViewport = new LayerViewport(240.0f, 240.0f
+					* mScreenViewport.width / mScreenViewport.height, 240,
+					240.0f * mScreenViewport.width / mScreenViewport.height);
+		} else {
+			mLayerViewport = new LayerViewport(240.0f * mScreenViewport.width
+					/ mScreenViewport.height, 240.0f, 240.0f
+					* mScreenViewport.width / mScreenViewport.height, 240);
+		}
+
+		// Load in the assets
+		AssetStore assetManager = mGame.getAssetManager();
+		assetManager.loadAndAddBitmap("Sky1", "Images/Sky1.png");
+		assetManager.loadAndAddBitmap("Sky2", "Images/Sky2.png");
+		assetManager.loadAndAddBitmap("Sky3", "Images/Sky3.png");
+		assetManager.loadAndAddBitmap("Sky4", "Images/Sky4.png");
+		assetManager.loadAndAddBitmap("Sky5", "Images/Sky5.png");
+		assetManager.loadAndAddBitmap("Rocket", "Images/Rocket.png");
+		assetManager.loadAndAddBitmap("Rocket2", "Images/Rocket2.png");
+		assetManager.loadAndAddBitmap("Rocket3", "Images/Rocket3.png");
+		assetManager.loadAndAddBitmap("Rocket4", "Images/Rocket4.png");
+		assetManager.loadAndAddBitmap("Helicopter", "Images/Helicopter.png");
+		assetManager.loadAndAddBitmap("Aeroplane", "Images/Aeroplane.png");
+		assetManager.loadAndAddBitmap("Spaceship", "Images/SpaceShip.png");
+		assetManager.loadAndAddBitmap("Comet", "Images/Comet.png");
+		assetManager.loadAndAddBitmap("Fuel", "Images/fuel.png");
+		assetManager.loadAndAddBitmap("Probar", "Images/bar.png");
+		assetManager.loadAndAddBitmap("Fireball", "Images/fireball.png");
+		assetManager.loadAndAddBitmap("Coin", "Images/Coin.png");
+		assetManager.loadAndAddBitmap("Hole", "Images/blackhole.png");
+		assetManager.loadAndAddBitmap("Coin1", "Images/Coin1.png");
+		assetManager.loadAndAddBitmap("Coin2", "Images/Coin2.png");
+		assetManager.loadAndAddBitmap("Coin3", "Images/Coin3.png");
+		assetManager.loadAndAddBitmap("Coin4", "Images/Coin4.png");
+		assetManager.loadAndAddBitmap("Coin5", "Images/Coin5.png");
+		assetManager.loadAndAddBitmap("Coin6", "Images/Coin6.png");
+		assetManager.loadAndAddBitmap("Coin7", "Images/Coin7.png");
+		assetManager.loadAndAddBitmap("Coin8", "Images/Coin8.png");
+		// get music and play relevant audio for game
+		assetManager.getMusic("Launch").setLooping(false);
+		if (SettingsScreen.getSoundMute() == 0) {
+			assetManager.getMusic("Launch").play();
+		}
+		assetManager.getMusic("Explosion").setLooping(false);
+
+		assetManager.getMusic("GameMusic").setLooping(true);
+		if (SettingsScreen.getMute() == 0) {
+			assetManager.getMusic("GameMusic").play();
+		}
+
+		// Create the sky background
+		mSkyBackground = new GameObject(LEVEL_WIDTH / 2.0f,
+				LEVEL_HEIGHT / 2.0f, LEVEL_WIDTH, LEVEL_HEIGHT, getGame()
+						.getAssetManager().getBitmap("Sky1"), this);
+
+		// Create the player rocket
+		mPlayerRocket = new PlayerRocket((LEVEL_WIDTH / 2), 100, this, MAX_TANK);
+
+		mProgressBar = new ProgressBar(100, 100, this);
+
+		float minHeight = (float) 0.15;
+		float maxHeight = (float) 1.0;
+		Random random = new Random();
+		Random random2 = new Random();
+		// Create a number of randomly positioned AI controlled helicopters
+		mAIHelicopters = new ArrayList<AIObjects>(NUM_HELICOPTERS);
+		for (int idx = 0; idx < NUM_HELICOPTERS; idx++) {
+			mAIHelicopters.add(new AIObjects(random.nextFloat() * LEVEL_WIDTH,
+					(random2.nextFloat() * (maxHeight - minHeight) + minHeight)
+							* LEVEL_HEIGHT, 50.0f, 50.0f,
+					AIObjects.AIBehaviour.Helicopter, this, getGame()
+							.getAssetManager().getBitmap("Helicopter")));
+		}
+
+		mFireball = new ArrayList<AIObjects>(NUM_FIREBALL);
+		for (int idx = 0; idx < NUM_FIREBALL; idx++) {
+			mFireball.add(new AIObjects(random.nextFloat() * LEVEL_WIDTH,
+					LEVEL_HEIGHT, 25.0f, 25.0f, AIObjects.AIBehaviour.Fireball,
+					this, getGame().getAssetManager().getBitmap("Fireball")));
+		}
+
+		mAeroplane = new ArrayList<AIObjects>(NUM_AEROPLANE);
+		for (int idx = 0; idx < NUM_AEROPLANE; idx++) {
+			mAeroplane.add(new AIObjects(0, (random2.nextFloat()
+					* (maxHeight - minHeight) + minHeight)
+					* LEVEL_HEIGHT, 100.0f, 40.0f,
+					AIObjects.AIBehaviour.Aeroplane, this, getGame()
+							.getAssetManager().getBitmap("Aeroplane")));
+		}
+
+		mComet = new ArrayList<AIObjects>(NUM_COMET);
+		for (int idx = 0; idx < NUM_COMET; idx++) {
+			mComet.add(new AIObjects(LEVEL_WIDTH, random.nextFloat()
+					* LEVEL_HEIGHT, 50.0f, 50.0f, AIObjects.AIBehaviour.Comet,
+					this, getGame().getAssetManager().getBitmap("Comet")));
+		}
+
+		mAlienSpaceship = new ArrayList<AIObjects>(NUM_ALIENSPACESHIP);
+		for (int idx = 0; idx < NUM_ALIENSPACESHIP; idx++) {
+			mAlienSpaceship.add(new AIObjects(random.nextFloat() * LEVEL_WIDTH,
+					random.nextFloat() * LEVEL_HEIGHT, 50.0f, 50.0f,
+					AIObjects.AIBehaviour.AlienSpaceship, this, getGame()
+							.getAssetManager().getBitmap("Spaceship")));
+		}
+
+		mFuel = new ArrayList<Fuel>(NUM_FUEL);
+		for (int idy = 0; idy < NUM_FUEL; idy++) {
+			mFuel.add(new Fuel(random.nextFloat() * LEVEL_WIDTH, random
+					.nextFloat() * LEVEL_HEIGHT, this));
+		}
+
+		mCoin = new ArrayList<Money>(Money.getNumberCoin());
+		for (int idy = 0; idy < Money.getNumberCoin(); idy++) {
+			 mCoin.add(new Money(random.nextFloat() * LEVEL_WIDTH, random
+					.nextFloat() * LEVEL_HEIGHT, this));
+		}
+		
+		
+		mHole = new ArrayList<BlackHole>(2);
+		for (int idy = 0; idy < 2; idy++) {
+			mHole.add(new BlackHole(random.nextFloat() * LEVEL_WIDTH, random
+					.nextFloat() * LEVEL_HEIGHT, this));
+		}
+
+		// These if statements determine how fast the fuel goes down and the
+		// speed of the rocket,
+		// depending on what the player bought in the shop
+		if (ShopScreen.getFTick() == 1) {
+			setFuelRemover(3);
+		}
+
+		if (ShopScreen.getFTick() == 2) {
+			setFuelRemover(2);
+		}
+
+		if (ShopScreen.getFTick() == 3) {
+			setFuelRemover(1);
+		}
+
+		if (ShopScreen.getETick() == 1) {
+			setAccelerator(600);
+		}
+
+		if (ShopScreen.getETick() == 2) {
+			setAccelerator(800);
+		}
+
+		if (ShopScreen.getETick() == 3) {
+			setAccelerator(1000);
+		}
+	}
+
+	// Support methods
+
+	/**
+	 * This method returns the fuel remover
+	 * 
+	 * @return - the fuel remover
+	 */
+	public static double getFuelRemover() {
+		return fuelRemover;
+	}
+
+	/**
+	 * This method sets the fuel remover to a new number
+	 * 
+	 * @param fuelRemover
+	 *            - the new fuel remover
+	 */
+	public static void setFuelRemover(double fuelRemover) {
+		RocketGameScreen.fuelRemover = fuelRemover;
+	}
+
+	/**
+	 * This method sets the acceleration to a new number
+	 * 
+	 * @param accelerator
+	 *            - the new acceleration
+	 */
+	public static void setAccelerator(float accelerator) {
+		RocketGameScreen.accelerator = accelerator;
+	}
+
+	/**
+	 * This method returns the score for the player
+	 * 
+	 * @return - the score
+	 */
+	public static int getScore() {
+		return score;
+	}
+
+	/**
+	 * This method returns what level the player is on
+	 * 
+	 * @return - the level number
+	 */
+	public int getLevel() {
+		return level;
+	}
+
+	/**
+	 * This method resets the score to 0 when the user plays a new game
+	 */
+	public static void resetScore() {
+		score = 0;
+	}
+
+	/**
+	 * This method refreshes both the fuel and coins at random locations for
+	 * when the player enters a new level
+	 */
+	public void refreshFuelAndCoins() {
+		mFuel.clear();
+		Random random = new Random();
+		for (int idy = 0; idy < NUM_FUEL; idy++) {
+			mFuel.add(new Fuel(random.nextFloat() * LEVEL_WIDTH, random
+					.nextFloat() * LEVEL_HEIGHT, this));
+		}
+
+		mCoin.clear();
+		mCoin = new ArrayList<Money>(Money.getNumberCoin());
+		for (int idy = 0; idy < Money.getNumberCoin(); idy++) {
+			mCoin.add(new Money(random.nextFloat() * LEVEL_WIDTH, random
+					.nextFloat() * LEVEL_HEIGHT, this));
+		}
+	}
+
+	/**
+	 * This method returns the player rocket object
+	 * 
+	 * @return - the player rocket
+	 */
+	public PlayerRocket getPlayerRocket() {
+		return mPlayerRocket;
+	}
+
+	/**
+	 * This method returns the progress bar (fuel gauge) for the game
+	 * 
+	 * @return - the progress bar
+	 */
+	public ProgressBar getProgressBar() {
+		return mProgressBar;
+	}
+
+	/**
+	 * This method returns a list of the AI Helicopters in the level
+	 * 
+	 * @return - List of AI controlled helicopters
+	 */
+	public List<AIObjects> getAIHelicopters() {
+		return mAIHelicopters;
+	}
+
+	/**
+	 * This method returns a list of the AI Fireballs in the level
+	 * 
+	 * @return - List of AI controlled Fireballs
+	 */
+	public List<AIObjects> getFireball() {
+		return mFireball;
+	}
+
+	/**
+	 * This method returns a list of the AI Aeroplanes in the level
+	 * 
+	 * @return - List of AI controlled Aeroplanes
+	 */
+	public List<AIObjects> getAeroplane() {
+		return mAeroplane;
+	}
+
+	/**
+	 * This method returns a list of the AI Comets in the level
+	 * 
+	 * @return - List of AI controlled Comets
+	 */
+	public List<AIObjects> getComet() {
+		return mComet;
+	}
+
+	/**
+	 * This method returns a list of the AI Spaceships in the level
+	 * 
+	 * @return - List of AI controlled spaceships
+	 */
+	public List<AIObjects> getAlienSpaceship() {
+		return mAlienSpaceship;
+	}
+
+	/**
+	 * This method changes the levels for the game using a switch statement the
+	 * level is incremented in the update method when the bounds is reached and
+	 * the players position is then reset, this is also in the update method
+	 */
+	public void getLevels() {
+		switch (level) {
+		case 1:
+			mSkyBackground.setBitmap(getGame().getAssetManager().getBitmap(
+					"Sky2"));
+			refreshFuelAndCoins();
+			break;
+		case 2:
+			mSkyBackground.setBitmap(getGame().getAssetManager().getBitmap(
+					"Sky3"));
+			mAIHelicopters.clear();
+			refreshFuelAndCoins();
+			break;
+		case 3:
+			mSkyBackground.setBitmap(getGame().getAssetManager().getBitmap(
+					"Sky4"));
+			refreshFuelAndCoins();
+			break;
+		case 4:
+			mSkyBackground.setBitmap(getGame().getAssetManager().getBitmap(
+					"Sky5"));
+			refreshFuelAndCoins();
+			break;
+		case 5:
+			refreshFuelAndCoins();
+			break;
+		}
+	}
+
+	// Update and Draw methods
+
+	@Override
+	public void update(ElapsedTime elapsedTime) {
+		mPlayerRocket.maxAcceleration = accelerator;
+		
+		for (int idy = 0; idy < mCoin.size(); idy++) {
+			mCoin.get(idy).update(elapsedTime);
+		}
+		
+
+		mProgressBar.update(elapsedTime);
+		// if the rocket reaches its height potential then reset the coordinates
+		// and delete the AI for that level
+		if (mPlayerRocket.position.y > LEVEL_HEIGHT - 80) {
+			mPlayerRocket.setPosition(mPlayerRocket.position.x, 100);
+			level++;
+			getLevels();
+		}
+
+		// Update the player rocket
+		mPlayerRocket.update(elapsedTime);
+		mProgressBar.setPosition(mPlayerRocket.position.x + 18,
+				mPlayerRocket.position.y - 30);
+
+		// Ensure the player cannot leave the confines of the world
+		BoundingBox playerBound = mPlayerRocket.getBound();
+		if (playerBound.getLeft() < 0)
+			mPlayerRocket.position.x -= playerBound.getLeft();
+		else if (playerBound.getRight() > LEVEL_WIDTH - 60)
+			mPlayerRocket.position.x -= (playerBound.getRight() - LEVEL_WIDTH + 60);
+
+		if (playerBound.getBottom() < 0)
+			mPlayerRocket.position.y -= playerBound.getBottom();
+		else if (playerBound.getTop() > LEVEL_HEIGHT)
+			mPlayerRocket.position.y -= (playerBound.getTop() - LEVEL_HEIGHT);
+
+		// Focus the layer viewport on the player
+		mLayerViewport.x = mPlayerRocket.position.x;
+		mLayerViewport.y = mPlayerRocket.position.y;
+
+		// Ensure the viewport cannot leave the confines of the world
+		if (mLayerViewport.getLeft() < 0)
+			mLayerViewport.x -= mLayerViewport.getLeft();
+		else if (mLayerViewport.getRight() > LEVEL_WIDTH)
+			mLayerViewport.x -= (mLayerViewport.getRight() - LEVEL_WIDTH);
+
+		if (mLayerViewport.getBottom() < 0)
+			mLayerViewport.y -= mLayerViewport.getBottom();
+		else if (mLayerViewport.getTop() > LEVEL_HEIGHT)
+			mLayerViewport.y -= (mLayerViewport.getTop() - LEVEL_HEIGHT);
+
+		// Update each of the AI controlled helicopters
+		for (AIObjects aiSpaceship : mAIHelicopters)
+			aiSpaceship.update(elapsedTime);
+
+		if (level == 1) {
+			// Ensure the AI cannot leave the confines of the world
+			for (int i = 0; i < mAIHelicopters.size(); i++) {
+				BoundingBox AIBound = mAIHelicopters.get(i).getBound();
+				if (AIBound.getLeft() < 0) {
+					mAIHelicopters.get(i).position.x -= AIBound.getLeft();
+				} else if (AIBound.getRight() > LEVEL_WIDTH - 100) {
+					mAIHelicopters.get(i).position.x -= (AIBound.getRight()
+							- LEVEL_WIDTH + 100);
+				}
+
+				if (AIBound.getBottom() < 0) {
+					mAIHelicopters.get(i).position.y -= AIBound.getBottom();
+				} else if (AIBound.getTop() > LEVEL_HEIGHT) {
+					mAIHelicopters.get(i).position.y -= (AIBound.getTop() - LEVEL_HEIGHT);
+				}
+			}
+
+			// Collision Detection for when rocket hits helicopters
+			for (int i = 0; i < mAIHelicopters.size(); i++) {
+				AssetStore assetManager = mGame.getAssetManager();
+				BoundingBox AIBound = mAIHelicopters.get(i).getBound();
+				if (AIBound.intersects(playerBound)) {
+					assetManager.getMusic("GameMusic").stop();
+					if (SettingsScreen.getMute() == 0) {
+						assetManager.getMusic("Explosion").play();
+					}
+					try {
+						Thread.sleep(2500);
+						assetManager.getMusic("Explosion").stop();
+					} catch (InterruptedException e) {
+						Log.e("RocketOut", "Game screen could not swap");
+					}
+					// If the helicopter touches the rocket then swap screens
+					mGame.getScreenManager().removeScreen(this.getName());
+					GameOverScreen gameOver = new GameOverScreen(mGame, score,
+							level);
+					// As it's the only added screen it will become active.
+					mGame.getScreenManager().addScreen(gameOver);
+				}
+			}
+		}
+
+		if (level == 2) {
+			for (AIObjects aiplane : mAeroplane) {
+				aiplane.update(elapsedTime);
+			}
+
+			for (int i = 0; i < mAeroplane.size(); i++) {
+				BoundingBox AIBound = mAeroplane.get(i).getBound();
+				if (AIBound.getLeft() < 0) {
+					mAeroplane.get(i).position.x -= AIBound.getLeft();
+				} else if (AIBound.getRight() > LEVEL_WIDTH - 100) {
+					mAeroplane.get(i).position.x -= (AIBound.getRight()
+							- LEVEL_WIDTH + 100);
+				}
+
+				if (AIBound.getBottom() < 0) {
+					mAeroplane.get(i).position.y -= AIBound.getBottom();
+				} else if (AIBound.getTop() > LEVEL_HEIGHT) {
+					mAeroplane.get(i).position.y -= (AIBound.getTop() - LEVEL_HEIGHT);
+				}
+			}
+			// Collision detection for when rocket hits aeroplane
+			for (int i = 0; i < mAeroplane.size(); i++) {
+				AssetStore assetManager = mGame.getAssetManager();
+				BoundingBox AIBound = mAeroplane.get(i).getBound();
+				if (AIBound.intersects(playerBound)) {
+					assetManager.getMusic("GameMusic").stop();
+					if (SettingsScreen.getMute() == 0) {
+					assetManager.getMusic("Explosion").play();
+					}
+					try {
+						Thread.sleep(2500);
+					} catch (InterruptedException e) {
+						Log.e("RocketOut", "Game screen could not swap");
+					}
+					// If the meteor touches the rocket then swap screens
+					mGame.getScreenManager().removeScreen(this.getName());
+					GameOverScreen gameOver = new GameOverScreen(mGame, score,
+							level);
+					// As it's the only added screen it will become active.
+					mGame.getScreenManager().addScreen(gameOver);
+				}
+			}
+			
+		}
+
+		if (level == 3) {
+			for (AIObjects aifire : mFireball) {
+				aifire.update(elapsedTime);
+			}
+
+			for(BlackHole blackHole:mHole){
+				blackHole.update(elapsedTime);
+			}
+			for (int i = 0; i < mHole.size(); i++) {
+				BoundingBox holeBound = mHole.get(i).getBound();
+				if (holeBound.intersects(playerBound)) {
+					mHole.remove(i);
+					level=1;
+					getLevels();
+				}
+			}
+			for (int i = 0; i < mFireball.size(); i++) {
+				BoundingBox AIBound = mFireball.get(i).getBound();
+				if (AIBound.getLeft() < 0) {
+					mFireball.get(i).position.x -= AIBound.getLeft();
+				} else if (AIBound.getRight() > LEVEL_WIDTH - 100) {
+					mFireball.get(i).position.x -= (AIBound.getRight()
+							- LEVEL_WIDTH + 100);
+				}
+
+				if (AIBound.getBottom() < 0) {
+					mFireball.get(i).position.y -= AIBound.getBottom();
+				} else if (AIBound.getTop() > LEVEL_HEIGHT) {
+					mFireball.get(i).position.y -= (AIBound.getTop() - LEVEL_HEIGHT);
+				}
+			}
+
+			// Collision detection for when rocket hits fireball
+			for (int i = 0; i < mFireball.size(); i++) {
+				AssetStore assetManager = mGame.getAssetManager();
+				BoundingBox AIBound = mFireball.get(i).getBound();
+				if (AIBound.intersects(playerBound)) {
+					assetManager.getMusic("GameMusic").stop();
+					if (SettingsScreen.getMute() == 0) {
+						assetManager.getMusic("Explosion").play();
+					}
+					try {
+						Thread.sleep(2500);
+						assetManager.getMusic("Explosion").stop();
+					} catch (InterruptedException e) {
+						Log.e("RocketOut", "Game screen could not swap");
+					}
+					// If the meteor touches the rocket then swap screens
+					mGame.getScreenManager().removeScreen(this.getName());
+					GameOverScreen gameOver = new GameOverScreen(mGame, score,
+							level);
+					// As it's the only added screen it will become active.
+					mGame.getScreenManager().addScreen(gameOver);
+				}
+			}
+		}
+
+		if (level == 4) {
+			for (AIObjects aicomet : mComet) {
+				aicomet.update(elapsedTime);
+			}
+
+			for (int i = 0; i < mComet.size(); i++) {
+				BoundingBox AIBound = mComet.get(i).getBound();
+				if (AIBound.getLeft() < 0) {
+					mComet.get(i).position.x -= AIBound.getLeft();
+				} else if (AIBound.getRight() > LEVEL_WIDTH - 100) {
+					mComet.get(i).position.x -= (AIBound.getRight()
+							- LEVEL_WIDTH + 100);
+				}
+
+				if (AIBound.getBottom() < 0) {
+					mComet.get(i).position.y -= AIBound.getBottom();
+				} else if (AIBound.getTop() > LEVEL_HEIGHT) {
+					mComet.get(i).position.y -= (AIBound.getTop() - LEVEL_HEIGHT);
+				}
+			}
+			// Collision detection for when rocket hits comet
+			for (int i = 0; i < mComet.size(); i++) {
+				AssetStore assetManager = mGame.getAssetManager();
+				BoundingBox AIBound = mComet.get(i).getBound();
+				if (AIBound.intersects(playerBound)) {
+					assetManager.getMusic("GameMusic").stop();
+					if (SettingsScreen.getMute() == 0) {
+					assetManager.getMusic("Explosion").play();
+					}
+					try {
+						Thread.sleep(2500);
+					} catch (InterruptedException e) {
+						Log.e("RocketOut", "Game screen could not swap");
+					}
+					// If the meteor touches the rocket then swap screens
+					mGame.getScreenManager().removeScreen(this.getName());
+					GameOverScreen gameOver = new GameOverScreen(mGame, score,
+							level);
+					// As it's the only added screen it will become active.
+					mGame.getScreenManager().addScreen(gameOver);
+				}
+			}
+		}
+
+		if (level == 5 || level > 5) {
+			for (AIObjects aialien : mAlienSpaceship) {
+				aialien.update(elapsedTime);
+			}
+			
+			
+
+			for (int i = 0; i < mAlienSpaceship.size(); i++) {
+				BoundingBox AIBound = mAlienSpaceship.get(i).getBound();
+				if (AIBound.getLeft() < 0) {
+					mAlienSpaceship.get(i).position.x -= AIBound.getLeft();
+				} else if (AIBound.getRight() > LEVEL_WIDTH - 100) {
+					mAlienSpaceship.get(i).position.x -= (AIBound.getRight()
+							- LEVEL_WIDTH + 100);
+				}
+
+				if (AIBound.getBottom() < 0) {
+					mAlienSpaceship.get(i).position.y -= AIBound.getBottom();
+				} else if (AIBound.getTop() > LEVEL_HEIGHT) {
+					mAlienSpaceship.get(i).position.y -= (AIBound.getTop() - LEVEL_HEIGHT);
+				}
+			}
+			// Collision detection for when rocket hits spaceship
+			for (int i = 0; i < mAlienSpaceship.size(); i++) {
+				AssetStore assetManager = mGame.getAssetManager();
+				BoundingBox AIBound = mAlienSpaceship.get(i).getBound();
+				if (AIBound.intersects(playerBound)) {
+					assetManager.getMusic("GameMusic").stop();
+					if (SettingsScreen.getMute() == 0) {
+					assetManager.getMusic("Explosion").play();
+					}
+					try {
+						Thread.sleep(2500);
+					} catch (InterruptedException e) {
+						Log.e("RocketOut", "Game screen could not swap");
+					}
+					// If the meteor touches the rocket then swap screens
+					mGame.getScreenManager().removeScreen(this.getName());
+					GameOverScreen gameOver = new GameOverScreen(mGame, score,
+							level);
+					// As it's the only added screen it will become active.
+					mGame.getScreenManager().addScreen(gameOver);
+				}
+			}
+			
+		}
+
+		// Collision Detection if player collides with fuel
+		for (int i = 0; i < mFuel.size(); i++) {
+			BoundingBox fuelBound = mFuel.get(i).getBound();
+			if (fuelBound.intersects(playerBound)) {
+				mFuel.remove(i);
+
+				if (mPlayerRocket.getFuelLevel() < MAX_TANK) {
+					mPlayerRocket.setFuelLevel(mPlayerRocket.getFuelLevel()
+							+ FUEL_TANK);
+				}
+				if (mPlayerRocket.getFuelLevel() > MAX_TANK) {
+					mPlayerRocket.setFuelLevel(MAX_TANK);
+				}
+			}
+		}
+		
+		
+		
+		//Collision for colliding with money
+		for (int i = 0; i < mCoin.size(); i++) {
+			BoundingBox coinBound = mCoin.get(i).getBound();
+			if (coinBound.intersects(playerBound)) {
+				mCoin.remove(i);
+				Money.setTotalMoney(Money.getTotalMoney()
+						+ Money.getCoinWorth());
+			}
+		}
+
+		// remove Fuel
+		mPlayerRocket
+				.setFuelLevel((int) (mPlayerRocket.getFuelLevel() - getFuelRemover()));
+
+		// Go to game over screen if fuel gauge is equal to 0
+		if (mPlayerRocket.getFuelLevel() <= 0) {
+			mGame.getScreenManager().removeScreen(this.getName());
+			GameOverScreen gameOver = new GameOverScreen(mGame, score, level);
+			// As it's the only added screen it will become active.
+			mGame.getScreenManager().addScreen(gameOver);
+		}
+		score++;
+	}
+
+	@Override
+	public void draw(ElapsedTime elapsedTime, IGraphics2D graphics2D) {
+		// Create the screen to black and define a clip based on the viewport
+		graphics2D.clear(Color.BLACK);
+		graphics2D.clipRect(mScreenViewport.toRect());
+
+		// Draw the background first of all
+		mSkyBackground.draw(elapsedTime, graphics2D, mLayerViewport,
+				mScreenViewport);
+
+		// Draw the fuel
+		for (Fuel fuelTanks : mFuel) {
+			fuelTanks.draw(elapsedTime, graphics2D, mLayerViewport,
+					mScreenViewport);
+		}
+		
+		// Draw the money
+		for (Money coins : mCoin) {
+			coins.draw(elapsedTime, graphics2D, mLayerViewport, mScreenViewport);
+		}
+
+		// Draw each of the AI controlled helicopters
+		for (AIObjects aiSpaceship : mAIHelicopters) {
+			aiSpaceship.draw(elapsedTime, graphics2D, mLayerViewport,
+					mScreenViewport);
+		}
+
+		if (level == 2) {
+			for (AIObjects aiPlane : mAeroplane) {
+				aiPlane.draw(elapsedTime, graphics2D, mLayerViewport,
+						mScreenViewport);
+			}
+			
+		}
+
+		if (level == 3) {
+			for (AIObjects aiFire : mFireball) {
+				aiFire.draw(elapsedTime, graphics2D, mLayerViewport,
+						mScreenViewport);
+			}
+			for(BlackHole blackHole:mHole){
+				blackHole.draw(elapsedTime, graphics2D, mLayerViewport, mScreenViewport);
+			}
+		}
+		if (level == 4) {
+			for (AIObjects aiComet : mComet) {
+				aiComet.draw(elapsedTime, graphics2D, mLayerViewport,
+						mScreenViewport);
+			}
+		}
+		if (level == 5 || level > 5) {
+			for (AIObjects aiAlien : mAlienSpaceship) {
+				aiAlien.draw(elapsedTime, graphics2D, mLayerViewport,
+						mScreenViewport);
+				
+				
+			}
+		}
+
+		// Draw the player
+		mPlayerRocket.draw(elapsedTime, graphics2D, mLayerViewport,
+				mScreenViewport);
+
+		// Draw the progress bar
+		mProgressBar.draw(elapsedTime, graphics2D);
+
+		// Paint used to determine font of text written to screen
+		Paint paint = new Paint();
+		if (level == 1) {
+			paint.setColor(Color.BLACK);
+		} else {
+			paint.setColor(Color.WHITE);
+		}
+
+		paint.setTextSize(mGame.getScreenHeight() / 21);
+		Typeface tf = Typeface.create("normal", Typeface.BOLD_ITALIC);
+		paint.setTypeface(tf);
+		graphics2D.drawText("Score: " + score,
+				(float) (mGame.getScreenWidth() / 12),
+				mGame.getScreenHeight() / 11, paint);
+	}
+}

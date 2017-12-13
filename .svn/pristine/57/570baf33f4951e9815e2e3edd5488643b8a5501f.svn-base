@@ -1,0 +1,106 @@
+package uk.co.takeabytestudios.rock_etout.game;
+
+import java.util.ArrayList;
+
+import android.graphics.Bitmap;
+import uk.co.takeabytestudios.rock_etout.engine.ElapsedTime;
+import uk.co.takeabytestudios.rock_etout.game.gameScreens.RocketGameScreen;
+
+import uk.co.takeabytestudios.rock_etout.world.Sprite;
+
+/**
+ * This class creates a money object that is used in our game as a collectable
+ * 
+ * @authors Nathan Harrison, Niall Shannon, David Walsh, Reece Magee
+ */
+public class Money extends Sprite {
+
+	// Defines the number of coins in each level, how much each coin is worth
+	// and the total money collected
+	private static final int NUM_COIN = 10;
+	private static final int COIN_WORTH = 5;
+	private static int totalMoney = 0;
+	private ArrayList<Bitmap> animationArray;
+
+	// Constructor
+	/**
+	 * This creates a money object to be collected within the game
+	 * 
+	 * @param startX
+	 *            - The X co-ordinate of the money object
+	 * @param startY
+	 *            - The Y co-ordinate of the money object
+	 * @param gameScreen
+	 *            - The game screen to which the money object belongs to
+	 */
+	public Money(float startX, float startY, RocketGameScreen gameScreen) {
+		super(startX, startY, 15.0f, 25.0f, gameScreen.getGame()
+				.getAssetManager().getBitmap("Coin1"), gameScreen);
+
+		animationArray = new ArrayList<Bitmap>();
+		animationArray.add(0, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin1"));
+		animationArray.add(1, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin2"));
+		animationArray.add(2, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin3"));
+		animationArray.add(3, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin4"));
+		animationArray.add(4, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin5"));
+		animationArray.add(5, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin6"));
+		animationArray.add(6, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin7"));
+		animationArray.add(7, mGameScreen.getGame().getAssetManager()
+				.getBitmap("Coin8"));
+
+	}
+
+	// Methods
+
+	/**
+	 * This method returns the number of coins
+	 * 
+	 * @return - the number of coins
+	 */
+	public static int getNumberCoin() {
+		return NUM_COIN;
+	}
+
+	/**
+	 * This method returns how much a coin is worth
+	 * 
+	 * @return - the coin worth
+	 */
+	public static int getCoinWorth() {
+		return COIN_WORTH;
+	}
+
+	/**
+	 * This method returns the total money the player has
+	 * 
+	 * @return - the total money the player has
+	 */
+	public static int getTotalMoney() {
+		return totalMoney;
+	}
+
+	/**
+	 * This method sets the total money the player has. This is with the load
+	 * methos
+	 * 
+	 * @param totalMoney
+	 *            - the new total money the player has
+	 */
+	public static void setTotalMoney(int totalMoney) {
+		Money.totalMoney = totalMoney;
+	}
+
+	@Override
+	public void update(ElapsedTime elapsedTime) {
+		animationChanger(animationArray);
+		super.update(elapsedTime);
+	}
+
+}
