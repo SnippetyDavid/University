@@ -12,7 +12,7 @@
 	<atom:link href="https://www.genuitec.com/feed/" rel="self" type="application/rss+xml" />
 	<link>https://www.genuitec.com</link>
 	<description>The Cloud Control Company</description>
-	<lastBuildDate>Wed, 13 Dec 2017 07:50:01 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 14 Dec 2017 08:38:32 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -36,6 +36,8 @@
 		<description><![CDATA[<p>In this Angular tutorial, we are going to create a Note Taking App using Angular IDE.Create New Angular ProjectWe’re going to be using Angular IDE in this tutorial, though you can use Webclipse or MyEclipse, following exactly the same steps. Before beginning, do ensure you are in the Angular Perspective (Window &#62; Perspective &#62; Open Perspective [&#8230;]</p>
 <p>The post <a rel="nofollow" href="https://www.genuitec.com/create-note-taking-app-using-angular/">Create a Note Taking App Using Angular</a> appeared first on <a rel="nofollow" href="https://www.genuitec.com">Genuitec</a>.</p>
 ]]></description>
+<enclosure url="https://resources.cloud.genuitec.com/wp-content/uploads/2017/11/note-taking-app-video-1.mp4" length="2433162" type="video/mp4" />
+<enclosure url="https://resources.cloud.genuitec.com/wp-content/uploads/2017/11/note-taking-app-video-2.mp4" length="378943" type="video/mp4" />
 		</item>
 		<item>
 		<title>In CI 9, DevStyle Ships with Webclipse and Angular IDE &#8211; Here’s Why</title>
@@ -312,9 +314,9 @@
 
 <!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
 
-Object Caching 9474/9594 objects using disk
+Object Caching 9470/9820 objects using disk
 Page Caching using disk: enhanced (Requested URI is rejected)
 Content Delivery Network via resources.cloud.genuitec.com
-Database Caching 3/46 queries in 0.025 seconds using disk
+Database Caching 7/50 queries in 1.314 seconds using disk
 
- Served from: www.genuitec.com @ 2017-12-13 02:32:42 by W3 Total Cache -->
+ Served from: www.genuitec.com @ 2017-12-14 02:57:08 by W3 Total Cache -->
