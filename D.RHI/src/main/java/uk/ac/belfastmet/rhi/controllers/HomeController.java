@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.belfastmet.rhi.domain.Beneficiaries;
-import uk.ac.belfastmet.rhi.repositories.BenificiariesRepository;
+import uk.ac.belfastmet.rhi.repositories.BeneficiariesRepository;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
 	@Autowired
-	BenificiariesRepository benRepo;
+	BeneficiariesRepository benRepo;
 
-	public HomeController(BenificiariesRepository benRepo) {
+	public HomeController(BeneficiariesRepository benRepo) {
 		super();
 		this.benRepo = benRepo;
 	}
