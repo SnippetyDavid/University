@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title th:text="${pageTitle}">Home!</title>
+
+<style type="text/css"></style>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+<link href="lab5.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+	<nav th:replace="layouts/nav :: navFragment"></nav>
+
+	<div class="jumbotron">
+		<pre
+			style="text-align: center; font-family: Impact; font-size: 150px; color: black; text-shadow: -3px -3px 0 #AFF, 3px -3px 0 #AFF, -3px 3px 0 #AFF, 3px 3px 0 #AFF;">BIG  OL'  BUILDINGS</pre>
+	</div>
+
+	<div style="text-align: center;" class="container">
+		<br />
+		<br />
+		<br />
+		<button style="height:50px;width:400px;background-color:cyan;font-size:20px;" type="button" class="btn"
+			onclick="window.location.href='/floorArea/'"><b>Top 10
+			Building's Floor Area</b></button>
+		<br />
+		<br />
+		<br />
+		<br />
+		<button style="height:50px;width:400px;background-color:cyan;font-size:20px;" type="button" class="btn"
+			onclick="window.location.href='/footprint/'"><b>Top 10
+			Building's Footprints</b></button>
+		<br />
+		<br />
+		<br />
+		<br />
+		<button style="height:50px;width:400px;background-color:cyan;font-size:20px;" type="button" class="btn"
+			onclick="window.location.href='/volume/'"><b>Top 10 Building's
+			Volume</b></button>
+
+	</div>
+	<div th:replace="layouts/foot :: divFragment"></div>
+</body>
+</html>

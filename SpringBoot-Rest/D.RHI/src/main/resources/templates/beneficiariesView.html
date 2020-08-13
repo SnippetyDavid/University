@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Details</title>
+
+<style type="text/css"></style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+</head>
+<body>
+	<nav th:replace="layouts/nav :: navFragment"></nav>
+
+	<div class="jumbotron text-center">
+		<h1 th:each="tPass:${Beneficiaries}" th:text="${tPass.name}"></h1>
+		<h2></h2>
+		<br />
+	</div>
+
+	<div class="container">
+		<table class="table">
+			<tbody>
+				<tr th:each="tPass:${Beneficiaries}">
+					<td>Name</td>
+					<td th:text="${tPass.name}"></td>
+				</tr>
+				<tr th:each="tPass:${Beneficiaries}">
+					<td>applicationDate</td>
+					<td th:text="${tPass.applicationDate}"></td>
+				</tr>
+				<tr th:each="tPass:${Beneficiaries}">
+					<td>bussinessOrInstallationLocation</td>
+					<td th:text="${tPass.bussinessOrInstallationLocation}"></td>
+				</tr>
+				<tr th:each="tPass:${Beneficiaries}">
+					<td>technologyTypeInstallation</td>
+					<td th:text="${tPass.technologyTypeInstallation}"></td>
+				</tr>
+				<tr th:each="tPass:${Beneficiaries}">
+					<td>capacity</td>
+					<td th:text="${tPass.capacity}"></td>
+				</tr>
+				<tr th:each="tPass:${Beneficiaries}">
+					<td>amountOfPaymentsMadeTo28Feb</td>
+					<td th:text="${tPass.amountOfPaymentsMadeTo28Feb}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<!-- Custom Styles  -->
+<title th:text="${pageTitle}">Generic Page Title</title>
+</head>
+
+<body>
+	<nav th:replace="layouts/nav :: navFragment"></nav>
+
+	<div class="jumbotron text-center">
+		<h1 th:text="${title}">Create</h1>
+		<br />
+	</div>
+
+	<div class="container">
+
+		<form class="form-horizontal" th:action="@{/Save}"
+			th:object="${Beneficiaries}" method="post">
+
+			<!-- hidden field is important! -->
+			<input type="hidden" th:field="${Beneficiaries.beneficiariesId}" />
+
+			<!--  1 -->
+			<!-- 		<label class="col-md-2">Manufacturer</label>
+			<div class="form-group">
+			<input type="text" class="form-control" th:field="${Passengers.manufacturer}" />
+			<span th:if="${#fields.hasErrors('manufacturer')}" th:errors="${Passengers.cerealName}" 
+				th:class="help-block"></span>
+			</div>
+-->
+			<!--  2 -->
+<!-- 			<div class="form-group is-invalid"
+				th:classappend="${#fields.hasErrors('manufacturer')}? 'has-error'">
+				<label class="col-md-2">Manufacturer</label>
+				<div class="col-md-10 control-label">
+					<input type="text" class="form-control"
+						th:field="${Passengers.manufacturer}" /> <span
+						th:if="${#fields.hasErrors('manufacturer')}"
+						th:errors="*{manufacturer}" th:class="help-block">Manufacturer
+						Errors</span>
+				</div>
+			</div>
+			<br />
+			<div class="form-group is-invalid"
+				th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
+				<label class="col-md-2">Cereal</label>
+				<div class="col-md-10">
+					<input type="text" class="form-control"
+						th:field="${Passengers.cerealName}" /> <span
+						th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}" th:class="help-block">Name Errors</span>
+				</div>
+			</div>
+
+-->
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<td>Name</td>
+						<td><input type="text" class="form-control"
+							th:field="${Beneficiaries.name}" /></td>
+					</tr>
+					<tr>
+						<td>Application Date</td>
+						<td><input type="text" class="form-control"
+							th:field="${Beneficiaries.applicationDate}" /></td>
+					</tr>
+					<tr>
+						<td>Business/Installation Location</td>
+						<td><input type="text" class="form-control"
+							th:field="${Beneficiaries.bussinessOrInstallationLocation}" /></td>
+					</tr>
+					<tr>
+						<td>Technology Type Installation</td>
+						<td><input type="text" class="form-control"
+							th:field="${Beneficiaries.technologyTypeInstallation}" /></td>
+					</tr>
+					<tr>
+						<td>Capacity</td>
+						<td><input type="text" class="form-control"
+							th:field="${Beneficiaries.capacity}" /></td>
+					</tr>
+					<tr>
+						<td>Amount of Payment made</td>
+						<td><input type="text" class="form-control"
+							th:field="${Beneficiaries.amountOfPaymentsMadeTo28Feb}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</body>
+</html>

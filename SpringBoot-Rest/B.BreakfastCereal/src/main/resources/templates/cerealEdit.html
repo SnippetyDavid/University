@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<!-- Custom Styles  -->
+<title th:text="${pageTitle}">Generic Page Title</title>
+</head>
+
+<body>
+	<div class="jumbotron text-center">
+		<h1 th:text="${title}">Create</h1>
+		<br />
+	</div>
+
+	<div class="container">
+
+		<form class="form-horizontal" th:action="@{/Cereal/Save}"
+			th:object="${cereal}" method="post">
+
+			<!-- hidden field is important! -->
+			<input type="hidden" th:field="${cereal.cerealId}" />
+
+			<!--  1 -->
+			<!-- 		<label class="col-md-2">Manufacturer</label>
+			<div class="form-group">
+			<input type="text" class="form-control" th:field="${cereal.manufacturer}" />
+			<span th:if="${#fields.hasErrors('manufacturer')}" th:errors="${cereal.cerealName}" 
+				th:class="help-block"></span>
+			</div>
+-->
+			<!--  2 -->
+			<div class="form-group is-invalid"
+				th:classappend="${#fields.hasErrors('manufacturer')}? 'has-error'">
+				<label class="col-md-2">Manufacturer</label>
+				<div class="col-md-10 control-label">
+					<input type="text" class="form-control"
+						th:field="${cereal.manufacturer}" /> <span
+						th:if="${#fields.hasErrors('manufacturer')}"
+						th:errors="*{manufacturer}" th:class="help-block">Manufacturer
+						Errors</span>
+				</div>
+			</div>
+			<br />
+			<div class="form-group is-invalid"
+				th:classappend="${#fields.hasErrors('cerealName')}? 'is-invalid'">
+				<label class="col-md-2">Cereal</label>
+				<div class="col-md-10">
+					<input type="text" class="form-control"
+						th:field="${cereal.cerealName}" /> <span
+						th:if="${#fields.hasErrors('cerealName')}"
+						th:errors="*{cerealName}" th:class="help-block">Name Errors</span>
+				</div>
+			</div>
+
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nutrition</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Energy</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.energy}" /></td>
+					</tr>
+					<tr>
+						<td>Calories</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.calories}" /></td>
+					</tr>
+					<tr>
+						<td>Protein</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.protein}" /></td>
+					</tr>
+					<tr>
+						<td>Carbohydrate</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.carbohydrate}" /></td>
+					</tr>
+					<tr>
+						<td>Sugars</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.sugars}" /></td>
+					</tr>
+					<tr>
+						<td>Fat</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.fat}" /></td>
+					</tr>
+					<tr>
+						<td>Saturates</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.saturates}" /></td>
+					</tr>
+					<tr>
+						<td>Fibre</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.fibre}" /></td>
+					</tr>
+					<tr>
+						<td>Sodium</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.sodium}" /></td>
+					</tr>
+					<tr>
+						<td>Salt</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.salt}" /></td>
+					</tr>
+					<tr>
+						<td>Iron</td>
+						<td><input type="text" class="form-control"
+							th:field="${cereal.iron}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Details</title>
+
+<style type="text/css"></style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+</head>
+<body>
+
+	<div class="jumbotron text-center">
+		<h1 th:each="cer:${Cereals}" th:text="${cer.cerealName}"></h1>
+		<h2></h2>
+		<br />
+	</div>
+
+	<div class="container">
+		<table class="table">
+			<tbody>
+				<tr th:each="cer:${Cereals}">
+					<td>Manufacturer</td>
+					<td th:text="${cer.manufacturer}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Name</td>
+					<td th:text="${cer.cerealName}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Energy</td>
+					<td th:text="${cer.energy}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Calories</td>
+					<td th:text="${cer.calories}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Protein</td>
+					<td th:text="${cer.protein}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Carbohydrate</td>
+					<td th:text="${cer.carbohydrate}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Sugars</td>
+					<td th:text="${cer.sugars}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Fat</td>
+					<td th:text="${cer.fat}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Saturates</td>
+					<td th:text="${cer.saturates}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Fibre</td>
+					<td th:text="${cer.fibre}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Sodium</td>
+					<td th:text="${cer.sodium}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Salt</td>
+					<td th:text="${cer.salt}"></td>
+				</tr>
+				<tr th:each="cer:${Cereals}">
+					<td>Iron</td>
+					<td th:text="${cer.iron}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+</body>
+</html>

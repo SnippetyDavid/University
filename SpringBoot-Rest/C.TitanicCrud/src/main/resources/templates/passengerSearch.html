@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Details</title>
+
+<style type="text/css"></style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+</head>
+<body>
+	<nav th:replace="layouts/nav :: navFragment"></nav>
+
+	<div class="container">
+		<label th:text="${name}"></label>
+	</div>
+	
+	<div class="container">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Links</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tPass:${Passengers}">
+					<td th:text="${tPass.name}"></td>
+					<td><a th:href="@{Passenger/View/} + ${tPass.passengerId}"
+						class="btn btn-secondary" role="button" aria-pressed="true">View</a>
+						<a th:href="@{Passenger/Edit/} + ${tPass.passengerId}"
+						class="btn btn-secondary" role="button" aria-pressed="true">Edit</a>
+						<a th:href="@{Passenger/Delete/} + ${tPass.passengerId}"
+						class="btn btn-secondary" role="button" aria-pressed="true">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="/Passenger/Add" class="btn btn-secondary active"
+			role="button" aria-pressed="true">Add</a>
+	</div>
+
+</body>
+</html>

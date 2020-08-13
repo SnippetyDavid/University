@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<title th:text="${pageTitle}"></title>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"></link>
+	<style>
+	body {
+	    background-color: rgb(200, 200, 200);
+	}
+	</style>
+</head>
+<body>
+	<nav th:replace="layouts/nav :: navFragment">
+	</nav>
+	
+	<div class="jumbotron">
+		<h1 style="text-align: center;">Volume</h1>
+	</div>
+	<div class="container" style="background-color:rgb(235, 235, 235);">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Name</th>
+					<th>Volume</th>
+					<th>Picture</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="bv:${buildingVolume}">
+					<td th:text="${bv.rank}"></td>
+					<td th:text="${bv.name}"></td>
+					<td th:text="${bv.volume}"></td>
+					<td><img
+						src="../static/buildingVolume/v1.jpg" th:src="@{/buildingVolume/} + ${bv.image}" width="150" height ="150"/></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+		<div th:replace="layouts/foot :: divFragment">
+	</div>
+</body>
+</html>
