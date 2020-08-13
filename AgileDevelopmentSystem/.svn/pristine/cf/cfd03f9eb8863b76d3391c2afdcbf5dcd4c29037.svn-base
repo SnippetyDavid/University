@@ -1,0 +1,125 @@
+﻿using SharedModelLibrary;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+
+namespace WCFScrumManagement
+{
+
+    public class Project : ProjectService
+    {
+
+        // create the sql connection that connects to our hosted db
+        SqlConnection con = new SqlConnection("Data Source=jdickinson03.public.cs.qub.ac.uk;Initial Catalog=jdickinson03;User ID=jdickinson03;Password=5rmp7b1x2hzsv42f");
+
+        // Inserts the project name and description into the projects table
+        public Boolean InsertProjectDetails(string projectName, string projectDescription)
+        {
+            // open the sql connection
+            con.Open();
+
+            String query = "INSERT INTO Project(projectName,projectDescription, user_id) VALUES(@projectName, @projectDescription, 1)";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@projectName", projectName);
+            cmd.Parameters.AddWithValue("@projectDescription", projectDescription);
+            
+            // execute the insert statement and store the result
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+            // check to see if the user was succesfully added and return a boolean value based on the result
+            if (result == 1)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+        public Boolean DisplayProjectDetails(string projectName)
+        {
+            // open the sql connection
+            con.Open();
+
+            String query = "SELECT * FROM Projects(project_name)";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@projectName", projectName);
+
+            // execute the select statement and display the result
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+
+            if (result == 1)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public Boolean addUsersToProject(List<int> selectedUsers)
+        {
+            String query = "";
+
+            foreach (int user_id in selectedUsers)
+            {
+                query += "INSERT INTO ProjectTeam (project_id, user_id, roles_id) VALUES (1,"+ user_id +", 1)";
+
+            }
+
+            con.Open();
+
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+
+            if (result == 1)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        // Method to be used by the client to retrieve team invites for the user provided
+        public List<UserInvites> getTeamInvites(string user)
+        {
+            con.Open();
+
+            List<UserInvites> invites = new List<UserInvites>();
+
+            String query = "SELECT ProjectTeam.id, Project.projectName, Roles.roleName FROM ProjectTeam, Project, Roles WHERE ProjectTeam.id = Project.id AND ProjectTeam.roles_id = Roles.id AND ProjectTeam.user_id = @userId AND ProjectTeam.status = 0;";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                invites.Add(
+
+                    new UserInvites
+                    {
+                        ProjectName = (string)reader["projectName"],
+                        ProjectRole = (string)reader["roleName"]
+                    }
+                    );
+            }
+
+            con.Close();
+
+            return invites;
+        }
+    }
+}

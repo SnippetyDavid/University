@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace WCFScrumManagement
+{
+    [ServiceContract]
+    public interface ProjectService
+    {
+        [OperationContract]
+        Boolean InsertProjectDetails(string projectName, string projectDescription);
+
+        [OperationContract]
+        Boolean DisplayProjectDetails(string projectName);
+
+        [OperationContract]
+        Boolean addUsersToProject(List<int> selectedUsers);
+    }
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Project" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:5595/Project.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:5595/Project.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:5595/Project.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SharedModelLibrary" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ProjectService_InsertProjectDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertProjectDetails" />
+  </wsdl:message>
+  <wsdl:message name="ProjectService_InsertProjectDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertProjectDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProjectService_addUsersToProject_InputMessage">
+    <wsdl:part name="parameters" element="tns:addUsersToProject" />
+  </wsdl:message>
+  <wsdl:message name="ProjectService_addUsersToProject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addUsersToProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProjectService_getTeamInvites_InputMessage">
+    <wsdl:part name="parameters" element="tns:getTeamInvites" />
+  </wsdl:message>
+  <wsdl:message name="ProjectService_getTeamInvites_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getTeamInvitesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ProjectService">
+    <wsdl:operation name="InsertProjectDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProjectService/InsertProjectDetails" message="tns:ProjectService_InsertProjectDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProjectService/InsertProjectDetailsResponse" message="tns:ProjectService_InsertProjectDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addUsersToProject">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProjectService/addUsersToProject" message="tns:ProjectService_addUsersToProject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProjectService/addUsersToProjectResponse" message="tns:ProjectService_addUsersToProject_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getTeamInvites">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProjectService/getTeamInvites" message="tns:ProjectService_getTeamInvites_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProjectService/getTeamInvitesResponse" message="tns:ProjectService_getTeamInvites_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ProjectService" type="tns:ProjectService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="InsertProjectDetails">
+      <soap:operation soapAction="http://tempuri.org/ProjectService/InsertProjectDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUsersToProject">
+      <soap:operation soapAction="http://tempuri.org/ProjectService/addUsersToProject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTeamInvites">
+      <soap:operation soapAction="http://tempuri.org/ProjectService/getTeamInvites" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Project">
+    <wsdl:port name="BasicHttpBinding_ProjectService" binding="tns:BasicHttpBinding_ProjectService">
+      <soap:address location="http://localhost:5595/Project.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

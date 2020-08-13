@@ -1,0 +1,15 @@
+﻿<Window x:Class="EasyWpfLoginNavigateExample.View.TeamBurndownWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="TeamBurndownWindow" Height="350" Width="525">
+
+    <Grid>
+        <oxy:Plot Title="{Binding Title}">
+            <oxy:Plot.Series >
+                <oxy:LineSeries Color="Red"  ItemsSource="{Binding Points}"/>
+                <oxy:LineSeries Color="Red"  ItemsSource="{Binding testPoints}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
+    </Grid>
+</Window>

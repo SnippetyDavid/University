@@ -1,0 +1,282 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+using SharedModelLibrary;
+
+namespace WCFScrumManagement
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
+    public class User : UserService
+    {
+        // create the sql connection that connects to our hosted db
+        SqlConnection con = new SqlConnection("Data Source=jdickinson03.public.cs.qub.ac.uk;Initial Catalog=jdickinson03;User ID=jdickinson03;Password=5rmp7b1x2hzsv42f");
+
+        public Boolean InsertUserDetails(string username, string password, string email)
+        {
+            // open the sql connection
+            con.Open();
+
+            String query = "INSERT INTO Users(username,password,email) VALUES(@username, @password, @email)";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@email", email);
+            // execute the insert statement and store the result
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+            // check to see if the user was succesfully added and return a boolean value based on the result
+            if (result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean RegisterUser(string username, string password, string email, bool projectManager, bool scrumMaster, bool developer)
+        {
+            // open the sql connection
+            con.Open();
+
+
+            String query = "INSERT INTO Users(username,password,email,projectManager,scrumMaster,developer) VALUES(@username, @password, @email,@projectManager,@scrumMaster,@developer)";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@email", email);
+
+            int pm = 0;
+            if (@projectManager == true)
+            {
+                pm = 1;
+            }
+
+            int sm = 0;
+            if (scrumMaster == true)
+            {
+                sm = 1;
+            }
+
+            int dev = 0;
+            if (developer == true)
+            {
+
+                dev = 1;
+            }
+
+
+
+            cmd.Parameters.AddWithValue("@projectManager", pm);
+            cmd.Parameters.AddWithValue("@scrumMaster", sm);
+            cmd.Parameters.AddWithValue("@developer", dev);
+            // execute the insert statement and store the result
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+            // check to see if the user was succesfully added and return a boolean value based on the result
+            if (result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        //Method to be used by the client to retrieve a user object with details of the current user
+        public UserModel GetUserDetails(string username)
+        {
+            //defined variables of the user object
+            string email = "";
+            bool PmRole = false;
+            bool SmRole = false;
+            bool DevRole = false;
+
+            con.Open();
+
+            //define and execute the query to get the email address of the user and store it in a string
+            String query = "SELECT email FROM users WHERE username = @username";
+            SqlCommand EmailCmd = new SqlCommand(query, con);
+            EmailCmd.Parameters.AddWithValue("@username", username);
+
+            SqlDataReader EmailReader = EmailCmd.ExecuteReader();
+
+            if (EmailReader.Read())
+            {
+                email = EmailReader.GetString(0);
+            }
+
+            EmailReader.Close();
+
+            //define and execute the query to get the pmRole o and store in a bool
+            query = "SELECT projectManager FROM users WHERE username = @username AND projectManager IS NOT NULL";
+            SqlCommand PmCmd = new SqlCommand(query, con);
+            PmCmd.Parameters.AddWithValue("@username", username);
+
+            SqlDataReader PmReader = PmCmd.ExecuteReader();
+
+            if (PmReader.Read())
+            {
+                int i = PmReader.GetInt32(0);
+
+                if (i == 1)
+                {
+                    PmRole = true;
+                }
+            }
+
+            PmReader.Close();
+
+            //define and execute the query to get the smRole o and store in a bool
+            query = "SELECT scrumMaster FROM users WHERE username = @username AND scrumMaster IS NOT NULL";
+            SqlCommand SmCmd = new SqlCommand(query, con);
+            SmCmd.Parameters.AddWithValue("@username", username);
+
+            SqlDataReader SmReader = SmCmd.ExecuteReader();
+
+            if (SmReader.Read())
+            {
+                int i = SmReader.GetInt32(0);
+
+                if (i == 1)
+                {
+                    SmRole = true;
+                }
+            }
+
+            SmReader.Close();
+
+            //define and execute the query to get the devRole o and store in a bool
+            query = "SELECT developer FROM users WHERE username = @username AND developer IS NOT NULL";
+            SqlCommand DevCmd = new SqlCommand(query, con);
+            DevCmd.Parameters.AddWithValue("@username", username);
+
+            SqlDataReader DevReader = DevCmd.ExecuteReader();
+
+            if (DevReader.Read())
+            {
+                int i = DevReader.GetInt32(0);
+
+                if (i == 1)
+                {
+                    DevRole = true;
+                }
+            }
+
+            DevReader.Close();
+
+            con.Close();
+
+            //create the user object to be returned using the data we got from querying the db
+            UserModel user = new UserModel { id = username, Email = email, ProjectManager = PmRole, ScrumMaster = SmRole, Developer = DevRole };
+
+            return user;
+        }
+
+        public Boolean checkUserDetails(string username, string password)
+        {
+            // open the sql connection
+            con.Open();
+
+            // Query string and execute the query
+            String query = "SELECT * FROM users WHERE username = @username AND password = @password;";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            // Reader returns true if the username and password is in the database
+            if (reader.Read()) 
+            {
+                // close the sql connection
+                con.Close();
+                return true;
+            }
+            else
+            {
+                // close the sql connection
+                con.Close();
+                return false;
+            }
+           
+        }
+
+        public Boolean checkRegisteredUserDetails(string email)
+        {
+            // open the sql connection
+            con.Open();
+
+            // Query string and execute the query
+            String query = "SELECT * FROM users WHERE email = 'asdasd';";
+            SqlCommand cmd = new SqlCommand(query, con);
+            //cmd.Parameters.AddWithValue("@email", email);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            // Reader returns true if the email is in the database
+            if (reader.HasRows)
+            {
+                // close the sql connection
+                con.Close();
+                return true;
+            }
+            else
+            {
+                // close the sql connection
+                con.Close();
+                return false;
+            }
+
+        }
+
+        public List<UserModel> getAllUsers()
+        {
+            // open the sql connection
+            con.Open();
+
+            List<UserModel> users = new List<UserModel>();
+
+            // Query string and execute the query
+            String query = "SELECT * FROM users;";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                users.Add(
+
+                    new UserModel
+                    {
+                        id = (string)reader["id"].ToString(),
+                        UserName = (string)reader["username"],
+                        Password = (string)reader["password"],
+                        Email = (string)reader["email"]
+                        //,
+                        //ProjectManager = (bool)reader["projectManager"],
+                        //ScrumMaster = (bool)reader["scrumMaster"],
+                        // Developer = (bool)reader["developer"]
+                    }
+                    );
+            }
+            return users;
+        }
+    }
+}

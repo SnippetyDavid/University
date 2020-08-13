@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5bb1e694-bc46-4081-84cf-d86048868810" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:5595/Project.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Project.disco" MetadataType="Disco" ID="a9727084-c8a9-4e6c-a20b-a716596d30a0" SourceId="1" SourceUrl="http://localhost:5595/Project.svc?disco" />
+    <MetadataFile FileName="Project.xsd" MetadataType="Schema" ID="03693200-ee08-4c4d-8f43-9ba97c22884a" SourceId="1" SourceUrl="http://localhost:5595/Project.svc?xsd=xsd1" />
+    <MetadataFile FileName="Project1.xsd" MetadataType="Schema" ID="3f0ba715-38f3-46fa-b187-7a05e430bd22" SourceId="1" SourceUrl="http://localhost:5595/Project.svc?xsd=xsd2" />
+    <MetadataFile FileName="Project.wsdl" MetadataType="Wsdl" ID="87b5b1f6-e69d-458f-bfe5-bd0f39d8a5da" SourceId="1" SourceUrl="http://localhost:5595/Project.svc?wsdl" />
+    <MetadataFile FileName="Project2.xsd" MetadataType="Schema" ID="92129bf9-abc0-44c5-aed8-ad291457ee27" SourceId="1" SourceUrl="http://localhost:5595/Project.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

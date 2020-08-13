@@ -1,0 +1,28 @@
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\LoginNunitTest.dll.config
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\LoginNunitTest.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\LoginNunitTest.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\EasyWpfLoginNavigateExample.exe
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\nunit.framework.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\SharedModelLibrary.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\WCFScrumManagement.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\SharedModelLibrary.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\WCFScrumManagement.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\EasyWpfLoginNavigateExample.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\bin\Debug\nunit.framework.xml
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\obj\Debug\LoginNunitTest.csprojResolveAssemblyReference.cache
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\obj\Debug\LoginNunitTest.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\LoginNunitTest\obj\Debug\LoginNunitTest.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\LoginNunitTest.dll.config
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\LoginNunitTest.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\LoginNunitTest.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\EasyWpfLoginNavigateExample.exe
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\nunit.framework.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\SharedModelLibrary.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\WCFScrumManagement.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\SharedModelLibrary.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\WCFScrumManagement.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\EasyWpfLoginNavigateExample.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\bin\Debug\nunit.framework.xml
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\obj\Debug\LoginNunitTest.csprojResolveAssemblyReference.cache
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\obj\Debug\LoginNunitTest.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\LoginNunitTest\obj\Debug\LoginNunitTest.pdb

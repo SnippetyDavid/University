@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace EasyWpfLoginNavigateExample.View
+{
+    /// <summary>
+    /// Interaction logic for Window4.xaml
+    /// </summary>
+    public partial class EmailForm : Window
+    {
+        public EmailForm()
+        {
+            InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("example@gmail.com", "password");
+                MailMessage msg = new MailMessage();
+                msg.To.Add(textBoxTo.Text);
+                msg.From = new MailAddress("example@gmail.com");
+                msg.Subject = textBoxSubject.Text;
+                msg.Body = textBoxBody.Text;
+                client.Send(msg);
+                MessageBox.Show("Message sent");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
+}

@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using WPFClientApplication.Helpers;
+using WPFClientApplication.Model;
+using EasyWpfLoginNavigateExample.ServiceReference;
+using WPFClientApplication.View;
+using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
+using System.Windows;
+
+
+namespace WPFClientApplication.ViewModel
+{
+    public class RegistrationViewModel : ViewModelBase
+    {
+        public RelayCommand RegisterCommand { get; set; }
+        public AuthenticationViewModel AuthVM { get; set; }
+
+        public bool AlreadyRegistered;
+
+        public RegistrationViewModel()
+        {
+            AuthVM = new AuthenticationViewModel();
+            RegisteringUser = new UserModel { UserName = "username", Password = "password", Email = "email", ProjectManager=false, ScrumMaster=false, Developer=false};
+
+            RegisterCommand = new RelayCommand(DoRegister);
+            RegisterCommand = new RelayCommand(sendConfirmationEmail);
+
+        }
+
+        private UserModel _RegisteringUser;
+        public UserModel RegisteringUser
+        {
+            get { return _RegisteringUser; }
+            set
+            {
+                if (value != _RegisteringUser)
+                {
+                    _RegisteringUser = value;
+                    RaisePropertyChanged("RegisteringUser");
+                }
+            }
+        }
+
+        private void DoRegister(object obj)
+        {
+            UserServiceClient client = new UserServiceClient();
+
+            client.RegisterUser(this.RegisteringUser.UserName, this.RegisteringUser.Password, this.RegisteringUser.Email, this.RegisteringUser.ProjectManager, this.RegisteringUser.ScrumMaster, this.RegisteringUser.Developer);
+
+        }
+
+        //Method to send a confirmation email
+        private void sendConfirmationEmail(object sender)
+        {
+            try
+            {
+                //Sets the client to a Gmail port
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                //Sets client to waterfallltd@gmail.com
+                client.Credentials = new NetworkCredential("waterfallltd@gmail.com", "Waterfall123");
+                MailMessage msg = new MailMessage();
+                msg.To.Add(this.RegisteringUser.Email);
+                msg.From = new MailAddress("waterfallltd@gmail.com");
+                msg.Subject = "Confirmation Email";
+                msg.Body = "Hi" + " " + this.RegisteringUser.UserName + "," + "\r\r" + " You are now a registered member of the Waterfall LTD systems.\r\r This is your username:\r\r  "
+                           + this.RegisteringUser.UserName + "\r\r This is your Password:\r\r" + " " + this.RegisteringUser.Password + "\r\r Thanks for registering \r\r Regards, \r Darryl Stewart \r Waterfall LTD";
+                client.Send(msg);
+                MessageBox.Show("Confirmation Email sent");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+﻿using EasyWpfLoginNavigateExample.Model;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Windows.Controls;
+using WPFClientApplication.Helpers;
+using WPFClientApplication.ViewModel;
+
+namespace EasyWpfLoginNavigateExample.ViewModel
+{
+    class ProjectViewModel : ViewModelBase
+    {
+
+        public RelayCommand CreateProjectCommand { get; set; }
+
+        public CreateProjectViewModel NewProject { get; set; }
+
+        public ProjectViewModel(Border Stage)
+        {
+
+            CreateProjectCommand = new RelayCommand(createProject);
+            NewProject = new CreateProjectViewModel();
+
+        }
+
+        public void createProject(object obj)
+        {
+            NewProject.createProject();
+
+        }
+    }
+}

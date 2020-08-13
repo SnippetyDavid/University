@@ -1,0 +1,135 @@
+CREATE TABLE ProjectTeam
+(
+id int IDENTITY(1,1) NOT NULL,
+project_id int NOT NULL,
+user_id int NOT NULL,
+roles_id int NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (project_id) REFERENCES Project(id),
+FOREIGN KEY (user_id) REFERENCES Users(id),
+FOREIGN KEY (roles_id) REFERENCES Roles(id)
+);
+
+
+CREATE TABLE Users
+(
+id int IDENTITY(1,1) NOT NULL,
+username varchar(100) NOT NULL,
+password varchar(100) NOT NULL,
+email varchar(100) NOT NULL,
+projectManager int,
+scrumMaster int,
+developer int,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Project
+(
+id int IDENTITY(1,1) NOT NULL,
+projectName varchar(100) NOT NULL,
+projectDescription varchar(500) NOT NULL,
+user_id int NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Roles
+(
+id int IDENTITY(1,1) NOT NULL,
+roleName varchar(100) NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE Invite
+(
+id int IDENTITY(1,1) NOT NULL,
+project_id int NOT NULL,
+user_id int NOT NULL,
+invited bit NOT NULL  DEFAULT 0,
+accepted bit NOT NULL  DEFAULT 0,
+ceased bit NOT NULL DEFAULT 0,
+DateCreated DATETIME NOT NULL DEFAULT(GETDATE()),
+PRIMARY KEY (id),
+FOREIGN KEY (project_id) REFERENCES Project(id),
+FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+
+CREATE TABLE [dbo].[ProjectSprint]
+(
+	[id]	INT		Identity(1,1) NOT NULL,
+	[project_id] INT NOT NULL,
+	[scrumMaster_id] INT NULL, 
+    	[startDate] DATE NULL, 
+    	[endDate] DATE NULL, 
+	[daily_work_hours] INT NULL,
+    	PRIMARY KEY CLUSTERED ([id] ASC),
+	FOREIGN KEY ([project_id]) REFERENCES [dbo].[Project] ([id]),
+	FOREIGN KEY ([scrumMaster_id]) REFERENCES [dbo].[Users] ([id])
+);
+
+CREATE TABLE [dbo].[ProjectBacklog]
+(
+	[id]		INT		Identity(1,1) NOT NULL,
+	[project_id]	INT		NOT NULL,
+	[user_story]	VARCHAR(500) NOT NULL,
+	[market_value]	INT,
+	[story_points]	INT,
+	PRIMARY KEY CLUSTERED ([id] ASC),
+	FOREIGN KEY ([project_id]) REFERENCES [dbo].[Project] ([id])
+);
+
+CREATE TABLE [dbo].[ProjectSprintBacklog]
+(
+	[id] 	    INT Identity(1,1) NOT NULL,
+	[sprint_id] INT NOT NULL,
+	[backlog_id]INT  NOT NULL,
+	FOREIGN KEY ([sprint_id]) REFERENCES [dbo].[ProjectSprint] ([id]),
+	FOREIGN KEY ([backlog_id]) REFERENCES [dbo].[ProjectBacklog] ([id]),
+);
+
+CREATE TABLE [dbo].[ProjectSprintBacklogTasks]
+(
+	[id] 	    INT Identity(1,1) NOT NULL,
+	[sprint_backlog_id] INT NOT NULL,
+	[task_owner] INT NULL,
+	[task_description] VARCHAR(500) NULL,
+	[hours_estimated] INT NULL,
+	PRIMARY KEY CLUSTERED ([id] ASC),
+	FOREIGN KEY ([sprint_backlog_id]) REFERENCES [dbo].[ProjectSprintBacklog] ([id]),
+	FOREIGN KEY ([task_owner]) REFERENCES [dbo].[Users] ([id])
+);
+
+CREATE TABLE [dbo].[ProjectSprintBacklogTasksHoursRemaining]
+(
+	[id] 	    INT Identity(1,1) NOT NULL,
+	[sprint_backlog_task_id] INT NOT NULL,
+	[sprint_date] DATE NOT NULL,
+	[hours_remaining] INT NOT NULL,
+	PRIMARY KEY CLUSTERED ([id] ASC),
+	FOREIGN KEY ([sprint_backlog_task_id]) REFERENCES [dbo].[ProjectSprintBacklogTasks] ([id])
+);
+
+
+CREATE TABLE UserStories
+(
+id int IDENTITY(1,1) NOT NULL,
+userStoryDescription varchar(500) NOT NULL,
+sprint_id int NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (sprint_id) REFERENCES Sprints(id)
+);
+
+ALTER TABLE ProjectTeam ADD accepted bit DEFAULT 0;
+
+INSERT  INTO Roles (roleName) VALUES ('Developer');
+INSERT  INTO Roles (roleName) VALUES ('Scrum Master');
+INSERT  INTO Roles (roleName) VALUES ('Project Manager');
+INSERT  INTO Roles (roleName) VALUES ('Project Owner');
+INSERT INTO users (username, password, email) VALUES ('cmccaughey', 'password', 'cmccaughey12@qub.ac.uk');
+UPDATE users SET projectManager = 1, scrumMaster = 1, developer = 1 WHERE id IN (1,3);
+
+ALTER TABLE users ADD DEFAULT 0 FOR projectManager;
+ALTER TABLE users ADD DEFAULT 0 FOR  scrumMaster;
+ALTER TABLE users ADD DEFAULT 0 FOR  developer;
+ALTER TABLE projectTeam ADD declined BIT DEFAULT 0

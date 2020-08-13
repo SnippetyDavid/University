@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="User" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:5595/User.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:5595/User.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:5595/User.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SharedModelLibrary" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="UserService_InsertUserDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="UserService_InsertUserDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="UserService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_checkUserDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:checkUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="UserService_checkUserDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:checkUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_checkRegisteredUserDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:checkRegisteredUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="UserService_checkRegisteredUserDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:checkRegisteredUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_GetUserDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="UserService_GetUserDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_getAllUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:getAllUsers" />
+  </wsdl:message>
+  <wsdl:message name="UserService_getAllUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getAllUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_searchUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:searchUsers" />
+  </wsdl:message>
+  <wsdl:message name="UserService_searchUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:searchUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_ShowTeamMembersByProject_InputMessage">
+    <wsdl:part name="parameters" element="tns:ShowTeamMembersByProject" />
+  </wsdl:message>
+  <wsdl:message name="UserService_ShowTeamMembersByProject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ShowTeamMembersByProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_searchUserSkillset_InputMessage">
+    <wsdl:part name="parameters" element="tns:searchUserSkillset" />
+  </wsdl:message>
+  <wsdl:message name="UserService_searchUserSkillset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:searchUserSkillsetResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_searchAvailableDevs_InputMessage">
+    <wsdl:part name="parameters" element="tns:searchAvailableDevs" />
+  </wsdl:message>
+  <wsdl:message name="UserService_searchAvailableDevs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:searchAvailableDevsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserService_addImageToDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:addImageToDatabase" />
+  </wsdl:message>
+  <wsdl:message name="UserService_addImageToDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addImageToDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:portType name="UserService">
+    <wsdl:operation name="InsertUserDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/InsertUserDetails" message="tns:UserService_InsertUserDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/InsertUserDetailsResponse" message="tns:UserService_InsertUserDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/RegisterUser" message="tns:UserService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/RegisterUserResponse" message="tns:UserService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="checkUserDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/checkUserDetails" message="tns:UserService_checkUserDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/checkUserDetailsResponse" message="tns:UserService_checkUserDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="checkRegisteredUserDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/checkRegisteredUserDetails" message="tns:UserService_checkRegisteredUserDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/checkRegisteredUserDetailsResponse" message="tns:UserService_checkRegisteredUserDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/GetUserDetails" message="tns:UserService_GetUserDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/GetUserDetailsResponse" message="tns:UserService_GetUserDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/getAllUsers" message="tns:UserService_getAllUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/getAllUsersResponse" message="tns:UserService_getAllUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="searchUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/searchUsers" message="tns:UserService_searchUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/searchUsersResponse" message="tns:UserService_searchUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ShowTeamMembersByProject">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/ShowTeamMembersByProject" message="tns:UserService_ShowTeamMembersByProject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/ShowTeamMembersByProjectResponse" message="tns:UserService_ShowTeamMembersByProject_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="searchUserSkillset">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/searchUserSkillset" message="tns:UserService_searchUserSkillset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/searchUserSkillsetResponse" message="tns:UserService_searchUserSkillset_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="searchAvailableDevs">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/searchAvailableDevs" message="tns:UserService_searchAvailableDevs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/searchAvailableDevsResponse" message="tns:UserService_searchAvailableDevs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addImageToDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/UserService/addImageToDatabase" message="tns:UserService_addImageToDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/UserService/addImageToDatabaseResponse" message="tns:UserService_addImageToDatabase_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_UserService" type="tns:UserService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="InsertUserDetails">
+      <soap:operation soapAction="http://tempuri.org/UserService/InsertUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/UserService/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkUserDetails">
+      <soap:operation soapAction="http://tempuri.org/UserService/checkUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkRegisteredUserDetails">
+      <soap:operation soapAction="http://tempuri.org/UserService/checkRegisteredUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <soap:operation soapAction="http://tempuri.org/UserService/GetUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllUsers">
+      <soap:operation soapAction="http://tempuri.org/UserService/getAllUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchUsers">
+      <soap:operation soapAction="http://tempuri.org/UserService/searchUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ShowTeamMembersByProject">
+      <soap:operation soapAction="http://tempuri.org/UserService/ShowTeamMembersByProject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchUserSkillset">
+      <soap:operation soapAction="http://tempuri.org/UserService/searchUserSkillset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchAvailableDevs">
+      <soap:operation soapAction="http://tempuri.org/UserService/searchAvailableDevs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addImageToDatabase">
+      <soap:operation soapAction="http://tempuri.org/UserService/addImageToDatabase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="User">
+    <wsdl:port name="BasicHttpBinding_UserService" binding="tns:BasicHttpBinding_UserService">
+      <soap:address location="http://localhost:5595/User.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

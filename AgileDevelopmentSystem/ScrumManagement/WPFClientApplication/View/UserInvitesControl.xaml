@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="EasyWpfLoginNavigateExample.View.UserInvitesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="820">
+    <Grid Background="White">
+        <ListView HorizontalAlignment="Center" Height="400" Margin="0,10,0,0" 
+              VerticalAlignment="Top" Width="820" ItemsSource="{Binding Invites}">
+            <ListView.View>
+                <GridView x:Name="GridView1">
+                    <GridViewColumn DisplayMemberBinding= "{Binding Path=ProjectName}" 
+                                Header="Project Name" Width="300"/>
+                    <GridViewColumn DisplayMemberBinding= "{Binding Path=ProjectRole}" 
+                                Header="Role" Width="300"/>
+
+                    <GridViewColumn  Header="Accept or decline" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <RadioButton Content="Accept"
+                                     IsChecked="{Binding Path=IsAccepted, Mode=TwoWay}"
+		                             HorizontalAlignment="Left"
+		                             Margin="10,10,0,0"
+		                             VerticalAlignment="Top"/>
+                                    <RadioButton Content="Decline"
+                                     IsChecked="{Binding Path=IsDeclined, Mode=TwoWay}"
+		                             HorizontalAlignment="Left"
+		                             Margin="10,30,0,0"
+		                             VerticalAlignment="Top"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Command="{Binding UpdateInvitesCommand}" Content="Update Invites" HorizontalAlignment="Left" Margin="336,415,0,0" VerticalAlignment="Top" Width="182" Height="34" RenderTransformOrigin="0.5,0.5"/>
+
+    </Grid>
+</UserControl>

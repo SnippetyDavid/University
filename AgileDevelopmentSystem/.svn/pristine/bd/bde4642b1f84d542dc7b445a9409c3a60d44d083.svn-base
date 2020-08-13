@@ -1,0 +1,41 @@
+﻿using System;
+using System.Data.SqlClient;
+
+namespace WCFScrumManagement
+{
+
+    public class Project : ProjectService
+    {
+
+        // create the sql connection that connects to our hosted db
+        SqlConnection con = new SqlConnection("Data Source=jdickinson03.public.cs.qub.ac.uk;Initial Catalog=jdickinson03;User ID=jdickinson03;Password=5rmp7b1x2hzsv42f");
+
+        // Inserts the project name and description into the projects table
+        public Boolean InsertProjectDetails(string projectName, string projectDescription)
+        {
+            // open the sql connection
+            con.Open();
+
+            String query = "INSERT INTO Projects(project_name,project_description) VALUES(@projectName, @projectDescription)";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@projectName", projectName);
+            cmd.Parameters.AddWithValue("@projectDescription", projectDescription);
+            
+            // execute the insert statement and store the result
+            int result = cmd.ExecuteNonQuery();
+
+            // close the sql connection
+            con.Close();
+
+            // check to see if the user was succesfully added and return a boolean value based on the result
+            if (result == 1)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+    }
+}

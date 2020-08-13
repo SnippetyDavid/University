@@ -1,0 +1,7 @@
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\obj\Debug\WCFScrumManagement.csprojResolveAssemblyReference.cache
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\bin\WCFScrumManagement.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\bin\WCFScrumManagement.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\bin\SharedModelLibrary.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\bin\SharedModelLibrary.pdb
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\obj\Debug\WCFScrumManagement.dll
+C:\Users\david_000\Documents\Agile_\ScrumManagement\WCFScrumManagement\obj\Debug\WCFScrumManagement.pdb

@@ -1,0 +1,54 @@
+﻿using EasyWpfLoginNavigateExample.ServiceReference;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using WPFClientApplication.Helpers;
+using WPFClientApplication.ViewModel;
+using WPFClientApplication.View;
+using SharedModelLibrary;
+
+namespace WPFClientApplication.ViewModel
+{
+    class UserAccountViewModel : ViewModelBase
+    {
+        public RelayCommand UpdateCommand { get; set; }
+        public RelayCommand ChangePasswordCommand { get; set; }
+
+        UserServiceClient client = new UserServiceClient();
+
+        public UserAccountViewModel()
+        {
+            //UserModel cUser = client.GetUserDetails(user);
+            UserModel cUser = new UserModel { UserName = "test", Password = "test", Email = "tet", ProjectManager = true, ScrumMaster = true, Developer = true };
+            UpdateCommand = new RelayCommand(DoUpdate);
+            ChangePasswordCommand = new RelayCommand(DoChangePassword);
+        }
+
+        private UserModel _cUser;
+        public UserModel cUser
+        {
+            get { return _cUser; }
+            set
+            {
+                if (value != _cUser)
+                {
+                    _cUser = value;
+                    RaisePropertyChanged("cUser");
+                }
+            }
+        }
+
+        private void DoUpdate(object obj)
+        {
+
+        }
+
+        private void DoChangePassword(object obj)
+        {
+
+        }
+
+
+    }
+}

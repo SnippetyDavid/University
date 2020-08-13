@@ -1,0 +1,47 @@
+﻿using WPFClientApplication.Model;
+using WPFClientApplication.View;
+using System.Windows.Controls;
+using EasyWpfLoginNavigateExample.View;
+
+namespace WPFClientApplication
+{
+    class ApplicationController
+    {
+        static ApplicationController _instance;
+        public static ApplicationController GetInstance()
+        {
+
+            if (_instance == null)
+                _instance = new ApplicationController();
+            return _instance;
+        }
+
+        Border _stage;
+
+        private ApplicationController() { }
+
+        public void GoToPage(ApplicationPage page)
+        {
+            switch (page)
+            {
+                case ApplicationPage.NewControl1:
+                    _stage.Child = new UserControl1();
+                    break;
+                case ApplicationPage.NewWindow2:
+                    var win = new Window2();
+                    win.Show();
+                    break;
+                case ApplicationPage.NewProjectWindow:
+                    var win1 = new CreateProject();
+                    win1.Show();
+                    break;
+            }
+        }
+
+        public void SetStage(Border Stage)
+        {
+            _stage = Stage;
+        }
+
+    }
+}

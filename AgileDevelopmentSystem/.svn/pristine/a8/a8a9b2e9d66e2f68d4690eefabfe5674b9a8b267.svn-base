@@ -1,0 +1,57 @@
+﻿<Window x:Class="EasyWpfLoginNavigateExample.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dashboard" Height="600" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="23*"/>
+            <RowDefinition Height="74*"/>
+            <RowDefinition Height="74*"/>
+            <RowDefinition Height="74*"/>
+            <RowDefinition Height="74*"/>
+            <RowDefinition Height="74*"/>
+            <RowDefinition Height="140*"/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="165*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="781*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="LoggedInPic" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="165" Background="#FF66CCFF" Grid.ColumnSpan="2" Grid.RowSpan="3">
+            <Grid x:Name="Content" HorizontalAlignment="Left" Height="508" Margin="165,60,-829,-506" VerticalAlignment="Top" Width="829" Background="#FFF2F2F2">
+            </Grid>
+            <Label x:Name="Title" Content="Scrum Mangement" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,16,5,0" Height="28" Width="130" FontSize="13" FontFamily="Century Gothic" Foreground="White" FontWeight="Bold"/>
+            <Image x:Name="Logo" HorizontalAlignment="Left" Margin="6,16,0,20" Width="24" Source="/Images/smlogo.png"/>
+        </Grid>
+        <Grid x:Name="TopPanel" Height="62" VerticalAlignment="Top" Background="White" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="508" Margin="0,3,0,-1" VerticalAlignment="Top" Width="165" Background="#FF99CCFF" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="7">
+            <ComboBox DataContext="{Binding ProjectList}" DisplayMemberPath="Name" SelectedValuePath="ProjectID" x:Name="ProjectDropdown" HorizontalAlignment="Left" Margin="45,35,0,0" VerticalAlignment="Top" Width="110" Height="36"/>
+            <ComboBox x:Name="UserDropdown" HorizontalAlignment="Left" Margin="45,110,0,0" VerticalAlignment="Top" Width="110" Height="35"/>
+            <Image x:Name="ProjectIcon" HorizontalAlignment="Left" Height="35" Margin="5,36,0,0" VerticalAlignment="Top" Source="/Images/folderLogo.png" Width="35"/>
+            <Image x:Name="UserIcon" HorizontalAlignment="Left" Height="35" Margin="5,110,0,0" VerticalAlignment="Top" Source="/Images/userLogo.png" Width="35" RenderTransformOrigin="0.505,1.067"/>
+            <Grid x:Name="SearchBox" HorizontalAlignment="Left" Height="40" Margin="5,452,0,0" VerticalAlignment="Top" Width="150" Background="#FFF2F2F2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="11*"/>
+                </Grid.ColumnDefinitions>
+                <Image HorizontalAlignment="Left" Height="30" Margin="31,5,0,0" VerticalAlignment="Top" Width="25" Source="/Images/searchIcon.png" Grid.Column="1"/>
+                <TextBox x:Name="SearchText" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="Search" Width="100" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
+            </Grid>
+            <ComboBox x:Name="SettingsDropDown" HorizontalAlignment="Left" Margin="45,184,0,0" VerticalAlignment="Top" Width="110" Height="35"/>
+            <Image x:Name="SettingsIcon" HorizontalAlignment="Left" Height="35" Margin="5,184,0,0" VerticalAlignment="Top" Source="/Images/settingIcon.png" Width="35" RenderTransformOrigin="0.505,1.067"/>
+            <Button Command="{Binding NewAccountWindowCommand}" Content="View Account" HorizontalAlignment="Left" Height="35" Margin="45,258,0,0" VerticalAlignment="Top" Width="110" Background="#FFF2F2F2" FontFamily="Century Gothic" FontSize="10"/>
+            <Image x:Name="EmailIcon" HorizontalAlignment="Left" Height="35" Margin="5,258,0,0" VerticalAlignment="Top" Source="/Images/userLogo.png" Width="35" RenderTransformOrigin="0.505,1.067"/>
+            <Button x:Name="BacklogManager" Content="Backlog Manager" HorizontalAlignment="Left" Height="36" Margin="45,331,0,0" VerticalAlignment="Top" Width="110" Background="#FFF2F2F2" FontFamily="Century Gothic" FontSize="10"/>
+            <Image x:Name="BacklogIcon" HorizontalAlignment="Left" Height="35" Margin="5,332,0,0" VerticalAlignment="Top" Source="/Images/backlogIcon.png" Width="35" RenderTransformOrigin="0.505,1.067"/>
+        </Grid>
+        <Border x:Name="Stage" Grid.Row="1"/>
+    </Grid>
+</Window>

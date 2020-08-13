@@ -1,0 +1,12 @@
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\obj\Debug\UnitTestClientApplication.csprojResolveAssemblyReference.cache
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\UnitTestClientApplication.dll.config
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\UnitTestClientApplication.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\UnitTestClientApplication.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\EasyWpfLoginNavigateExample.exe
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\SharedModelLibrary.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\WCFScrumManagement.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\SharedModelLibrary.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\WCFScrumManagement.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\bin\Debug\EasyWpfLoginNavigateExample.pdb
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\obj\Debug\UnitTestClientApplication.dll
+C:\Users\40134497\Documents\Visual Studio 2013\Projects\ScrumManagement\UnitTestClientApplication\obj\Debug\UnitTestClientApplication.pdb

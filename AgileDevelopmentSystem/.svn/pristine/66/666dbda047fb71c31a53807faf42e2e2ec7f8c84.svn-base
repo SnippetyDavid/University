@@ -1,0 +1,30 @@
+﻿<Window x:Class="EasyWpfLoginNavigateExample.View.RegistrationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:model="clr-namespace:WPFClientApplication.Model"
+        xmlns:view="clr-namespace:WPFClientApplication.View"
+        xmlns:helpers="clr-namespace:WPFClientApplication.Helpers"
+        Title="RegistrationForm" Height="500" Width="400">
+    <Grid Background="#FFA4DAFF">
+
+        <TextBlock HorizontalAlignment="Left" Height="56" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="372" TextAlignment="Center" FontSize="24" FontFamily="Calibri" Foreground="White"><Run Language="en-gb" Text="Sign Up"/></TextBlock>
+
+        <TextBox Text="{Binding RegisteringUser.Email}" HorizontalAlignment="right" Height="40" Margin="0,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <TextBox Text="{Binding RegisteringUser.UserName}" HorizontalAlignment="right" Height="40" Margin="0,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <TextBox Text="{Binding RegisteringUser.Password}" HorizontalAlignment="right" Height="40" Margin="0,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+
+        <Button Command="{Binding RegisterCommand}" Content="Register" HorizontalAlignment="Left" Height="59" Margin="0,410,0,0" VerticalAlignment="Top" Width="392" Background="#FF50B7DC" BorderBrush="#FF0017FF" BorderThickness="0" Foreground="White" FontSize="22" FontFamily="Calibri" TextOptions.TextFormattingMode="Display"/>
+
+        <Label Content="email" HorizontalAlignment="Left" Height="37" Margin="0,70,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label Content="name" HorizontalAlignment="Left" Height="37" Margin="0,117,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label Content="password" HorizontalAlignment="Left" Height="37" Margin="0,170,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label Content="Select Desired Project Roles" HorizontalAlignment="Left" Height="37" Margin="1,222,0,0" VerticalAlignment="Top" Width="160"/>
+        <CheckBox Content="Project Manager" IsChecked="{Binding RegisteringUser.ProjectManager}" HorizontalAlignment="Left" Margin="21,262,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Scrum Master" IsChecked="{Binding RegisteringUser.ScrumMaster}" HorizontalAlignment="Left" Margin="141,262,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Developer" IsChecked="{Binding RegisteringUser.Developer}" HorizontalAlignment="Left" Margin="261,262,0,0" VerticalAlignment="Top"/>
+        <Image  Source="{Binding profilePicture}" Stretch="Fill" HorizontalAlignment="Left" Height="70" Margin="10,300,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button Command="{Binding BrowseCommand}" Content="Browse" HorizontalAlignment="Left" Margin="85,300,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label HorizontalAlignment="Left" Height="37" Margin="190,288,0,0" VerticalAlignment="Top" Width="115" Content="SkillSet"/>
+        <TextBox Text="{Binding RegisteringUser.SkillSet}" TextWrapping="Wrap" Margin="190,325,45,77"/>
+    </Grid>
+</Window>

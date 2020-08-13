@@ -1,0 +1,70 @@
+﻿using WPFClientApplication.Model;
+using WPFClientApplication.View;
+using System.Windows.Controls;
+using EasyWpfLoginNavigateExample.View;
+
+namespace WPFClientApplication
+{
+    class ApplicationController
+    {
+        static ApplicationController _instance;
+        public static ApplicationController GetInstance()
+        {
+
+            if (_instance == null)
+                _instance = new ApplicationController();
+            return _instance;
+        }
+
+        Border _stage;
+
+        private ApplicationController() { }
+
+        public void GoToPage(ApplicationPage page)
+        {
+            switch (page)
+            {
+                case ApplicationPage.NewControl1:
+                    _stage.Child = new UserControl1();
+                    break;
+                case ApplicationPage.NewWindow2:
+                    var win = new Window2();
+                    win.Show();
+                    break;
+                case ApplicationPage.NewRegisterWindow:
+                    var reg = new RegistrationForm();
+                    reg.Show();
+                    break;
+                case ApplicationPage.NewProjectWindow:
+                    var win1 = new CreateProject();
+                    win1.Show();
+                    break;
+                case ApplicationPage.showAddUsersNewProject:
+                    _stage.Child = new addUsersToProject();
+                    break;
+                case ApplicationPage.showCreatedProject:
+                    _stage.Child = new showCreatedProject();
+                    break;
+            }
+        }
+
+
+        public void NewAccountWindow(object obj, string user)
+        {
+            var acc = new UserAccount( user );
+            acc.Show();
+        }
+
+        public void NewMainWindow(object obj, string user)
+        {
+            var acc = new MainWindow(user);
+            acc.Show();
+        }
+
+        public void SetStage(Border Stage)
+        {
+            _stage = Stage;
+        }
+
+    }
+}
