@@ -1,0 +1,18 @@
+[submodule "SpringBoot_Rest"]
+	path = SpringBoot_Rest
+	url = https://github.com/SnippetyDavid/SpringBoot_Rest.git
+[submodule "AgileDevelopmentSystem"]
+	path = AgileDevelopmentSystem
+	url = https://github.com/SnippetyDavid/AgileDevelopmentSystem.git
+[submodule "Rock-et-Out"]
+	path = Rock-et-Out
+	url = https://github.com/SnippetyDavid/Rock-et-Out.git
+[submodule "Monopoly"]
+	path = Monopoly
+	url = https://github.com/SnippetyDavid/Monopoly.git
+[submodule "GroupMessenger-MultipleThreads"]
+	path = GroupMessenger-MultipleThreads
+	url = https://github.com/SnippetyDavid/GroupMessenger-MultipleThreads.git
+[submodule "SecurityLogin-EncryptionAlgorithms"]
+	path = SecurityLogin-EncryptionAlgorithms
+	url = https://github.com/SnippetyDavid/SecurityLogin-EncryptionAlgorithms.git
