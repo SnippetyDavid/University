@@ -1,0 +1,111 @@
+package uk.co.takeabytestudios.rock_etout;
+
+import uk.co.takeabytestudios.rock_etout.engine.AssetStore;
+import uk.co.takeabytestudios.rock_etout.game.GameLoader;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+/**
+ * The Main RocketOut Activity class
+ * 
+ * @authors Nathan Harrison, Niall Shannon, David Walsh, Reece Magee
+ */
+@SuppressLint("InlinedApi")
+public class RocketOut extends Activity {
+
+	// Game fragment instance
+	private RocketOutFragment mGame;
+	// integer to store API version for immersive mode
+	private int currentApiVersion;
+
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	@SuppressLint("InlinedApi")
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// This code is used for immersive mode on android 4.4 or higher
+		currentApiVersion = android.os.Build.VERSION.SDK_INT;
+
+		final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+				| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+				| View.SYSTEM_UI_FLAG_FULLSCREEN | View.KEEP_SCREEN_ON
+				| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+		// This work only for android 4.4+
+		if (currentApiVersion >= Build.VERSION_CODES.KITKAT) {
+			getWindow().getDecorView().setSystemUiVisibility(flags);
+
+			// Code below is to handle presses of Volume up or Volume down.
+			// Without this, after pressing volume buttons, the navigation bar
+			// will show up and won't hide
+			final View decorView = getWindow().getDecorView();
+			decorView
+					.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+						@Override
+						public void onSystemUiVisibilityChange(int visibility) {
+							if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+								decorView.setSystemUiVisibility(flags);
+							}
+						}
+					});
+		}
+
+		// Setup the window as suitable for a game, namely: full screen
+		// with no title and a request to keep the screen on. The changes
+		// are made before any content is inflated.
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+		// Set the content view to use a simple frame layout
+		setContentView(R.layout.activity_fragment);
+
+		// Add in the main game fragment
+		FragmentManager fm = getFragmentManager();
+		mGame = (RocketOutFragment) fm
+				.findFragmentById(R.id.activity_fragment_id);
+
+		if (mGame == null) {
+			mGame = new GameLoader();
+			fm.beginTransaction().add(R.id.activity_fragment_id, mGame)
+					.commit();
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		// If the fragment does not consume the back event then
+		// trigger the default behaviour
+		AssetStore assetManager = mGame.getAssetManager();
+		assetManager.getMusic("GameMusic").stop();
+		if (!mGame.onBackPressed())
+			super.onBackPressed();
+	}
+
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@SuppressLint("InlinedApi")
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		// Immersive mode code
+		if (currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus) {
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_FULLSCREEN
+							| View.KEEP_SCREEN_ON
+							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		}
+	}
+}
