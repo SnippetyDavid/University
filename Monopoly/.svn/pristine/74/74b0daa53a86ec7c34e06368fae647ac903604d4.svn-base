@@ -1,0 +1,207 @@
+package mainWindow;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import utils.SwingUtils;
+
+/**
+ * This class creates the middle panel for the game
+ * 
+ * @author Brogrammers
+ */
+@SuppressWarnings("serial")
+public class MiddlePanel extends JPanel {
+
+	SwingUtils utils = new SwingUtils();
+	private static Dimension screenRes;
+	private static ImageIcon player1Pic, player2Pic, player3Pic, player4Pic;
+	private static JLabel player1Char, player2Char, player3Char, player4Char;
+
+	/**
+	 * This constructor creates the middle panel
+	 * @param characterArray - array of player images
+	 */
+	public MiddlePanel(List<String> characterArray) {
+		setLayout(null);
+		addPlayerCharacters(characterArray);
+	}
+
+	/**
+	 * This method is used to draw the board to the screen
+	 */
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		screenRes = Toolkit.getDefaultToolkit().getScreenSize();
+		if (screenRes.width >= 1920) {
+			g.drawImage(utils.scaleBackForScreen(new ImageIcon(
+					"images/board.jpg"),
+					(screenRes.width - (screenRes.width / 4)), screenRes.height
+							- (screenRes.height / 10)), 0, 0, null);
+		} else {
+			g.drawImage(utils.scaleBackForScreen(new ImageIcon(
+					"images/board.jpg"), (screenRes.width
+					- (screenRes.width / 3) - 15), screenRes.height
+					- (screenRes.height / 9)), 0, 0, null);
+		}
+	}
+
+	/**
+	 * This method is used to add the player characters to the board 
+	 * @param characterArray - the array of character images
+	 */
+	private void addPlayerCharacters(List<String> characterArray) {
+		player1Pic = utils.scaleDownByFactor(new ImageIcon("images/characters/" + characterArray.get(0).toLowerCase() + ".png"), 18);
+		player1Char = new JLabel(player1Pic);
+		player1Char.setBounds(1300, 840, 100, 100);
+		player2Pic = utils.scaleDownByFactor(new ImageIcon("images/characters/" + characterArray.get(1).toLowerCase() + ".png"), 18);
+		player2Char = new JLabel(player2Pic);
+		player2Char.setBounds(1350, 840, 100, 100);
+		player3Pic = utils.scaleDownByFactor(new ImageIcon("images/characters/" + characterArray.get(2).toLowerCase() + ".png"), 18);
+		player3Char = new JLabel(player3Pic);
+		player3Char.setBounds(1300, 890, 100, 100);
+		player4Pic = utils.scaleDownByFactor(new ImageIcon("images/characters/" + characterArray.get(3).toLowerCase() + ".png"), 18);
+		player4Char = new JLabel(player4Pic);
+		player4Char.setBounds(1350, 890, 100, 100);
+		add(player1Char);
+		add(player2Char);
+		add(player3Char);
+		add(player4Char);
+	}
+
+	/**
+	 * This method sets the player's character position depending on the space they are on
+	 * @param playerNo - the player of the image to set
+	 * @param property - the space they are on
+	 */	
+	public static void setPlayerCharLocation(int playerNo, int property){
+		if(playerNo == 1){
+			if(property == 0){
+				player1Char.setBounds(1300, 840, 100, 100);
+			} 
+			else if (property < 10 ){	
+				player1Char.setBounds((1240-(120*property)), 840, 100, 100);
+			} 
+			else if (property == 10){
+				player1Char.setBounds(-10, 900, 100, 100);
+			}
+			else if (property < 20 && property > 10){
+				player1Char.setBounds(20, (820-(80*(property-10))), 100, 100);
+			}
+			else if (property == 20){
+				player1Char.setBounds(20, 10, 100, 100);
+			}
+			else if (property > 20 && property < 30){	
+				player1Char.setBounds((50+(120*(property-20))), 10, 100, 100);
+			} 
+			else if (property == 30){
+				player1Char.setBounds(1300, 10, 100, 100);
+			}
+			else if (property > 30 && property < 40){	
+				player1Char.setBounds(1280, (20+(80*(property-30))), 100, 100);
+			} 
+			else if (property == 40){
+				player1Char.setBounds(30, 820, 100, 100);
+			}
+			player1Char.repaint();
+		}
+		if (playerNo == 2){
+			if(property == 0){
+				player2Char.setBounds(1350, 840, 100, 100);
+			}
+			else if (property < 10 ){	
+				player2Char.setBounds((1290-(120*property)), 840, 100, 100);
+			} 
+			else if (property == 10){
+				player2Char.setBounds(30, 900, 100, 100);
+			}
+			else if (property < 20 && property > 10){
+				player2Char.setBounds(70, (820-(80*(property-10))), 100, 100);
+			}
+			else if (property == 20){
+				player2Char.setBounds(70, 10, 100, 100);
+			}
+			else if (property > 20 && property < 30){	
+				player2Char.setBounds((100+(120*(property-20))), 10, 100, 100);
+			} 
+			else if (property == 30){
+				player2Char.setBounds(1350, 10, 100, 100);
+			}
+			else if (property > 30 && property < 40){	
+				player2Char.setBounds(1330, (20+(80*(property-30))), 100, 100);
+			} 
+			else if (property == 40){
+				player2Char.setBounds(80, 820, 100, 100);
+			}
+			player2Char.repaint();
+		}
+		if(playerNo == 3){
+			if(property == 0){
+				player3Char.setBounds(1300, 890, 100, 100);
+			} 
+			else if (property < 10 ){	
+				player3Char.setBounds((1240-(120*property)), 890, 100, 100);
+			} 
+			else if (property == 10){
+				player3Char.setBounds(80, 900, 100, 100);
+			}
+			else if (property < 20 && property > 10){
+				player3Char.setBounds(20, (850-(80*(property-10))), 100, 100);
+			}
+			else if (property == 20){
+				player3Char.setBounds(20, 40, 100, 100);
+			}
+			else if (property > 20 && property < 30){	
+				player3Char.setBounds((50+(120*(property-20))), 40, 100, 100);
+			} 
+			else if (property == 30){
+				player3Char.setBounds(1300, 40, 100, 100);
+			}
+			else if (property > 30 && property < 40){	
+				player3Char.setBounds(1280, (50+(80*(property-30))), 100, 100);
+			} 
+			else if (property == 40){
+				player3Char.setBounds(30, 870, 100, 100);
+			}
+			player3Char.repaint();
+		}
+		if (playerNo == 4){
+			if(property == 0){
+				player4Char.setBounds(1350, 890, 100, 100);
+			}
+			else if (property < 10 ){	
+				player4Char.setBounds((1290-(120*property)), 890, 100, 100);
+			} 
+			else if (property == 10){
+				player4Char.setBounds(120, 900, 100, 100);
+			}
+			else if (property < 20 && property > 10){
+				player4Char.setBounds(70, (850-(80*(property-10))), 100, 100);
+			}
+			else if (property == 20){
+				player4Char.setBounds(70, 10, 100, 100);
+			}
+			else if (property > 20 && property < 30){	
+				player4Char.setBounds((100+(120*(property-20))), 10, 100, 100);
+			} 
+			else if (property == 30){
+				player4Char.setBounds(1350, 10, 100, 100);
+			}
+			else if (property > 30 && property < 40){	
+				player4Char.setBounds(1330, (50+(80*(property-30))), 100, 100);
+			} 
+			else if (property == 40){
+				player4Char.setBounds(80, 870, 100, 100);
+			}
+			player4Char.repaint();
+		}
+	}
+
+}
